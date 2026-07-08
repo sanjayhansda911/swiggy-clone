@@ -62,12 +62,20 @@
                 <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
             </div>
 
-            <!-- Cart Trigger Button -->
-            <button onclick="toggleCart(true)" class="relative bg-slate-900 text-white px-5 py-3 rounded-2xl font-bold flex items-center gap-3 hover:bg-brand-500 shadow-lg shadow-slate-900/10 hover:shadow-brand-500/20 transition-all-300 transform active:scale-95 group">
-                <i class="fa-solid fa-bag-shopping text-lg transition-transform group-hover:rotate-12"></i>
-                <span>Cart</span>
-                <span id="cart-badge" class="bg-brand-500 group-hover:bg-white group-hover:text-brand-500 text-white text-xs px-2.5 py-0.5 rounded-full font-extrabold transition-all-300">0</span>
-            </button>
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-3">
+                <!-- Voice Assistant Trigger -->
+                <button onclick="startVoiceListening()" class="bg-brand-50 text-brand-500 hover:bg-brand-500 hover:text-white p-3.5 rounded-2xl font-bold flex items-center justify-center transition-all-300 shadow-md shadow-brand-500/5 hover:shadow-brand-500/10 active:scale-95 group" title="Order by Voice">
+                    <i class="fa-solid fa-microphone text-xl animate-pulse"></i>
+                </button>
+
+                <!-- Cart Trigger Button -->
+                <button onclick="toggleCart(true)" class="relative bg-slate-900 text-white px-5 py-3 rounded-2xl font-bold flex items-center gap-3 hover:bg-brand-500 shadow-lg shadow-slate-900/10 hover:shadow-brand-500/20 transition-all-300 transform active:scale-95 group">
+                    <i class="fa-solid fa-bag-shopping text-lg transition-transform group-hover:rotate-12"></i>
+                    <span>Cart</span>
+                    <span id="cart-badge" class="bg-brand-500 group-hover:bg-white group-hover:text-brand-500 text-white text-xs px-2.5 py-0.5 rounded-full font-extrabold transition-all-300">0</span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -304,6 +312,79 @@
             </button>
         </div>
     </aside>
+
+    <!-- Voice Modal Overlay -->
+    <div id="voice-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
+        <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl p-8 max-w-md w-full text-center mx-4 relative">
+            <button onclick="stopVoiceListening()" class="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-950 hover:bg-slate-100 rounded-xl transition-all-300">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            
+            <div class="mb-6 flex justify-center">
+                <!-- Glowing Mic Indicator -->
+                <div id="voice-mic-glow" class="w-20 h-20 bg-brand-100 text-brand-500 rounded-full flex items-center justify-center text-3xl relative">
+                    <div class="absolute inset-0 rounded-full bg-brand-500/20 animate-ping"></div>
+                    <i class="fa-solid fa-microphone animate-pulse"></i>
+                </div>
+            </div>
+
+            <h3 id="voice-status-title" class="text-2xl font-extrabold text-slate-900 mb-2">Listening...</h3>
+            <p id="voice-instructions" class="text-slate-400 text-xs font-semibold mb-6">Say something like:<br><span class="text-brand-500 font-extrabold">"Order Margherita Pizza from The Pizza Palace"</span></p>
+            
+            <!-- Real-time transcript bubble -->
+            <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 min-h-[60px] flex items-center justify-center text-slate-600 font-bold italic text-sm mb-4">
+                <span id="voice-transcript">Speak now...</span>
+            </div>
+
+            <div id="voice-error-msg" class="text-red-500 text-xs font-bold hidden mb-2"></div>
+        </div>
+    </div>
+
+    <!-- Mock Payment Screen Overlay -->
+    <div id="payment-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
+        <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl p-8 max-w-md w-full mx-4">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-brand-50 text-brand-500 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="text-2xl font-black text-slate-900 tracking-tight">Secure Payment</h3>
+                <p class="text-slate-400 text-sm mt-1">Merchant: <span class="font-bold text-slate-700">HungerBites Delivery</span></p>
+            </div>
+
+            <!-- Invoice details -->
+            <div class="bg-slate-50 border border-slate-100 rounded-3xl p-5 mb-8 space-y-3">
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-slate-400 font-semibold">Ordering:</span>
+                    <span id="payment-item-name" class="font-extrabold text-slate-800">Pizza</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-slate-400 font-semibold">From:</span>
+                    <span id="payment-restaurant-name" class="font-extrabold text-slate-800">The Pizza Palace</span>
+                </div>
+                <hr class="border-slate-200/60 my-2">
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-800 font-extrabold text-base">Grand Total:</span>
+                    <span id="payment-grand-total" class="text-xl font-black text-brand-500">₹395.00</span>
+                </div>
+            </div>
+
+            <!-- Simulated Payment Processing State -->
+            <div id="payment-processing-state" class="text-center py-6">
+                <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-100 border-t-brand-500 mx-auto mb-4"></div>
+                <h4 class="font-bold text-slate-900 text-lg">Processing Transaction...</h4>
+                <p class="text-slate-400 text-xs mt-1">Please do not refresh or press back.</p>
+            </div>
+
+            <!-- Simulated Payment Success State -->
+            <div id="payment-success-state" class="text-center py-6 hidden">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h4 class="font-extrabold text-emerald-600 text-xl">Payment Successful!</h4>
+                <p class="text-slate-500 text-sm mt-1">Redirecting to order tracking...</p>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 mt-12">
@@ -770,8 +851,240 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Voice Recognition Functions
+        let recognition = null;
+
+        function initVoice() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                console.warn("Web Speech API (Speech Recognition) is not supported in this browser.");
+                return;
+            }
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+
+            recognition.onstart = () => {
+                document.getElementById('voice-transcript').innerText = "Listening...";
+                document.getElementById('voice-status-title').innerText = "Listening...";
+                document.getElementById('voice-mic-glow').querySelector('.animate-ping').classList.remove('hidden');
+                document.getElementById('voice-error-msg').classList.add('hidden');
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Speech recognition error", event.error);
+                let errorMsg = "Error: " + event.error;
+                if (event.error === 'not-allowed') {
+                    errorMsg = "Microphone access blocked. Please enable it in browser settings.";
+                }
+                document.getElementById('voice-status-title').innerText = "Error";
+                document.getElementById('voice-error-msg').innerText = errorMsg;
+                document.getElementById('voice-error-msg').classList.remove('hidden');
+                document.getElementById('voice-mic-glow').querySelector('.animate-ping').classList.add('hidden');
+            };
+
+            recognition.onend = () => {
+                document.getElementById('voice-mic-glow').querySelector('.animate-ping').classList.add('hidden');
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('voice-transcript').innerText = `"${transcript}"`;
+                speakText(`Processing: ${transcript}`);
+                
+                // Process the voice query
+                setTimeout(() => {
+                    processVoiceCommand(transcript);
+                }, 1000);
+            };
+        }
+
+        function startVoiceListening() {
+            if (!recognition) {
+                initVoice();
+            }
+            if (!recognition) {
+                alert("Speech recognition is not supported in this browser. Please use Google Chrome or Edge.");
+                return;
+            }
+            
+            // Speak guidelines to user
+            speakText("Tell me what you would like to order.");
+
+            // Reset UI
+            document.getElementById('voice-transcript').innerText = "Speak now...";
+            document.getElementById('voice-status-title').innerText = "Listening...";
+            document.getElementById('voice-error-msg').classList.add('hidden');
+            
+            // Show modal
+            document.getElementById('voice-modal').classList.remove('hidden');
+            
+            try {
+                recognition.start();
+            } catch (e) {
+                console.warn("Recognition already started or error:", e);
+            }
+        }
+
+        function stopVoiceListening() {
+            if (recognition) {
+                try {
+                    recognition.stop();
+                } catch(e) {}
+            }
+            document.getElementById('voice-modal').classList.add('hidden');
+        }
+
+        // Voice Command Parsing
+        function processVoiceCommand(text) {
+            const query = text.toLowerCase().trim();
+            console.log("Analyzing command:", query);
+
+            let matchedItem = null;
+            let matchedRestaurant = null;
+
+            // Search algorithm:
+            // 1. Scan all restaurants and dishes to match name keywords
+            for (const rest of restaurants) {
+                const restNameLower = rest.name.toLowerCase();
+                for (const item of rest.menu) {
+                    const itemNameLower = item.name.toLowerCase();
+                    
+                    // Direct item and restaurant match in query
+                    if (query.includes(itemNameLower)) {
+                        if (query.includes(restNameLower) || !matchedItem) {
+                            matchedItem = item;
+                            matchedRestaurant = rest;
+                        }
+                    }
+                }
+            }
+
+            // If we found a matching item
+            if (matchedItem && matchedRestaurant) {
+                speakText(`Perfect! Adding ${matchedItem.name} from ${matchedRestaurant.name}. Transitioning to checkout.`);
+                stopVoiceListening();
+
+                // Clear previous cart, put this new item
+                cart = [{ name: matchedItem.name, price: matchedItem.price, quantity: 1 }];
+                updateCartUI();
+
+                // Trigger payment screen
+                showPaymentScreen(matchedRestaurant, matchedItem);
+            } else {
+                // Speak error
+                speakText("Sorry, I could not match that item. Try saying: Order chicken biryani from Kolkata Biryani House.");
+                document.getElementById('voice-transcript').innerText = "Couldn't match command. Try again.";
+            }
+        }
+
+        // Voice Feedback Text-to-Speech Helper
+        function speakText(msg) {
+            if ('speechSynthesis' in window) {
+                // Cancel any ongoing speaking
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(msg);
+                utterance.rate = 1.0;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Payment Processing Screen
+        function showPaymentScreen(restaurant, item) {
+            const paymentModal = document.getElementById('payment-modal');
+            paymentModal.classList.remove('hidden');
+
+            // Setup Invoice details
+            document.getElementById('payment-item-name').innerText = item.name;
+            document.getElementById('payment-restaurant-name').innerText = restaurant.name;
+            
+            const deliveryFee = 30;
+            const tax = 15;
+            const grandTotal = item.price + deliveryFee + tax;
+            document.getElementById('payment-grand-total').innerText = `₹${grandTotal.toFixed(2)}`;
+
+            // Reset States
+            const procState = document.getElementById('payment-processing-state');
+            const succState = document.getElementById('payment-success-state');
+            procState.classList.remove('hidden');
+            succState.classList.add('hidden');
+
+            // Simulation of transaction processing
+            setTimeout(() => {
+                procState.classList.add('hidden');
+                succState.classList.remove('hidden');
+                speakText("Payment Successful. Enjoy your tracking!");
+
+                // Wait another 1.5 seconds, then transition to Tracking Page
+                setTimeout(() => {
+                    paymentModal.classList.add('hidden');
+                    
+                    // Directly place order & load tracking page
+                    placeOrderDirectly(restaurant, item, grandTotal);
+                }, 1500);
+            }, 2500);
+        }
+
+        // Direct placement for Voice Order (bypassing normal placeOrder alert)
+        function placeOrderDirectly(restaurant, item, grandTotal) {
+            // Generate order ID
+            const orderId = `#HB-${Math.floor(100000 + Math.random() * 900000)}`;
+            document.getElementById('tracking-order-id').innerText = orderId;
+
+            // Render ordered items summary in status panel
+            const itemsList = document.getElementById('tracking-items-list');
+            itemsList.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span>${item.name} <span class="text-slate-400 text-xs font-semibold">x 1</span></span>
+                    <span class="font-bold text-slate-700">₹${item.price.toFixed(2)}</span>
+                </div>
+            `;
+
+            // Hide normal website sections
+            document.getElementById('hero-section').classList.add('hidden');
+            document.getElementById('restaurants-section').classList.add('hidden');
+            document.getElementById('menu-section').classList.add('hidden');
+
+            // Reset step banner and button
+            document.getElementById('delivered-badge').classList.add('hidden');
+            document.getElementById('order-complete-actions').classList.add('hidden');
+
+            // Show and scroll to Order Tracking Panel
+            const trackingSection = document.getElementById('order-tracking-section');
+            trackingSection.classList.remove('hidden');
+            trackingSection.scrollIntoView({ behavior: 'smooth' });
+
+            // Initialize simulation steps
+            let currentStep = 0;
+            updateTrackingProgress(currentStep);
+
+            // Clear any old simulation if running
+            if (window.trackingInterval) clearInterval(window.trackingInterval);
+
+            // Start 5-second interval simulation
+            window.trackingInterval = setInterval(() => {
+                currentStep++;
+                if (currentStep <= 3) {
+                    updateTrackingProgress(currentStep);
+                } else {
+                    clearInterval(window.trackingInterval);
+                    // Show completion actions
+                    document.getElementById('delivered-badge').classList.remove('hidden');
+                    document.getElementById('order-complete-actions').classList.remove('hidden');
+                }
+            }, 5000);
+
+            // Reset Cart badge/data
+            cart = [];
+            updateCartUI();
+        }
+
         // On Page Load
-        window.addEventListener('DOMContentLoaded', fetchRestaurants);
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchRestaurants();
+            initVoice();
+        });
     </script>
 </body>
 </html>
