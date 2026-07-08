@@ -968,40 +968,73 @@
             const query = text.toLowerCase().trim();
             console.log("Analyzing command:", query);
 
-            let matchedItem = null;
-            let matchedRestaurant = null;
+            let bestMatch = null;
+            let highestScore = 0;
 
-            // Search algorithm:
-            // 1. Scan all restaurants and dishes to match name keywords
             for (const rest of restaurants) {
                 const restNameLower = rest.name.toLowerCase();
+                
+                // Calculate restaurant match score
+                let restScore = 0;
+                // If query contains the full restaurant name, high score
+                if (query.includes(restNameLower)) {
+                    restScore += 100;
+                } else {
+                    // Check if words of the restaurant name are in the query
+                    const restWords = restNameLower.split(/\s+/);
+                    restWords.forEach(word => {
+                        if (word.length > 2 && query.includes(word)) {
+                            restScore += 30; // e.g. "kolkata" matches "kolkata biryani house"
+                        }
+                    });
+                }
+
                 for (const item of rest.menu) {
                     const itemNameLower = item.name.toLowerCase();
-                    
-                    // Direct item and restaurant match in query
+                    let itemScore = 0;
+
+                    // If query contains the exact item name, high score
                     if (query.includes(itemNameLower)) {
-                        if (query.includes(restNameLower) || !matchedItem) {
-                            matchedItem = item;
-                            matchedRestaurant = rest;
-                        }
+                        itemScore += 150;
+                    } else {
+                        // Check word overlap for the item name
+                        const itemWords = itemNameLower.split(/\s+/);
+                        itemWords.forEach(word => {
+                            if (word.length > 2 && query.includes(word)) {
+                                itemScore += 40; // e.g. "biryani" matches "chicken biryani"
+                            }
+                        });
+                    }
+
+                    // Total score is item score + restaurant score bonus
+                    // Only apply restaurant bonus if the item itself was matched at all
+                    let totalScore = itemScore;
+                    if (itemScore > 0) {
+                        totalScore += restScore;
+                    }
+
+                    if (totalScore > highestScore) {
+                        highestScore = totalScore;
+                        bestMatch = { restaurant: rest, item: item };
                     }
                 }
             }
 
-            // If we found a matching item
-            if (matchedItem && matchedRestaurant) {
-                speakText(`Perfect! Adding ${matchedItem.name} from ${matchedRestaurant.name}. Transitioning to checkout.`);
+            // If we found a matching item with a significant score
+            if (bestMatch && highestScore >= 30) {
+                const { restaurant, item } = bestMatch;
+                speakText(`Perfect! Adding ${item.name} from ${restaurant.name}. Transitioning to checkout.`);
                 stopVoiceListening();
 
                 // Clear previous cart, put this new item
-                cart = [{ name: matchedItem.name, price: matchedItem.price, quantity: 1 }];
+                cart = [{ name: item.name, price: item.price, quantity: 1 }];
                 updateCartUI();
 
                 // Trigger payment screen
-                showPaymentScreen(matchedRestaurant, matchedItem);
+                showPaymentScreen(restaurant, item);
             } else {
                 // Speak error
-                speakText("Sorry, I could not match that item. Try saying: Order chicken biryani from Kolkata Biryani House.");
+                speakText("Sorry, I could not match that dish. Please try saying it again clearly.");
                 document.getElementById('voice-transcript').innerText = "Couldn't match command. Try again.";
             }
         }
