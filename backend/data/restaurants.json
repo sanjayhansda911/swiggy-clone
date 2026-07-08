@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "name": "Kolkata Biryani House",
+    "rating": 4.5,
+    "menu": [
+      {
+        "name": "Chicken Biryani",
+        "price": 280.00,
+        "description": "Fragrant basmati rice cooked with succulent chicken, spiced potato, and a boiled egg, infused with saffron and subtle spices."
+      },
+      {
+        "name": "Mutton Rezala",
+        "price": 320.00,
+        "description": "A classic Mughlai dish featuring tender mutton simmered in a rich, yogurt-based gravy with cashew paste and aromatic spices."
+      },
+      {
+        "name": "Phirni",
+        "price": 90.00,
+        "description": "Creamy rice pudding flavored with green cardamom, saffron, and pistachios, served chilled in a traditional earthen pot."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "The Pizza Palace",
+    "rating": 4.3,
+    "menu": [
+      {
+        "name": "Margherita Pizza",
+        "price": 350.00,
+        "description": "Classic sourdough base topped with rich tomato sauce, fresh mozzarella cheese, fresh basil leaves, and a drizzle of extra virgin olive oil."
+      },
+      {
+        "name": "Pepperoni Feast",
+        "price": 480.00,
+        "description": "Loaded with double portions of premium pepperoni and mozzarella on a hand-tossed thin crust."
+      },
+      {
+        "name": "Garlic Breadsticks",
+        "price": 150.00,
+        "description": "Warm, oven-baked breadsticks brushed with garlic butter and herbs, served with a creamy cheese dip."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Southern Spice",
+    "rating": 4.6,
+    "menu": [
+      {
+        "name": "Masala Dosa",
+        "price": 120.00,
+        "description": "Crispy fermented rice crepe filled with a savory potato masala, served with coconut chutney and piping hot sambar."
+      },
+      {
+        "name": "Chicken Chettinad",
+        "price": 300.00,
+        "description": "A fiery South Indian chicken curry cooked with fresh-ground coconut and roasted Chettinad spices."
+      },
+      {
+        "name": "Filter Coffee",
+        "price": 60.00,
+        "description": "Traditional South Indian drip-brewed chicory coffee mixed with frothed hot milk, served in a brass tumbler."
+      }
+    ]
+  }
+]
