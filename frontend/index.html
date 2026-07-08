@@ -392,51 +392,78 @@
           }
         ];
 
-        // Fetch restaurants from Backend API when page loads
+        // Fetch restaurants from Backend API, falling back to static JSON or hardcoded mock data
         async function fetchRestaurants() {
             // Check if page is loaded locally via file:// protocol
             if (window.location.protocol === 'file:') {
-                console.log('Running locally via file:// protocol. Using mock restaurants data.');
+                console.log('Running locally via file:// protocol. Using mock fallback data.');
                 restaurants = fallbackRestaurants;
-                // Add a small badge showing we are in mock mode
-                showMockBanner();
+                showMockBanner('Running in Offline Fallback Mode');
                 renderRestaurants();
                 return;
             }
 
+            // Tier 1: Try Flask Backend API
             try {
                 const response = await fetch('/api/restaurants');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch restaurants data');
+                if (response.ok) {
+                    restaurants = await response.json();
+                    renderRestaurants();
+                    return;
                 }
-                restaurants = await response.json();
-                renderRestaurants();
-            } catch (error) {
-                console.error('Error fetching restaurants, falling back to mock data:', error);
-                restaurants = fallbackRestaurants;
-                showMockBanner();
-                renderRestaurants();
+                throw new Error('Flask API unavailable');
+            } catch (apiError) {
+                console.log('Flask API unavailable, trying Tier 2 (static JSON file)...');
             }
+
+            // Tier 2: Try fetching static JSON from the frontend folder (Vercel/static host support)
+            try {
+                const response = await fetch('./data/restaurants.json');
+                if (response.ok) {
+                    restaurants = await response.json();
+                    showMockBanner('Running in Shared Static Database Mode');
+                    renderRestaurants();
+                    return;
+                }
+                throw new Error('Static JSON file unavailable');
+            } catch (staticError) {
+                console.error('Static JSON file unavailable, falling back to Tier 3...', staticError);
+            }
+
+            // Tier 3: Hardcoded local fallback (last resort)
+            restaurants = fallbackRestaurants;
+            showMockBanner('Running in Offline Fallback Mode');
+            renderRestaurants();
         }
 
-        function showMockBanner() {
+        function showMockBanner(message) {
             // Create a small, elegant toast to inform that local data is active
+            // Remove any existing banners first
+            const existingBanners = document.querySelectorAll('.mock-banner');
+            existingBanners.forEach(b => b.remove());
+
             const banner = document.createElement('div');
-            banner.className = 'fixed bottom-4 left-4 z-50 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2 font-semibold border border-slate-800 animate-bounce';
+            banner.className = 'mock-banner fixed bottom-4 left-4 z-50 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2 font-semibold border border-slate-800 animate-bounce';
             banner.innerHTML = `
                 <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
-                <span>Running in Mock Database Mode</span>
+                <span>${message}</span>
             `;
             document.body.appendChild(banner);
         }
 
-
-        // Restaurant Mock Images (Mapping for beautiful cards)
-        const restaurantImages = {
-            1: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=80", // Biryani
-            2: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&auto=format&fit=crop&q=80", // Pizza
-            3: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=500&auto=format&fit=crop&q=80"  // Dosa
-        };
+        // Restaurant Mock Images (Vibrant food categories cycling deterministically)
+        const foodImages = [
+            "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=80", // Biryani
+            "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&auto=format&fit=crop&q=80", // Pizza
+            "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=500&auto=format&fit=crop&q=80", // Dosa
+            "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&auto=format&fit=crop&q=80", // Burger
+            "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500&auto=format&fit=crop&q=80", // Noodles/Chinese
+            "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=500&auto=format&fit=crop&q=80", // Curry/Punjab
+            "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=500&auto=format&fit=crop&q=80", // Donut/Dessert
+            "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&auto=format&fit=crop&q=80", // Coffee
+            "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?w=500&auto=format&fit=crop&q=80", // Samosa/Chaat
+            "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500&auto=format&fit=crop&q=80"  // Sushi
+        ];
 
         // Render restaurants in grid
         function renderRestaurants() {
@@ -448,7 +475,7 @@
             grid.classList.remove('hidden');
 
             restaurants.forEach(rest => {
-                const imgUrl = restaurantImages[rest.id] || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=80";
+                const imgUrl = foodImages[(rest.id - 1) % foodImages.length];
                 
                 const card = `
                     <div class="bg-white rounded-[2rem] border border-slate-100 hover:border-brand-100 shadow-sm hover:shadow-xl hover:shadow-brand-500/5 overflow-hidden transition-all-300 transform hover:-translate-y-1.5 flex flex-col group">

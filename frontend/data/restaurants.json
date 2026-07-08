@@ -1,0 +1,702 @@
+[
+  {
+    "id": 1,
+    "name": "Kolkata Biryani House",
+    "rating": 4.5,
+    "menu": [
+      { "name": "Chicken Biryani", "price": 280.00, "description": "Fragrant basmati rice cooked with chicken, potato, and egg." },
+      { "name": "Mutton Rezala", "price": 320.00, "description": "Tender mutton simmered in a rich, yogurt-based cashew gravy." },
+      { "name": "Mutton Kosha", "price": 350.00, "description": "Slow-cooked mutton in a rich, spicy traditional gravy." },
+      { "name": "Chicken Tikka", "price": 220.00, "description": "Spicy marinated chicken chunks grilled in a tandoor." },
+      { "name": "Garlic Naan", "price": 60.00, "description": "Soft flatbread brushed with minced garlic and butter." },
+      { "name": "Phirni", "price": 90.00, "description": "Creamy chilled rice pudding flavored with saffron." },
+      { "name": "Shahi Tukda", "price": 100.00, "description": "Rich bread pudding soaked in rabri with nuts." }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "The Pizza Palace",
+    "rating": 4.3,
+    "menu": [
+      { "name": "Margherita Pizza", "price": 350.00, "description": "Tomato sauce, fresh mozzarella cheese, and fresh basil." },
+      { "name": "Pepperoni Feast", "price": 480.00, "description": "Beef pepperoni and mozzarella on a hand-tossed crust." },
+      { "name": "Veggie Supreme", "price": 420.00, "description": "Onions, bell peppers, mushrooms, olives, and sweet corn." },
+      { "name": "Garlic Breadsticks", "price": 150.00, "description": "Baked breadsticks brushed with garlic butter and herbs." },
+      { "name": "Stuffed Garlic Bread", "price": 190.00, "description": "Garlic bread filled with sweet corn and melted cheese." },
+      { "name": "Choco Lava Cake", "price": 120.00, "description": "Chocolate cake with a warm, gooey molten chocolate center." },
+      { "name": "Cheesy Dip", "price": 40.00, "description": "Creamy cheddar cheese dip for breadsticks." }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Southern Spice",
+    "rating": 4.6,
+    "menu": [
+      { "name": "Masala Dosa", "price": 120.00, "description": "Crispy crepe filled with potato masala, served with sambar." },
+      { "name": "Idli Sambar (2 Pcs)", "price": 80.00, "description": "Steamed rice cakes served with sambar and coconut chutney." },
+      { "name": "Rava Dosa", "price": 130.00, "description": "Crispy semolina crepe with onions and green chilies." },
+      { "name": "Medu Vada (2 Pcs)", "price": 90.00, "description": "Deep-fried lentil donuts, crispy outside and soft inside." },
+      { "name": "Chicken Chettinad", "price": 300.00, "description": "Spicy South Indian chicken curry cooked with ground coconut." },
+      { "name": "Malabar Parotta", "price": 40.00, "description": "Flaky, layered refined flour flatbread." },
+      { "name": "Filter Coffee", "price": 60.00, "description": "Traditional South Indian drip-brewed chicory coffee." }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Royal Punjab",
+    "rating": 4.7,
+    "menu": [
+      { "name": "Butter Chicken", "price": 320.00, "description": "Tandoori chicken in a creamy, mildly sweet tomato gravy." },
+      { "name": "Paneer Butter Masala", "price": 280.00, "description": "Cottage cheese cubes in a rich tomato-cashew gravy." },
+      { "name": "Dal Makhani", "price": 240.00, "description": "Slow-cooked black lentils with cream and butter." },
+      { "name": "Tandoori Roti", "price": 30.00, "description": "Whole wheat bread baked in a clay oven." },
+      { "name": "Kadhai Paneer", "price": 290.00, "description": "Paneer cooked with bell peppers in a spicy kadhai gravy." },
+      { "name": "Sweet Lassi", "price": 90.00, "description": "Traditional yogurt drink flavored with cardamom." },
+      { "name": "Gulab Jamun (2 Pcs)", "price": 70.00, "description": "Fried milk solids balls soaked in sugar syrup." }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Sichuan Express",
+    "rating": 4.2,
+    "menu": [
+      { "name": "Veg Hakka Noodles", "price": 180.00, "description": "Wok-tossed noodles with colorful vegetables and soy sauce." },
+      { "name": "Chicken Manchurian", "price": 260.00, "description": "Chicken dumplings in a savory, tangy Manchurian sauce." },
+      { "name": "Chilli Chicken", "price": 270.00, "description": "Diced chicken tossed with bell peppers and green chilies." },
+      { "name": "Veg Fried Rice", "price": 170.00, "description": "Fluffy rice wok-tossed with finely chopped vegetables." },
+      { "name": "Spring Rolls (4 Pcs)", "price": 130.00, "description": "Crispy wrappers filled with spiced vegetables." },
+      { "name": "Hot & Sour Soup", "price": 110.00, "description": "Spicy and tangy vegetable broth with mushrooms." },
+      { "name": "Manchow Soup", "price": 120.00, "description": "Thick soy-based soup topped with crispy noodles." }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Burger Lab",
+    "rating": 4.4,
+    "menu": [
+      { "name": "Classic Cheese Burger", "price": 160.00, "description": "Beef patty, melted cheddar cheese, lettuce, and pickles." },
+      { "name": "Crispy Chicken Burger", "price": 180.00, "description": "Crispy chicken breast, mayo, and shredded lettuce." },
+      { "name": "Spicy Paneer Burger", "price": 170.00, "description": "Spiced paneer patty with tandoori sauce and onions." },
+      { "name": "French Fries", "price": 90.00, "description": "Crispy golden salted potato fries." },
+      { "name": "Loaded Nachos", "price": 150.00, "description": "Corn tortilla chips topped with cheese and jalapeños." },
+      { "name": "Onion Rings", "price": 100.00, "description": "Crispy deep-fried battered onion rings." },
+      { "name": "Vanilla Milkshake", "price": 130.00, "description": "Creamy milkshake made with vanilla ice cream." }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Sweet Sensations",
+    "rating": 4.8,
+    "menu": [
+      { "name": "Death by Chocolate", "price": 220.00, "description": "Layers of chocolate cake, ice cream, fudge, and cherries." },
+      { "name": "Mango Cheesecake", "price": 180.00, "description": "Creamy cheesecake topped with fresh mango pulp." },
+      { "name": "Red Velvet Cupcake", "price": 80.00, "description": "Soft red velvet cupcake topped with cream cheese frosting." },
+      { "name": "Brownie with Ice Cream", "price": 150.00, "description": "Warm chocolate brownie served with vanilla ice cream." },
+      { "name": "Apple Pie", "price": 160.00, "description": "Traditional baked apple pie with a flaky crust." },
+      { "name": "Blueberry Muffin", "price": 90.00, "description": "Freshly baked muffin bursting with sweet blueberries." },
+      { "name": "Macarons (Box of 4)", "price": 240.00, "description": "Assorted French almond macarons with creamy fillings." }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Cafe Coffee Day",
+    "rating": 4.1,
+    "menu": [
+      { "name": "Cappuccino", "price": 140.00, "description": "Espresso shot with steamed milk and thick foam layer." },
+      { "name": "Cafe Latte", "price": 150.00, "description": "Espresso mixed with plenty of hot steamed milk." },
+      { "name": "Cold Coffee", "price": 160.00, "description": "Chilled blended milk, espresso, and sugar syrup." },
+      { "name": "Hot Chocolate", "price": 170.00, "description": "Creamy cocoa blended with steamed milk and cream." },
+      { "name": "Paneer Tikka Sandwich", "price": 150.00, "description": "Grilled sandwich with tandoori paneer filling." },
+      { "name": "Chicken Club Sandwich", "price": 180.00, "description": "Double-decker sandwich with chicken, egg, and veggies." },
+      { "name": "Banana Walnut Cake", "price": 90.00, "description": "Slice of moist banana bread loaded with walnuts." }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Street Treat",
+    "rating": 4.3,
+    "menu": [
+      { "name": "Pani Puri (6 Pcs)", "price": 60.00, "description": "Crispy hollow puris filled with potatoes and spiced water." },
+      { "name": "Papdi Chaat", "price": 90.00, "description": "Puris topped with potatoes, yogurt, chutneys, and sev." },
+      { "name": "Samosa Chaat", "price": 100.00, "description": "Crushed samosas topped with spicy chickpeas and yogurt." },
+      { "name": "Aloo Tikki Chaat", "price": 95.00, "description": "Pan-fried potato patties topped with chickpeas and chutneys." },
+      { "name": "Dahi Vada", "price": 85.00, "description": "Lentil dumplings soaked in sweet and spiced yogurt." },
+      { "name": "Pav Bhaji", "price": 120.00, "description": "Spicy mashed vegetable curry served with buttered pav." },
+      { "name": "Masala Chai", "price": 30.00, "description": "Brewed black tea infused with ginger and cardamom." }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Tandoori Nights",
+    "rating": 4.6,
+    "menu": [
+      { "name": "Tandoori Chicken (Half)", "price": 280.00, "description": "Chicken marinated in yogurt and spices, roasted in clay oven." },
+      { "name": "Paneer Tikka Achari", "price": 240.00, "description": "Paneer cubes with a tangy pickling spice marinade." },
+      { "name": "Chicken Malai Tikka", "price": 270.00, "description": "Chicken chunks grilled in a creamy cheese marinade." },
+      { "name": "Butter Naan", "price": 50.00, "description": "Soft flatbread baked in tandoor and buttered." },
+      { "name": "Kadhai Veg", "price": 220.00, "description": "Mixed vegetables cooked in a spicy tandoor-style gravy." },
+      { "name": "Dal Tadka", "price": 180.00, "description": "Yellow lentils tempered with cumin, garlic, and chilies." },
+      { "name": "Jeera Rice", "price": 140.00, "description": "Basmati rice cooked with cumin seeds and ghee." }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Wok & Roll",
+    "rating": 4.3,
+    "menu": [
+      { "name": "Veg Momos (6 Pcs)", "price": 100.00, "description": "Steamed dumplings stuffed with finely minced vegetables." },
+      { "name": "Chicken Momos (6 Pcs)", "price": 130.00, "description": "Steamed dumplings filled with juicy minced chicken." },
+      { "name": "Veg Fried Noodles", "price": 160.00, "description": "Noodles stir-fried with vegetables and light soy sauce." },
+      { "name": "Schezwan Chicken", "price": 260.00, "description": "Chicken cooked in a fiery, garlic-heavy Schezwan sauce." },
+      { "name": "Kung Pao Veg", "price": 230.00, "description": "Diced vegetables tossed with peanuts and dried red chilies." },
+      { "name": "Sweet & Sour Paneer", "price": 240.00, "description": "Paneer cooked with pineapple and bell peppers in sweet sauce." },
+      { "name": "Darsaan with Ice Cream", "price": 120.00, "description": "Crispy honey noodles served with vanilla ice cream." }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Pizza Craft",
+    "rating": 4.4,
+    "menu": [
+      { "name": "Classic Farmhouse", "price": 390.00, "description": "Mushrooms, onions, bell peppers, tomatoes, and extra cheese." },
+      { "name": "Tandoori Paneer Pizza", "price": 420.00, "description": "Paneer tikka slices, onions, capsicum, and spicy red sauce." },
+      { "name": "Spicy Chicken Sausage", "price": 450.00, "description": "Sausage pieces, red paprika, onions, and jalapeños." },
+      { "name": "Garlic Cheese Toast", "price": 130.00, "description": "Toasted bread topped with garlic butter and melted cheese." },
+      { "name": "Penne Arrabbiata", "price": 250.00, "description": "Pasta in a spicy tomato sauce with olives and garlic." },
+      { "name": "Penne Alfredo", "price": 270.00, "description": "Pasta in a creamy cheese and butter white sauce." },
+      { "name": "Tiramisu Cup", "price": 150.00, "description": "Coffee-flavored Italian dessert with mascarpone cheese." }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Madras Cafe",
+    "rating": 4.5,
+    "menu": [
+      { "name": "Onion Uttapam", "price": 110.00, "description": "Thick rice pancake topped with chopped onions and coriander." },
+      { "name": "Plain Dosa", "price": 90.00, "description": "Thin, golden, crispy crepe served with chutney and sambar." },
+      { "name": "Cheese Mysore Masala Dosa", "price": 160.00, "description": "Spicy masala dosa lined with cheese and garlic chutney." },
+      { "name": "Sambar Vada (2 Pcs)", "price": 90.00, "description": "Fried lentil donuts soaked in spicy hot sambar." },
+      { "name": "Lemon Rice", "price": 120.00, "description": "Tangy rice flavored with lemon juice, peanuts, and curry leaves." },
+      { "name": "Kesari Bath", "price": 80.00, "description": "Sweet semolina pudding cooked with ghee and raisins." },
+      { "name": "Buttermilk", "price": 40.00, "description": "Salted yogurt drink diluted with water and spiced." }
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Mughal Sheraton",
+    "rating": 4.6,
+    "menu": [
+      { "name": "Mutton Korma", "price": 360.00, "description": "Rich Mughlai mutton stew cooked with yogurt and spices." },
+      { "name": "Chicken Jahangiri", "price": 310.00, "description": "Chicken in a rich, velvety brown onion and nut gravy." },
+      { "name": "Paneer Pasanda", "price": 270.00, "description": "Stuffed paneer sandwiches fried and simmered in onion gravy." },
+      { "name": "Khamiri Roti", "price": 40.00, "description": "Thick, leavened flatbread baked in a tandoor." },
+      { "name": "Murgh Pulao", "price": 260.00, "description": "Mildly spiced basmati rice cooked with chicken pieces." },
+      { "name": "Zafrani Kheer", "price": 90.00, "description": "Rich saffron rice pudding slow-cooked in sweetened milk." },
+      { "name": "Sufi Lassi", "price": 100.00, "description": "Yogurt drink scented with rose water and topped with almonds." }
+    ]
+  },
+  {
+    "id": 15,
+    "name": "The Grill House",
+    "rating": 4.3,
+    "menu": [
+      { "name": "BBQ Chicken Wings", "price": 240.00, "description": "Fried chicken wings tossed in smoky barbecue sauce." },
+      { "name": "Grilled Chicken Breast", "price": 290.00, "description": "Served with mashed potatoes and garlic sautéed vegetables." },
+      { "name": "Double Patty Hamburger", "price": 220.00, "description": "Two beef patties with lettuce, tomato, and special sauce." },
+      { "name": "Fish and Chips", "price": 320.00, "description": "Batter-fried fish fillet served with tartar sauce and fries." },
+      { "name": "Veg Quesadilla", "price": 180.00, "description": "Tortilla folded with cheese, sweet corn, and bell peppers." },
+      { "name": "Potato Wedges", "price": 110.00, "description": "Seasoned baked potato wedges served with sweet chilli dip." },
+      { "name": "Strawberry Shake", "price": 140.00, "description": "Blend of fresh strawberry syrup and milk ice cream." }
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Bakers Fresh",
+    "rating": 4.5,
+    "menu": [
+      { "name": "Chocolate Croissant", "price": 90.00, "description": "Flaky French pastry filled with rich dark chocolate." },
+      { "name": "Butter Croissant", "price": 70.00, "description": "Warm, buttery, flaky crescent-shaped pastry." },
+      { "name": "Paneer Puff", "price": 60.00, "description": "Layered puff pastry filled with spiced cottage cheese." },
+      { "name": "Chicken Tikka Puff", "price": 75.00, "description": "Flaky puff pastry stuffed with shredded chicken tikka." },
+      { "name": "Assorted Donuts (Box of 3)", "price": 180.00, "description": "One chocolate glaze, one strawberry sprinkles, one caramel." },
+      { "name": "Pineapple Pastry", "price": 90.00, "description": "Sponge cake layer iced with whipped cream and pineapple." },
+      { "name": "Iced Lemon Tea", "price": 80.00, "description": "Refreshing iced tea brewed with real black tea and fresh lemon." }
+    ]
+  },
+  {
+    "id": 17,
+    "name": "Chai Point",
+    "rating": 4.2,
+    "menu": [
+      { "name": "Elaichi Chai Flask", "price": 120.00, "description": "Aromatic milk tea flavored with cardamom, serves 2-3." },
+      { "name": "Ginger Chai Flask", "price": 120.00, "description": "Strong milk tea infused with real crushed ginger, serves 2-3." },
+      { "name": "Samosa (2 Pcs)", "price": 50.00, "description": "Crispy pastries stuffed with spiced potatoes and peas." },
+      { "name": "Bun Maska", "price": 60.00, "description": "Soft sweet bun sliced and layered with heavy butter." },
+      { "name": "Bread Omlette", "price": 90.00, "description": "Classic double egg omelette toasted inside buttered bread." },
+      { "name": "Maska Khari (6 Pcs)", "price": 50.00, "description": "Crispy baked puff pastry biscuits seasoned with salt." },
+      { "name": "Poha", "price": 90.00, "description": "Flattened rice cooked with turmeric, peanuts, and curry leaves." }
+    ]
+  },
+  {
+    "id": 18,
+    "name": "Chaat Bazaar",
+    "rating": 4.4,
+    "menu": [
+      { "name": "Dahi Puri (6 Pcs)", "price": 90.00, "description": "Puris filled with boiled potatoes, yogurt, chutneys, and sev." },
+      { "name": "Sev Puri", "price": 80.00, "description": "Flat puris topped with onions, potatoes, chutneys, and lots of sev." },
+      { "name": "Raj Kachori", "price": 130.00, "description": "Large crispy shell filled with lentils, yogurt, and chutneys." },
+      { "name": "Bhel Puri", "price": 70.00, "description": "Puffed rice tossed with onions, tomatoes, and tangy tamarind." },
+      { "name": "Chole Bhature (2 Pcs)", "price": 150.00, "description": "Spicy chickpea curry served with large puffed fried breads." },
+      { "name": "Aloo Tikki Burger", "price": 80.00, "description": "Desi burger with potato patty and sweet tamarind sauce." },
+      { "name": "Kulfi Falooda", "price": 110.00, "description": "Creamy saffron kulfi served with vermicelli and rose syrup." }
+    ]
+  },
+  {
+    "id": 19,
+    "name": "Kebabs & Kurries",
+    "rating": 4.7,
+    "menu": [
+      { "name": "Galouti Kebab (4 Pcs)", "price": 320.00, "description": "Melt-in-mouth minced mutton kebabs Lucknowi style." },
+      { "name": "Seekh Kebab Chicken", "price": 280.00, "description": "Spiced chicken mince skewered and roasted over open fire." },
+      { "name": "Paneer Hariyali Tikka", "price": 240.00, "description": "Paneer blocks grilled in fresh mint and coriander marinade." },
+      { "name": "Rumali Roti", "price": 40.00, "description": "Paper-thin soft wheat flatbread." },
+      { "name": "Chicken Lababdar", "price": 310.00, "description": "Chicken in a rich gravy made of onion, tomato, and cream." },
+      { "name": "Dal Panchmel", "price": 200.00, "description": "Five varieties of lentils tempered with garlic and cumin." },
+      { "name": "Matka Biryani Veg", "price": 250.00, "description": "Slow-cooked seasonal vegetables and rice in clay pot." }
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Dragon Wok",
+    "rating": 4.1,
+    "menu": [
+      { "name": "Chicken Drumsticks", "price": 260.00, "description": "Crispy chicken lollipop tossed in sweet and hot sauce." },
+      { "name": "Veg Fried Rice Schezwan", "price": 180.00, "description": "Rice wok-tossed with vegetable mix in spicy Schezwan paste." },
+      { "name": "Chicken Hakka Noodles", "price": 210.00, "description": "Egg noodles wok-tossed with chicken strips and onions." },
+      { "name": "Paneer Chilli Gravy", "price": 240.00, "description": "Cottage cheese chunks in a thick, dark, spicy soy sauce." },
+      { "name": "Veg Manchurian Dry", "price": 200.00, "description": "Deep-fried veggie balls tossed in ginger, garlic, and soy." },
+      { "name": "Kimchi Salad", "price": 80.00, "description": "Korean fermented cabbage salad spiced with chili powder." },
+      { "name": "Honey Chilli Potato", "price": 170.00, "description": "Crispy potato fingers tossed in honey and chili sauce." }
+    ]
+  },
+  {
+    "id": 21,
+    "name": "Pasta Fresca",
+    "rating": 4.3,
+    "menu": [
+      { "name": "Spaghetti Carbonara", "price": 290.00, "description": "Classic egg yolk, cheese, black pepper, and chicken bacon." },
+      { "name": "Pesto Penne Pasta", "price": 270.00, "description": "Pasta tossed in fresh basil, pine nut, garlic, and olive oil." },
+      { "name": "Four Cheese Lasagna", "price": 320.00, "description": "Baked pasta sheets layered with ricotta, mozzarella, and gouda." },
+      { "name": "Minestrone Soup", "price": 120.00, "description": "Healthy classic Italian vegetable soup with beans." },
+      { "name": "Bruschetta (3 Pcs)", "price": 140.00, "description": "Toasted bread topped with tomatoes, garlic, and olive oil." },
+      { "name": "Caesar Salad Chicken", "price": 210.00, "description": "Lettuce, chicken strips, croutons, and creamy Caesar dressing." },
+      { "name": "Panna Cotta", "price": 130.00, "description": "Vanilla cream gelatin dessert served with raspberry coulis." }
+    ]
+  },
+  {
+    "id": 22,
+    "name": "Udupi Vihar",
+    "rating": 4.4,
+    "menu": [
+      { "name": "Ghee Roast Dosa", "price": 140.00, "description": "Paper thin dosa roasted with pure clarified butter (ghee)." },
+      { "name": "Onion Rava Dosa", "price": 130.00, "description": "Crispy semolina dosa mixed with chopped raw onions." },
+      { "name": "Vada sambar (2 Pcs)", "price": 95.00, "description": "Savory fried donuts served with coconut chutney." },
+      { "name": "Dahi Vada (2 Pcs)", "price": 100.00, "description": "Lentil donuts soaked in cool yogurt and sweet tamarind." },
+      { "name": "Bisi Bele Bath", "price": 120.00, "description": "Traditional hot rice, lentil, and vegetable mash with spices." },
+      { "name": "Upma", "price": 80.00, "description": "Savory semolina porridge made with mustard seeds and curry leaves." },
+      { "name": "Filter Coffee Double Shot", "price": 80.00, "description": "Strong South Indian drip coffee served in traditional container." }
+    ]
+  },
+  {
+    "id": 23,
+    "name": "Sher-e-Punjab",
+    "rating": 4.6,
+    "menu": [
+      { "name": "Tandoori Chicken Full", "price": 490.00, "description": "Full chicken spiced and roasted over tandoor charcoal fire." },
+      { "name": "Kadhai Chicken", "price": 310.00, "description": "Chicken cooked with fresh ground coriander seeds and capsicum." },
+      { "name": "Paneer Tikka Masala", "price": 290.00, "description": "Tandoori paneer slices cooked in thick tomato gravy." },
+      { "name": "Laccha Paratha", "price": 50.00, "description": "Layered and crispy wheat flatbread roasted on tawa." },
+      { "name": "Yellow Dal Fry", "price": 190.00, "description": "Yellow lentils cooked with chopped tomatoes, onion, and spices." },
+      { "name": "Malai Kofta", "price": 280.00, "description": "Soft potato and paneer balls in mild creamy cashew gravy." },
+      { "name": "Salty Lassi", "price": 80.00, "description": "Refreshing buttermilk drink seasoned with roasted cumin powder." }
+    ]
+  },
+  {
+    "id": 24,
+    "name": "Fry & Cry",
+    "rating": 4.2,
+    "menu": [
+      { "name": "Hot Crispy Fried Chicken", "price": 250.00, "description": "Spicy and golden battered chicken thighs, 2 pieces." },
+      { "name": "Popcorn Chicken (Box)", "price": 160.00, "description": "Bite-sized crispy fried chicken nuggets with garlic dip." },
+      { "name": "Cheese Fries", "price": 130.00, "description": "Fries loaded with cheese sauce and jalapeño slices." },
+      { "name": "Chicken Zinger Burger", "price": 190.00, "description": "Juicy fried chicken breast burger with lettuce and spicy mayo." },
+      { "name": "Veg Patty Burger", "price": 140.00, "description": "Simple burger with fried potato patty, cheese, and onion." },
+      { "name": "Cheese Balls (6 Pcs)", "price": 110.00, "description": "Fried breaded balls filled with mozzarella and cheddar." },
+      { "name": "Coca Cola Can", "price": 40.00, "description": "330 ml can of chilled classic carbonated cola." }
+    ]
+  },
+  {
+    "id": 25,
+    "name": "Cream & Fudge",
+    "rating": 4.7,
+    "menu": [
+      { "name": "Chocolate Overdose", "price": 230.00, "description": "Double chocolate ice cream mixed with fudge, brownie, and chips." },
+      { "name": "Cookie Dough Delight", "price": 190.00, "description": "Vanilla ice cream mixed with chocolate chip cookie dough." },
+      { "name": "Strawberry Cheesecake", "price": 200.00, "description": "Cheesecake ice cream mixed with strawberry toppings and graham." },
+      { "name": "Pista Kulfi Scoop", "price": 90.00, "description": "Creamy Indian ice cream with pistachios and almond shavings." },
+      { "name": "Hot Fudge Sundae", "price": 160.00, "description": "Two scoops of vanilla ice cream topped with hot chocolate fudge." },
+      { "name": "Belgian Waffle Cone", "price": 50.00, "description": "Freshly baked sweet waffle cone for ice cream scoops." },
+      { "name": "Cold Oreo Shake", "price": 160.00, "description": "Thick milkshake blended with Oreo cookies and chocolate syrup." }
+    ]
+  },
+  {
+    "id": 26,
+    "name": "Brew & Bite",
+    "rating": 4.3,
+    "menu": [
+      { "name": "Mocha Frappe", "price": 170.00, "description": "Cold blended coffee with dark chocolate syrup and cream." },
+      { "name": "Americano", "price": 110.00, "description": "Double espresso shot diluted with hot water." },
+      { "name": "Paneer Tikka Croissant", "price": 130.00, "description": "Croissant baked with paneer tikka filling." },
+      { "name": "Pesto Veg Sandwich", "price": 140.00, "description": "Fresh vegetables, pesto sauce, and mozzarella in brown bread." },
+      { "name": "Blueberry Cheesecake Slice", "price": 180.00, "description": "Slice of cold-set cheesecake with blueberry sauce overlay." },
+      { "name": "Affogato", "price": 120.00, "description": "Vanilla ice cream scoop topped with a hot double espresso shot." },
+      { "name": "Green Tea", "price": 90.00, "description": "Light, antioxidant-rich hot organic green tea." }
+    ]
+  },
+  {
+    "id": 27,
+    "name": "Lassi Shop",
+    "rating": 4.1,
+    "menu": [
+      { "name": "Mango Lassi", "price": 90.00, "description": "Yogurt drink blended with Alphonso mango pulp." },
+      { "name": "Kesar Pista Lassi", "price": 100.00, "description": "Yogurt drink flavored with saffron and crushed pistachios." },
+      { "name": "Rose Milk", "price": 70.00, "description": "Chilled milk flavored with rose syrup and sweet basil seeds." },
+      { "name": "Badam Milk", "price": 80.00, "description": "Sweet milk cooked with crushed almonds and saffron, chilled." },
+      { "name": "Veg Grilled Sandwich", "price": 110.00, "description": "Toasted sandwich loaded with potatoes, cucumber, and cheese." },
+      { "name": "Corn and Cheese Toast", "price": 120.00, "description": "Open sandwich topped with sweet corn kernels and mozzarella." },
+      { "name": "Fruit Salad with Ice Cream", "price": 130.00, "description": "Assorted fresh seasonal fruits served with vanilla scoop." }
+    ]
+  },
+  {
+    "id": 28,
+    "name": "Momoland",
+    "rating": 4.4,
+    "menu": [
+      { "name": "Fried Veg Momos (6 Pcs)", "price": 110.00, "description": "Golden-fried dumplings stuffed with mixed vegetables." },
+      { "name": "Pan Fried Chicken Momos", "price": 150.00, "description": "Momos pan-seared and tossed in sweet garlic sauce." },
+      { "name": "Jhol Momos Veg (6 Pcs)", "price": 130.00, "description": "Momos served in a cold, tangy sesame and peanut soup." },
+      { "name": "Steam Paneer Momos (6 Pcs)", "price": 120.00, "description": "Steamed dumplings stuffed with spiced cottage cheese." },
+      { "name": "Chicken Thukpa", "price": 200.00, "description": "Traditional Tibetan noodle soup with chicken and vegetables." },
+      { "name": "Veg Chilli Momo (6 Pcs)", "price": 140.00, "description": "Fried momos tossed with onions, capsicum, and hot chili sauce." },
+      { "name": "Singju Salad", "price": 90.00, "description": "Manipuri cabbage salad with chili flakes and roasted chickpea powder." }
+    ]
+  },
+  {
+    "id": 29,
+    "name": "Biryani Blues",
+    "rating": 4.5,
+    "menu": [
+      { "name": "Hyderabadi Chicken Biryani", "price": 290.00, "description": "Authentic spicy dum biryani cooked with marinated chicken layers." },
+      { "name": "Hyderabadi Veg Biryani", "price": 230.00, "description": "Fragrant basmati rice layered with spiced garden vegetables." },
+      { "name": "Double Egg Biryani", "price": 210.00, "description": "Basmati rice cooked with caramelized onions and two boiled eggs." },
+      { "name": "Chicken 65 (Dry)", "price": 240.00, "description": "Spicy, deep-fried chicken cubes tempered with curry leaves." },
+      { "name": "Mirchi ka Salan", "price": 60.00, "description": "Traditional Hyderabadi curry made of big green chilies and peanuts." },
+      { "name": "Raita", "price": 40.00, "description": "Cool yogurt mixed with grated cucumber, carrot, and spices." },
+      { "name": "Double ka Meetha", "price": 90.00, "description": "Hyderabadi bread pudding topped with condensed milk." }
+    ]
+  },
+  {
+    "id": 30,
+    "name": "The Taco Club",
+    "rating": 4.2,
+    "menu": [
+      { "name": "Soft Chicken Tacos (2 Pcs)", "price": 180.00, "description": "Flour tortillas filled with shredded chicken, salsa, and cheese." },
+      { "name": "Crispy Veg Tacos (2 Pcs)", "price": 160.00, "description": "Corn shells filled with beans, corn, lettuce, and sour cream." },
+      { "name": "Chicken Burrito", "price": 220.00, "description": "Tortilla wrapped with rice, beans, chicken, and cheese." },
+      { "name": "Cheese Enchiladas (2 Pcs)", "price": 200.00, "description": "Tortillas rolled with cheese, baked in spicy tomato sauce." },
+      { "name": "Churros with Chocolate", "price": 140.00, "description": "Fried dough sticks dusted with cinnamon sugar, served with chocolate." },
+      { "name": "French Fries with Salsa", "price": 100.00, "description": "Salted potato fries served with freshly chopped tomato salsa." },
+      { "name": "Guacamole & Chips", "price": 150.00, "description": "Creamy avocado dip served with crispy tortilla chips." }
+    ]
+  },
+  {
+    "id": 31,
+    "name": "Sushi Zone",
+    "rating": 4.6,
+    "menu": [
+      { "name": "California Roll (6 Pcs)", "price": 320.00, "description": "Sushi roll with crab sticks, cucumber, avocado, and mayo." },
+      { "name": "Avocado Maki (6 Pcs)", "price": 260.00, "description": "Simple seaweed-wrapped roll with fresh avocado slices." },
+      { "name": "Salmon Nigiri (3 Pcs)", "price": 380.00, "description": "Slices of raw fresh salmon served over vinegared rice." },
+      { "name": "Veg Tempura", "price": 210.00, "description": "Deep-fried light crispy battered vegetables with dipping sauce." },
+      { "name": "Miso Soup Veg", "price": 120.00, "description": "Traditional Japanese soybean paste soup with tofu and seaweed." },
+      { "name": "Gyoza Chicken (4 Pcs)", "price": 240.00, "description": "Pan-fried Japanese dumplings filled with chicken and chives." },
+      { "name": "Matcha Ice Cream", "price": 110.00, "description": "Sweet scoop of green tea-flavored premium ice cream." }
+    ]
+  },
+  {
+    "id": 32,
+    "name": "Healthy Bites",
+    "rating": 4.3,
+    "menu": [
+      { "name": "Greek Salad", "price": 190.00, "description": "Tomatoes, cucumbers, olives, onions, and feta cheese." },
+      { "name": "Chicken Quinoa Bowl", "price": 270.00, "description": "Quinoa topped with grilled chicken, avocado, and olive oil." },
+      { "name": "Avocado Toast", "price": 170.00, "description": "Mashed seasoned avocado on toasted whole-grain sourdough." },
+      { "name": "Mixed Fruit Juice", "price": 110.00, "description": "Freshly pressed orange, watermelon, and apple juice mix." },
+      { "name": "Veg Hummus Wrap", "price": 160.00, "description": "Tortilla wrapped with creamy hummus, lettuce, and cucumber." },
+      { "name": "Oatmeal Bowl", "price": 120.00, "description": "Warm oats cooked in almond milk, topped with honey and bananas." },
+      { "name": "Chia Pudding", "price": 130.00, "description": "Chia seeds soaked in coconut milk, topped with berries." }
+    ]
+  },
+  {
+    "id": 33,
+    "name": "Rolls King",
+    "rating": 4.2,
+    "menu": [
+      { "name": "Single Egg Chicken Roll", "price": 140.00, "description": "Flaky parotta lined with egg, filled with onion and chicken tikka." },
+      { "name": "Double Paneer Tikka Roll", "price": 160.00, "description": "Parotta loaded with double quantity of spiced tandoori paneer." },
+      { "name": "Veg Kebab Roll", "price": 110.00, "description": "Roll filled with mixed vegetable kebabs, mint chutney, and onions." },
+      { "name": "Mutton Seekh Roll", "price": 190.00, "description": "Parotta wrapped around skewered mutton seekh kebabs." },
+      { "name": "Potato Masala Roll", "price": 90.00, "description": "Simple budget roll with spicy potato mash and chopped onions." },
+      { "name": "Extra Cheese Addon", "price": 30.00, "description": "Melted cheese slice added inside your favorite roll." },
+      { "name": "Jeera Shikanji", "price": 60.00, "description": "Spicy Indian lemonade flavored with cumin and black salt." }
+    ]
+  },
+  {
+    "id": 34,
+    "name": "Waffle World",
+    "rating": 4.6,
+    "menu": [
+      { "name": "Chocolate Waffle", "price": 150.00, "description": "Waffle loaded with dark, milk, and white chocolate drizzle." },
+      { "name": "Red Velvet Waffle", "price": 170.00, "description": "Red velvet base waffle served with sweet cream cheese spread." },
+      { "name": "Kitkat Waffle Crunch", "price": 180.00, "description": "Waffle topped with crushed Kitkat chocolate bars and syrup." },
+      { "name": "Honey Butter Waffle", "price": 130.00, "description": "Classic warm waffle served with honey syrup and butter dollop." },
+      { "name": "Nutella Waffle Slice", "price": 160.00, "description": "Waffle sandwich loaded with thick layers of Nutella." },
+      { "name": "Vanilla Scoop Addon", "price": 40.00, "description": "Single scoop of vanilla bean ice cream to top your waffle." },
+      { "name": "Cold Coffee with Ice Cream", "price": 180.00, "description": "Blended cold coffee served with vanilla scoop on top." }
+    ]
+  },
+  {
+    "id": 35,
+    "name": "The Dosa Factory",
+    "rating": 4.4,
+    "menu": [
+      { "name": "Cheese Masala Dosa", "price": 150.00, "description": "Crispy crepe coated with potato masala and shredded cheese." },
+      { "name": "Paneer Bhurji Dosa", "price": 170.00, "description": "Crepe filled with scrambled cottage cheese with onions." },
+      { "name": "Paper Plain Dosa", "price": 100.00, "description": "Extra large, thin, and super crispy plain rice crepe." },
+      { "name": "Schezwan Dosa Veg", "price": 140.00, "description": "Fusion crepe lined with hot and spicy Chinese Schezwan sauce." },
+      { "name": "Podda Idli (Ghee)", "price": 95.00, "description": "Steamed idlis coated with hot spicy gun powder (podi) and ghee." },
+      { "name": "Sambhar Vada (2 Pcs)", "price": 85.00, "description": "Crispy fried lentil donuts immersed in thick spicy sambar." },
+      { "name": "Hot Badam Milk", "price": 70.00, "description": "Warm milk flavored with almonds, cardamom, and saffron." }
+    ]
+  },
+  {
+    "id": 36,
+    "name": "Amritsari Dhaba",
+    "rating": 4.5,
+    "menu": [
+      { "name": "Amritsari Aloo Kulcha", "price": 130.00, "description": "Crispy, buttered, potato-stuffed flatbread served with chole." },
+      { "name": "Paneer Kulcha Combo", "price": 160.00, "description": "Cottage cheese stuffed kulcha served with spicy chickpea curry." },
+      { "name": "Chana Masala", "price": 190.00, "description": "Tangy and spicy Punjabi style chickpea curry." },
+      { "name": "Baingan Bharta", "price": 180.00, "description": "Smoky mashed eggplant cooked with green peas, onions, tomatoes." },
+      { "name": "Sarson ka Saag", "price": 220.00, "description": "Creamy mustard greens curry, best served with Makki Roti." },
+      { "name": "Makki di Roti (1 Pc)", "price": 40.00, "description": "Flatbread made of yellow maize flour, baked on tawa." },
+      { "name": "Tall Glass Sweet Lassi", "price": 100.00, "description": "Huge metal tumbler of sweet frothed yogurt with cream layer." }
+    ]
+  },
+  {
+    "id": 37,
+    "name": "Red Lantern",
+    "rating": 4.1,
+    "menu": [
+      { "name": "Chicken Fried Rice", "price": 200.00, "description": "Fluffy rice stir-fried with chicken chunks, egg, and soy." },
+      { "name": "Veg Chilli Garlic Noodles", "price": 170.00, "description": "Spicy noodles tossed with minced garlic and red chili flakes." },
+      { "name": "Gobi Manchurian Gravy", "price": 220.00, "description": "Crispy cauliflower florets in a savory soy and garlic gravy." },
+      { "name": "Chicken Sweet Corn Soup", "price": 110.00, "description": "Thick chicken broth with egg drops and sweet corn kernels." },
+      { "name": "Fried Chicken Momos (6 Pcs)", "price": 140.00, "description": "Deep-fried chicken dumplings served with spicy tomato dip." },
+      { "name": "Apple Toffee with Sesame", "price": 120.00, "description": "Fried apples glazed with caramelized sugar and sesame." },
+      { "name": "Lemon Coriander Soup Veg", "price": 100.00, "description": "Tangy soup flavored with lemon and fresh coriander leaves." }
+    ]
+  },
+  {
+    "id": 38,
+    "name": "Crust & Crumb",
+    "rating": 4.4,
+    "menu": [
+      { "name": "French Baguette", "price": 80.00, "description": "Traditional long, thin loaf of crusty French bread." },
+      { "name": "Sourdough Bread Loaf", "price": 150.00, "description": "Artisanal naturally leavened bread with a tangy flavor." },
+      { "name": "Focaccia Bread", "price": 110.00, "description": "Italian flatbread topped with rosemary, garlic, and cherry tomatoes." },
+      { "name": "Vanilla Sponge Cake (Half Kg)", "price": 400.00, "description": "Simple soft sponge cake, perfect for tea-time." },
+      { "name": "Chocolate Brownie", "price": 90.00, "description": "Dense, fudgy brownie loaded with dark chocolate chunks." },
+      { "name": "Veg Cheese Burger Sandwich", "price": 130.00, "description": "Bun loaded with fresh sliced veggies, cheese, and herb spread." },
+      { "name": "Cold Coffee Bottled", "price": 120.00, "description": "Home-brewed sweet cold coffee bottled for takeout." }
+    ]
+  },
+  {
+    "id": 39,
+    "name": "Bistro 55",
+    "rating": 4.2,
+    "menu": [
+      { "name": "Veg Stroganoff", "price": 260.00, "description": "Vegetables in a creamy mushroom sauce served with butter rice." },
+      { "name": "Chicken Steak", "price": 310.00, "description": "Minced chicken steak in black pepper sauce with fries." },
+      { "name": "Minced Meat Shepherd's Pie", "price": 340.00, "description": "Beef mince topped with creamy mashed potato layer, baked." },
+      { "name": "Tomato Basil Bruschetta", "price": 130.00, "description": "Crisp garlic bread topped with marinated tomatoes." },
+      { "name": "Cream of Mushroom Soup", "price": 120.00, "description": "Thick milk-based soup with minced button mushrooms." },
+      { "name": "Baked Mac and Cheese", "price": 240.00, "description": "Macaroni pasta in a rich cheese sauce baked with breadcrumbs." },
+      { "name": "Molten Chocolate Fondant", "price": 150.00, "description": "Warm cake with molten filling served with vanilla scoop." }
+    ]
+  },
+  {
+    "id": 40,
+    "name": "Shake Studio",
+    "rating": 4.5,
+    "menu": [
+      { "name": "Oreo Crush Shake", "price": 150.00, "description": "Blended milkshake with Oreo biscuits, chocolate, and cream." },
+      { "name": "Mango Shake Seasonal", "price": 160.00, "description": "Creamy shake made with fresh Alphonso mango pulp." },
+      { "name": "Butterscotch Classic Shake", "price": 140.00, "description": "Sweet butterscotch crunchies blended with milk and ice cream." },
+      { "name": "Kaju Anjeer Shake", "price": 180.00, "description": "Rich shake blended with dried figs, cashews, and milk." },
+      { "name": "French Fries Basket", "price": 100.00, "description": "Salted crispy potato fries served with spicy garlic dip." },
+      { "name": "Veg Cheese Sandwich", "price": 120.00, "description": "Plain white bread sandwich filled with cucumber, potato, cheese." },
+      { "name": "Fruit Custard Bowl", "price": 110.00, "description": "Sweet vanilla milk custard mixed with fresh fruits." }
+    ]
+  },
+  {
+    "id": 41,
+    "name": "Karim's Legacy",
+    "rating": 4.7,
+    "menu": [
+      { "name": "Mutton Nihari", "price": 380.00, "description": "Slow-cooked mutton stew flavored with ginger and spices." },
+      { "name": "Chicken Stew Mughlai", "price": 300.00, "description": "Chicken pieces cooked in aromatic onion and spice stock." },
+      { "name": "Paneer Makhani", "price": 270.00, "description": "Cottage cheese cooked in a rich, buttery tomato gravy." },
+      { "name": "Tandoori Khameeri Roti", "price": 35.00, "description": "Thick traditional fermented flatbread baked in clay oven." },
+      { "name": "Chicken Biryani Karim style", "price": 290.00, "description": "Basmati rice cooked in Delhi Mughlai spices with chicken." },
+      { "name": "Firni Saffron", "price": 90.00, "description": "Chilled ground rice pudding served in earthen bowls." },
+      { "name": "Sweet Rose Lassi", "price": 95.00, "description": "Yogurt drink scented with organic rose syrup and nuts." }
+    ]
+  },
+  {
+    "id": 42,
+    "name": "Pizza Factory",
+    "rating": 4.3,
+    "menu": [
+      { "name": "Double Cheese Margherita", "price": 380.00, "description": "Classic tomato base loaded with double mozzarella cheese layer." },
+      { "name": "Chicken Tikka Pizza", "price": 450.00, "description": "Spicy chicken tikka chunks, capsicum, red onion, cheese." },
+      { "name": "Garden Veggie Delight", "price": 410.00, "description": "Capsicum, sweet corn, mushrooms, black olives, and tomatoes." },
+      { "name": "Cheesy Breadsticks", "price": 160.00, "description": "Baked bread sticks stuffed with garlic butter and cheese." },
+      { "name": "Red Sauce Penne Pasta", "price": 230.00, "description": "Penne pasta cooked in tangy Italian red tomato gravy." },
+      { "name": "White Sauce Chicken Pasta", "price": 270.00, "description": "Pasta tossed with chicken strips in rich cream sauce." },
+      { "name": "Chocolate Brownie Shake", "price": 170.00, "description": "Thick shake blended with chocolate brownie and hot fudge." }
+    ]
+  },
+  {
+    "id": 43,
+    "name": "Dakshin",
+    "rating": 4.6,
+    "menu": [
+      { "name": "Onion Masala Dosa", "price": 130.00, "description": "Crispy crepe stuffed with spicy potatoes and fried onions." },
+      { "name": "Button Idli Sambar (10 Pcs)", "price": 100.00, "description": "Tiny steamed rice cakes immersed in piping hot sambar." },
+      { "name": "Rava Masala Dosa", "price": 140.00, "description": "Crispy semolina crepe with potato filling and green chilies." },
+      { "name": "Medu Vada Combo (2 Pcs)", "price": 90.00, "description": "Fried lentil savory donuts served with hot sambar." },
+      { "name": "Andhra Chilli Chicken Curry", "price": 310.00, "description": "Fiery Andhrastyle chicken curry cooked in green chili paste." },
+      { "name": "Appam with Coconut Milk (2 Pcs)", "price": 110.00, "description": "Lace-like rice crepes with sweet vanilla-infused coconut milk." },
+      { "name": "South Indian Filter Coffee", "price": 60.00, "description": "Strong decoction frothed up with hot sweet milk." }
+    ]
+  },
+  {
+    "id": 44,
+    "name": "Pind Balluchi",
+    "rating": 4.5,
+    "menu": [
+      { "name": "Kadhai Paneer Punjabi", "price": 290.00, "description": "Paneer blocks cooked with bell peppers in a spicy kadhai gravy." },
+      { "name": "Chicken Tariwala", "price": 310.00, "description": "Homestyle Punjabi chicken curry cooked in thin, spicy red gravy." },
+      { "name": "Black Dal Makhani Pind style", "price": 240.00, "description": "Slow-cooked black lentils simmered overnight with butter and cream." },
+      { "name": "Garlic Laccha Paratha", "price": 60.00, "description": "Layered wheat flatbread topped with chopped garlic and butter." },
+      { "name": "Veg Pulao", "price": 190.00, "description": "Long-grain basmati rice cooked with fresh seasonal vegetables." },
+      { "name": "Moong Dal Halwa", "price": 120.00, "description": "Traditional sweet pudding made of split yellow lentils and ghee." },
+      { "name": "Salted Mint Lassi", "price": 90.00, "description": "Buttermilk blended with fresh mint leaves and roasted spices." }
+    ]
+  },
+  {
+    "id": 45,
+    "name": "Noodle Bar",
+    "rating": 4.2,
+    "menu": [
+      { "name": "Veg Singapuri Noodles", "price": 190.00, "description": "Yellow thin noodles stir-fried with vegetables and mild curry powder." },
+      { "name": "Chicken Chilli Garlic Rice", "price": 220.00, "description": "Spicy wok-fried rice tossed with chicken chunks and garlic." },
+      { "name": "Paneer Manchurian Gravy", "price": 230.00, "description": "Fried paneer blocks in spicy ginger-garlic Manchurian sauce." },
+      { "name": "Crispy Veg Salt & Pepper", "price": 190.00, "description": "Deep-fried mixed vegetables seasoned with salt and black pepper." },
+      { "name": "Chicken Momos Fried (6 Pcs)", "price": 140.00, "description": "Fried chicken dumplings served with hot Schezwan dip." },
+      { "name": "Clear Noodle Soup Veg", "price": 100.00, "description": "Light vegetable broth with thin noodles and baby corn." },
+      { "name": "Sesame Honey Flat Noodles", "price": 130.00, "description": "Sweet crispy flat noodles tossed in honey and sesame seeds." }
+    ]
+  },
+  {
+    "id": 46,
+    "name": "The Burger Junction",
+    "rating": 4.3,
+    "menu": [
+      { "name": "Classic Veg Burger", "price": 130.00, "description": "Fried vegetable patty with mayo, lettuce, and tomato slices." },
+      { "name": "Spicy Crispy Chicken Burger", "price": 190.00, "description": "Fried chicken breast with spicy sauce and jalapeños." },
+      { "name": "Double Cheese Beef Burger", "price": 240.00, "description": "Two grilled beef patties with double melted cheddar slices." },
+      { "name": "French Fries Tub", "price": 110.00, "description": "Large tub of salted golden crispy potato fries." },
+      { "name": "Peri Peri French Fries", "price": 130.00, "description": "Crispy golden potato fries tossed in spicy peri peri powder." },
+      { "name": "Fried Chicken Nuggets (6 Pcs)", "price": 120.00, "description": "Breaded minced chicken nuggets served with cheese dip." },
+      { "name": "Chocolate Frappe Shake", "price": 160.00, "description": "Creamy blend of milk, cocoa, espresso, and vanilla ice cream." }
+    ]
+  },
+  {
+    "id": 47,
+    "name": "Dessert Parlour",
+    "rating": 4.7,
+    "menu": [
+      { "name": "Tiramisu Cheesecake Slice", "price": 190.00, "description": "Combination of coffee tiramisu and baked cream cheese cake." },
+      { "name": "Fudge Brownie Sundae", "price": 170.00, "description": "Warm brownie chunks served with chocolate scoop and hot fudge." },
+      { "name": "Red Velvet Pastry Slice", "price": 100.00, "description": "Layered sponge cake colored red with sweet cheese frosting." },
+      { "name": "Blueberry Waffle Sandwich", "price": 150.00, "description": "Waffle layered with blueberry compote and whipped cream." },
+      { "name": "Fruit Overload Ice Cream", "price": 130.00, "description": "Two scoops of fruit cream ice cream mixed with chopped dry fruits." },
+      { "name": "French Macarons Box", "price": 250.00, "description": "Box of 4 pastel-colored almond cookies filled with chocolate." },
+      { "name": "Hot Chocolate Fudge Mug", "price": 160.00, "description": "Vanilla ice cream layers topped with plenty of warm fudge and nuts." }
+    ]
+  },
+  {
+    "id": 48,
+    "name": "Tea Time",
+    "rating": 4.1,
+    "menu": [
+      { "name": "Ginger Lemon Honey Tea", "price": 70.00, "description": "Hot water brewed with ginger, fresh lemon, and organic honey." },
+      { "name": "Saffron Cardamom Tea", "price": 90.00, "description": "Rich milk tea infused with real saffron strands and cardamom." },
+      { "name": "Vegetable Grilled Sandwich", "price": 110.00, "description": "Toasted bread with mint spread and cucumber, potato slices." },
+      { "name": "Bun Maska Jam", "price": 70.00, "description": "Soft sweet bun sliced and layered with butter and mix fruit jam." },
+      { "name": "Aloo Samosa (2 Pcs)", "price": 40.00, "description": "Fried crispy pastries filled with spiced potato mash." },
+      { "name": "Fried Paneer Puff Pastry", "price": 60.00, "description": "Puff pastry packed with fried paneer bhurji inside." },
+      { "name": "Cookies Combo (4 Pcs)", "price": 50.00, "description": "Assorted sweet butter cookies, perfect for dipping in tea." }
+    ]
+  },
+  {
+    "id": 49,
+    "name": "Chatpata Corner",
+    "rating": 4.3,
+    "menu": [
+      { "name": "Special Dahi Bhalla", "price": 90.00, "description": "Soft lentil dumplings soaked in sweet yogurt and chutneys." },
+      { "name": "Katori Chaat", "price": 110.00, "description": "Crisp basket loaded with chickpeas, potatoes, curd, and sev." },
+      { "name": "Dahi Papdi Chaat", "price": 95.00, "description": "Crisp flour crackers with potatoes, sweet yogurt, chutneys." },
+      { "name": "Gol Gappe Water Mix (8 Pcs)", "price": 70.00, "description": "Hollow crispy puris served with spicy mint and sweet tamarind." },
+      { "name": "Hot Pav Bhaji Special", "price": 130.00, "description": "Mashed spiced vegetable curry cooked with pure butter, served with pav." },
+      { "name": "Cheese Vada Pav (2 Pcs)", "price": 90.00, "description": "Spiced potato dumpling burger lined with processed cheese." },
+      { "name": "Thandai Glass", "price": 100.00, "description": "Sweet milk drink blended with almonds, poppy seeds, and rose." }
+    ]
+  },
+  {
+    "id": 50,
+    "name": "Biryani Junction",
+    "rating": 4.4,
+    "menu": [
+      { "name": "Lucknowi Chicken Biryani", "price": 280.00, "description": "Mildly spiced aromatics rice cooked Lucknowi Awadhi style." },
+      { "name": "Mutton Dum Biryani Classic", "price": 360.00, "description": "Slow dum cooked basmati rice layered with tender mutton bone-in." },
+      { "name": "Egg Biryani Combo", "price": 200.00, "description": "Fragrant saffron rice layered with fried boiled eggs and gravy." },
+      { "name": "Chicken Korma Gravy", "price": 270.00, "description": "Chicken slow-cooked in brown onion, curd, and nut paste gravy." },
+      { "name": "Plain Tandoori Roti", "price": 25.00, "description": "Whole wheat bread baked in a clay tandoor." },
+      { "name": "Sweet Phirni Cup", "price": 80.00, "description": "Traditional ground rice pudding flavored with saffron." },
+      { "name": "Saffron Sweet Lassi", "price": 90.00, "description": "Yogurt drink flavored with pure saffron strands and cream." }
+    ]
+  }
+]

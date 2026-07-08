@@ -11,7 +11,7 @@ def serve_index():
 
 # Helper function to load restaurant data
 def load_restaurants():
-    data_path = os.path.join(os.path.dirname(__file__), 'data', 'restaurants.json')
+    data_path = os.path.join(os.path.dirname(__file__), '..', 'frontend', 'data', 'restaurants.json')
     try:
         with open(data_path, 'r', encoding='utf-8') as file:
             return json.load(file)
