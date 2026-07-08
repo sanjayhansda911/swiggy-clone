@@ -862,11 +862,11 @@
             }
             recognition = new SpeechRecognition();
             recognition.continuous = false;
-            recognition.lang = 'en-US';
+            recognition.lang = 'en-IN'; // Optimized for Indian accents and Indian food names
             recognition.interimResults = false;
 
             recognition.onstart = () => {
-                document.getElementById('voice-transcript').innerText = "Listening...";
+                document.getElementById('voice-transcript').innerText = "Listening... Speak now!";
                 document.getElementById('voice-status-title').innerText = "Listening...";
                 document.getElementById('voice-mic-glow').querySelector('.animate-ping').classList.remove('hidden');
                 document.getElementById('voice-error-msg').classList.add('hidden');
@@ -900,6 +900,39 @@
             };
         }
 
+        // Delay microphone activation until browser finishes reading the voice prompt
+        function speakThenListen(msg) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(msg);
+                utterance.rate = 1.0;
+                
+                // Set visual state showing the assistant is speaking
+                document.getElementById('voice-transcript').innerText = "Preparing to listen...";
+                document.getElementById('voice-status-title').innerText = "Speaking...";
+                document.getElementById('voice-mic-glow').querySelector('.animate-ping').classList.add('hidden');
+
+                utterance.onend = () => {
+                    // Activate microphone ONLY when the prompt completes
+                    try {
+                        recognition.start();
+                    } catch (e) {
+                        console.warn("Recognition already started or error:", e);
+                    }
+                };
+                window.speechSynthesis.speak(utterance);
+            } else {
+                // Fallback for browsers without text-to-speech
+                document.getElementById('voice-transcript').innerText = "Listening...";
+                document.getElementById('voice-status-title').innerText = "Listening...";
+                try {
+                    recognition.start();
+                } catch (e) {
+                    console.warn("Recognition start error:", e);
+                }
+            }
+        }
+
         function startVoiceListening() {
             if (!recognition) {
                 initVoice();
@@ -909,22 +942,12 @@
                 return;
             }
             
-            // Speak guidelines to user
-            speakText("Tell me what you would like to order.");
-
-            // Reset UI
-            document.getElementById('voice-transcript').innerText = "Speak now...";
-            document.getElementById('voice-status-title').innerText = "Listening...";
-            document.getElementById('voice-error-msg').classList.add('hidden');
-            
-            // Show modal
+            // Show modal first
             document.getElementById('voice-modal').classList.remove('hidden');
-            
-            try {
-                recognition.start();
-            } catch (e) {
-                console.warn("Recognition already started or error:", e);
-            }
+            document.getElementById('voice-error-msg').classList.add('hidden');
+
+            // Guide user verbally, then open microphone
+            speakThenListen("Tell me what you would like to order.");
         }
 
         function stopVoiceListening() {
@@ -932,6 +955,10 @@
                 try {
                     recognition.stop();
                 } catch(e) {}
+            }
+            // Stop speech synthesis if it is currently speaking the prompt
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
             }
             document.getElementById('voice-modal').classList.add('hidden');
         }
