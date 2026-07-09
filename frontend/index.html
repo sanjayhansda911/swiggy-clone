@@ -127,7 +127,7 @@
                         <img class="w-6.5 h-6.5 rounded-full border-2 border-white object-cover shadow-sm" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=50&auto=format&fit=crop&q=80" />
                     </div>
                     <span class="text-[11px] font-bold text-slate-500">
-                        <span class="text-slate-850 font-black">14,200+</span> dinners decided in Kolkata tonight <span class="text-amber-500">★</span> <span class="text-slate-800 font-extrabold">4.9/5</span>
+                        <span class="text-slate-850 font-black">14,200+</span> <span id="social-proof-desc">dinners decided in Kolkata tonight</span> <span class="text-amber-500">★</span> <span class="text-slate-800 font-extrabold">4.9/5</span>
                     </span>
                 </div>
             </div>
@@ -656,7 +656,7 @@
                 <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-xs font-semibold">
                     <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i> AI Empathy Engine
                 </span>
-                <h3 class="text-2xl font-black text-slate-900 mt-2">Let us handle dinner.</h3>
+                <h3 id="choose-me-modal-title" class="text-2xl font-black text-slate-900 mt-2">Let us handle dinner.</h3>
                 <p id="choose-me-context" class="text-slate-400 text-xs font-semibold mt-1">Based on the current weather and time, we curated these comfort meals for you:</p>
             </div>
             
@@ -2380,13 +2380,19 @@
             const hour = new Date().getHours();
             let heading = "What are we eating today, Rahul? 🌙";
             let subtitle = "Rainy evening in Park Street? Let our AI handle dinner.";
+            let socialProof = "dinners decided in Kolkata tonight";
+            let modalTitle = "Let us handle dinner.";
 
             if (hour >= 5 && hour < 12) {
                 heading = "What are we eating today, Rahul? 🌅";
                 subtitle = "Sunny morning in Park Street? Let our AI handle breakfast.";
+                socialProof = "breakfasts decided in Kolkata today";
+                modalTitle = "Let us handle breakfast.";
             } else if (hour >= 12 && hour < 17) {
                 heading = "What are we eating today, Rahul? ☀️";
                 subtitle = "Hot afternoon in Park Street? Let our AI handle lunch.";
+                socialProof = "lunches decided in Kolkata today";
+                modalTitle = "Let us handle lunch.";
             }
 
             const headlineEl = document.getElementById('personalized-headline');
@@ -2397,6 +2403,16 @@
             const subtitleEl = document.getElementById('choose-me-subtitle');
             if (subtitleEl) {
                 subtitleEl.innerText = subtitle;
+            }
+
+            const socialProofEl = document.getElementById('social-proof-desc');
+            if (socialProofEl) {
+                socialProofEl.innerText = socialProof;
+            }
+
+            const modalTitleEl = document.getElementById('choose-me-modal-title');
+            if (modalTitleEl) {
+                modalTitleEl.innerText = modalTitle;
             }
         }
 
