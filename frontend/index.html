@@ -1354,9 +1354,17 @@
                 const totalItemPrice = price * qty;
                 subtotal += totalItemPrice;
                 itemsList.innerHTML += `
-                    <div class="flex justify-between items-center text-xs text-slate-700">
-                        <span>${name} <span class="text-slate-400 font-bold">x ${qty}</span></span>
-                        <span class="font-bold text-slate-800">₹${totalItemPrice.toFixed(2)}</span>
+                    <div class="flex justify-between items-center text-xs text-slate-700 py-1.5 border-b border-slate-100/50 last:border-0">
+                        <span class="font-semibold text-slate-800">${name}</span>
+                        <div class="flex items-center gap-2.5">
+                            <!-- Qty Controls inside review page -->
+                            <div class="flex items-center border border-slate-200 rounded-lg bg-slate-50 overflow-hidden shadow-sm scale-90 origin-right">
+                                <button onclick="updateReviewQuantity('${name}', -1)" class="px-2 py-0.5 text-slate-500 hover:bg-slate-200 transition-colors font-bold text-[10px]">-</button>
+                                <span class="px-2 text-[10px] font-bold text-slate-800">${qty}</span>
+                                <button onclick="updateReviewQuantity('${name}', 1)" class="px-2 py-0.5 text-slate-500 hover:bg-slate-200 transition-colors font-bold text-[10px]">+</button>
+                            </div>
+                            <span class="font-extrabold text-slate-800 text-xs w-16 text-right">₹${totalItemPrice.toFixed(2)}</span>
+                        </div>
                     </div>
                 `;
             });
@@ -1402,6 +1410,29 @@
             document.getElementById('payment-close-btn').classList.remove('hidden');
             document.getElementById('payment-processing-state').classList.add('hidden');
             document.getElementById('payment-success-state').classList.add('hidden');
+        }
+
+        // Adjust item quantity directly from the last-minute review invoice
+        function updateReviewQuantity(name, amount) {
+            const item = cart.find(i => i.name === name);
+            if (!item) return;
+
+            item.quantity += amount;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.name !== name);
+            }
+
+            // Sync sidebar drawer cart display
+            updateCartUI();
+
+            // If everything is removed, close modal
+            if (cart.length === 0) {
+                closePaymentModal();
+                return;
+            }
+
+            // Refresh review overlay invoice
+            showPaymentScreen(currentOrderData.restaurant, cart);
         }
 
         // Toggle Payment Method view inputs and border colors
