@@ -1244,10 +1244,19 @@
                     try { recognition.stop(); } catch(e) {}
                 }
 
+                // Cache debug info globally
+                window.lastParsedItems = parsedItems;
+                window.lastResolvedOrders = resolvedOrders;
+
                 speakText(`I found ${firstAmbiguousItem.cleanPart} at multiple restaurants. Please choose a restaurant from the screen.`);
             } else {
                 // No ambiguity - direct checkout!
-                const finalRestaurant = globalRestaurant || resolvedOrders[0].restaurant;
+                const finalRestaurant = globalRestaurant || (resolvedOrders[0] ? resolvedOrders[0].restaurant : null);
+                
+                // Cache debug info globally
+                window.lastParsedItems = parsedItems;
+                window.lastResolvedOrders = resolvedOrders;
+
                 executeDirectCheckout(finalRestaurant, resolvedOrders);
             }
         }
@@ -1264,6 +1273,10 @@
                     quantity: parsed.quantity
                 });
             });
+
+            // Cache debug info globally
+            window.lastParsedItems = parsedItems;
+            window.lastResolvedOrders = resolvedOrders;
 
             executeDirectCheckout(restaurant, resolvedOrders);
         }
@@ -1349,6 +1362,10 @@
                         <pre class="text-[9px] mt-1 bg-white p-2 rounded-lg border border-red-200 overflow-x-auto whitespace-pre-wrap">${JSON.stringify(items, null, 2)}</pre>
                         <span class="block text-[10px] font-bold text-slate-400 mt-2">Global cart state:</span>
                         <pre class="text-[9px] mt-1 bg-white p-2 rounded-lg border border-red-200 overflow-x-auto whitespace-pre-wrap">${JSON.stringify(cart, null, 2)}</pre>
+                        <span class="block text-[10px] font-bold text-slate-400 mt-2">window.lastParsedItems:</span>
+                        <pre class="text-[9px] mt-1 bg-white p-2 rounded-lg border border-red-200 overflow-x-auto whitespace-pre-wrap">${JSON.stringify(window.lastParsedItems || null, null, 2)}</pre>
+                        <span class="block text-[10px] font-bold text-slate-400 mt-2">window.lastResolvedOrders:</span>
+                        <pre class="text-[9px] mt-1 bg-white p-2 rounded-lg border border-red-200 overflow-x-auto whitespace-pre-wrap">${JSON.stringify(window.lastResolvedOrders || null, null, 2)}</pre>
                     </div>
                 `;
             }
