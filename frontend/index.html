@@ -79,7 +79,7 @@
             <!-- User Address Mock -->
             <div onclick="openLocationPicker()" class="cursor-pointer hover:bg-slate-100 transition-all duration-300 flex items-center gap-1.5 text-xs md:text-sm text-slate-650 font-bold bg-slate-50 py-1.5 px-3 md:py-2 md:px-4 rounded-full border border-slate-100 max-w-[130px] sm:max-w-none">
                 <i class="fa-solid fa-location-dot text-brand-500 flex-shrink-0"></i>
-                <span id="user-display-address" class="truncate">Park Street, Kolkata</span>
+                <span id="user-display-address" class="truncate">Gachibowli, Hyderabad</span>
                 <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 flex-shrink-0"></i>
             </div>
 
@@ -805,7 +805,7 @@
         let restaurants = [];
         let cart = [];
         let selectedRestaurant = null;
-        let currentCity = "Kolkata";
+        let currentCity = "Hyderabad";
 
         // Mock data fallback in case backend is not running or accessed via file://
         const fallbackRestaurants = [
@@ -1238,7 +1238,7 @@
 
             // Reset friend details if any
             window.friendDetails = null;
-            document.getElementById('user-display-address').innerText = 'Park Street, Kolkata';
+            document.getElementById('user-display-address').innerText = 'Gachibowli, Hyderabad';
 
             // Return to Gateway landing screen
             showGateway();
