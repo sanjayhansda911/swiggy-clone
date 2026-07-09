@@ -112,18 +112,15 @@
         <section id="gateway-section" class="block py-6 animate-fade-in max-w-4xl mx-auto">
             <!-- Personalized welcome & CRO conversion headers -->
             <div class="text-center mb-10 mt-4">
-                <span id="personalized-greeting" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black bg-brand-100 text-brand-700 mb-3 tracking-wide">
-                    Good Evening, Rahul! 🌙
-                </span>
-                <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-                    Hungry, but can't decide?
+                <h1 id="personalized-headline" class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                    What are we eating today, Rahul? 🌙
                 </h1>
                 <p class="text-slate-500 text-sm mt-2 max-w-md mx-auto font-medium">
-                    Tell us your mood, or let our AI pick your perfect dinner in 1-tap.
+                    Pick how you want to order, or let us handle it.
                 </p>
                 
                 <!-- D2C Social Proof Avatar Stack -->
-                <div class="flex items-center justify-center gap-2 mt-4.5 mb-1">
+                <div class="flex items-center justify-center gap-2 mt-4">
                     <div class="flex -space-x-2">
                         <img class="w-6.5 h-6.5 rounded-full border-2 border-white object-cover shadow-sm" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50&auto=format&fit=crop&q=80" />
                         <img class="w-6.5 h-6.5 rounded-full border-2 border-white object-cover shadow-sm" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&auto=format&fit=crop&q=80" />
@@ -135,31 +132,8 @@
                 </div>
             </div>
 
-            <!-- 4 Navigation Cards Grid with Hero Card -->
+            <!-- Balanced 2x2 Grid of 4 Navigation Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-                <!-- Card 3 (Hero Card): Choose for Me -->
-                <div onclick="openChooseForMe()" class="md:col-span-2 bg-gradient-to-br from-amber-50/40 via-white to-orange-50/20 border-2 border-amber-500 hover:border-brand-500 rounded-[2.5rem] p-8 flex flex-col sm:flex-row items-center justify-between gap-6 cursor-pointer transition-all duration-300 hover:shadow-2xl hover:shadow-brand-500/10 group relative overflow-hidden text-left shadow-md">
-                    <div class="absolute -right-4 -bottom-4 text-brand-50/20 group-hover:text-brand-50/30 text-9xl transition-colors duration-300 font-bold z-0">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    </div>
-                    <div class="flex items-start gap-5 z-10">
-                        <div class="bg-brand-500 text-white p-5 rounded-3xl flex items-center justify-center shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform duration-300">
-                            <i class="fa-solid fa-wand-magic-sparkles text-3xl"></i>
-                        </div>
-                        <div>
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black bg-brand-100 text-brand-700 mb-2 uppercase tracking-wider animate-pulse">
-                                <i class="fa-solid fa-bolt text-amber-500"></i> Avg decision time: 45 seconds
-                            </span>
-                            <h3 class="font-extrabold text-slate-900 text-2xl group-hover:text-brand-500 transition-colors duration-300">Choose for Me</h3>
-                            <p id="choose-me-subtitle" class="text-[#4A5568] text-sm font-bold mt-1.5">Feeling decision fatigue? Let our AI handle dinner.</p>
-                        </div>
-                    </div>
-                    <div class="bg-slate-900 hover:bg-brand-500 text-white font-extrabold text-xs px-5 py-3.5 rounded-2xl shadow-md transition-colors z-10 flex items-center gap-1.5 self-center sm:self-auto flex-shrink-0">
-                        <span>Let AI Choose</span>
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </div>
-                </div>
-
                 <!-- Card 1: Show Catalog -->
                 <div onclick="showCatalog()" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden text-left">
                     <div class="absolute -right-4 -bottom-4 text-slate-50/50 group-hover:text-brand-50/50 text-8xl transition-colors duration-300 font-bold z-0">
@@ -188,8 +162,25 @@
                     </div>
                 </div>
 
+                <!-- Card 3: Choose for Me -->
+                <div onclick="openChooseForMe()" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden text-left">
+                    <div class="absolute -right-4 -bottom-4 text-brand-50/20 group-hover:text-brand-50/30 text-8xl transition-colors duration-300 font-bold z-0">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div class="bg-brand-50 text-brand-650 p-4.5 rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300 z-10">
+                        <i class="fa-solid fa-wand-magic-sparkles text-2xl animate-pulse text-brand-500"></i>
+                    </div>
+                    <div class="z-10 relative">
+                        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-black bg-brand-100 text-brand-700 mb-1 tracking-wide uppercase animate-pulse">
+                            <i class="fa-solid fa-bolt text-amber-500 text-[8px]"></i> Avg decision time: 45s
+                        </span>
+                        <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-brand-500 transition-colors duration-300">Choose for Me</h3>
+                        <p id="choose-me-subtitle" class="text-[#4A5568] text-xs font-bold mt-1">Feeling decision fatigue? Let our AI handle dinner.</p>
+                    </div>
+                </div>
+
                 <!-- Card 4: Order for a Friend -->
-                <div onclick="openOrderForFriend()" class="md:col-span-2 bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden text-left">
+                <div onclick="openOrderForFriend()" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden text-left">
                     <div class="absolute -right-4 -bottom-4 text-slate-50/50 group-hover:text-brand-50/50 text-8xl transition-colors duration-300 font-bold z-0">
                         <i class="fa-solid fa-gift"></i>
                     </div>
@@ -2387,20 +2378,20 @@
         // Dynamically tailor copy & weather telemetry based on time of day
         function updatePersonalizedGreeting() {
             const hour = new Date().getHours();
-            let greeting = "Good Evening, Rahul! 🌙";
+            let heading = "What are we eating today, Rahul? 🌙";
             let subtitle = "Rainy evening in Park Street? Tap for hot comfort foods.";
 
             if (hour >= 5 && hour < 12) {
-                greeting = "Good Morning, Rahul! 🌅";
+                heading = "What are we eating today, Rahul? 🌅";
                 subtitle = "Sunny morning in Park Street? Tap for fresh breakfast options.";
             } else if (hour >= 12 && hour < 17) {
-                greeting = "Good Afternoon, Rahul! ☀️";
+                heading = "What are we eating today, Rahul? ☀️";
                 subtitle = "Hot afternoon in Park Street? Tap for refreshing cool meals.";
             }
 
-            const greetingEl = document.getElementById('personalized-greeting');
-            if (greetingEl) {
-                greetingEl.innerHTML = greeting;
+            const headlineEl = document.getElementById('personalized-headline');
+            if (headlineEl) {
+                headlineEl.innerHTML = heading;
             }
 
             const subtitleEl = document.getElementById('choose-me-subtitle');
