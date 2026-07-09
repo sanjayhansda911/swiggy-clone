@@ -1502,6 +1502,10 @@
                 }
             }
 
+            if (window.mapAnimationId) cancelAnimationFrame(window.mapAnimationId);
+            window.mapAnimationId = requestAnimationFrame(step);
+        }
+
         // Text Catalog Filter Search
         function filterCatalog() {
             const query = document.getElementById('search-input').value.toLowerCase().trim();
