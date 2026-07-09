@@ -38,6 +38,9 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
+    <!-- Leaflet Maps CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <body class="bg-[#fbfcff] text-slate-800 font-sans min-h-screen flex flex-col">
 
@@ -185,46 +188,8 @@
                     </div>
                 </div>
 
-                <!-- Live Order Tracking Map Container -->
-                <div class="relative w-full h-48 bg-slate-100 rounded-3xl overflow-hidden border border-slate-200/60 mb-10 shadow-inner">
-                    <!-- Grid Map Background -->
-                    <div class="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] bg-[size:24px_24px] opacity-25"></div>
-                    
-                    <!-- Decorative Streets (Map Aesthetics) -->
-                    <div class="absolute top-1/3 left-0 right-0 h-[1px] bg-slate-200/50"></div>
-                    <div class="absolute top-2/3 left-0 right-0 h-[1px] bg-slate-200/50"></div>
-                    <div class="absolute left-1/4 top-0 bottom-0 w-[1px] bg-slate-200/50"></div>
-                    <div class="absolute left-3/4 top-0 bottom-0 w-[1px] bg-slate-200/50"></div>
-                    
-                    <!-- Main Delivery Road (Solid line) -->
-                    <div class="absolute left-12 right-12 top-[96px] h-2 bg-slate-200 rounded-full border-t border-b border-white z-0">
-                        <!-- Animated Route Path Fill -->
-                        <div id="map-road-fill" class="h-full bg-brand-500 rounded-full z-0 transition-all ease-linear" style="width: 0%"></div>
-                    </div>
-                    
-                    <!-- Map pins -->
-                    <!-- Restaurant (Left) -->
-                    <div class="absolute left-10 top-[96px] -translate-y-1/2 flex flex-col items-center z-10">
-                        <div class="bg-white border-2 border-brand-500 p-2.5 rounded-2xl shadow-md flex items-center justify-center text-brand-500 text-sm relative group hover:scale-105 transition-transform duration-300">
-                            <i class="fa-solid fa-shop"></i>
-                            <div class="absolute -top-1 right-0 w-2.5 h-2.5 bg-brand-500 rounded-full border-2 border-white animate-ping"></div>
-                        </div>
-                        <span class="text-[9px] font-black text-slate-700 bg-white/90 px-2 py-0.5 rounded-full border border-slate-200/60 mt-1.5 shadow-sm uppercase tracking-wider">Restaurant</span>
-                    </div>
-
-                    <!-- User Home (Right) -->
-                    <div class="absolute right-10 top-[96px] -translate-y-1/2 flex flex-col items-center z-10">
-                        <div class="bg-white border-2 border-emerald-500 p-2.5 rounded-2xl shadow-md flex items-center justify-center text-emerald-500 text-sm hover:scale-105 transition-transform duration-300">
-                            <i class="fa-solid fa-house-chimney"></i>
-                        </div>
-                        <span class="text-[9px] font-black text-slate-700 bg-white/90 px-2 py-0.5 rounded-full border border-slate-200/60 mt-1.5 shadow-sm uppercase tracking-wider">Your Home</span>
-                    </div>
-
-                    <!-- Scooter Delivery Icon Rider -->
-                    <div id="map-delivery-bike" class="absolute w-11 h-11 bg-slate-900 text-white rounded-full flex items-center justify-center text-base shadow-xl z-20 border-2 border-white transition-all ease-linear" style="left: 48px; top: 96px; transform: translate(-50%, -50%);">
-                        <i class="fa-solid fa-motorcycle text-brand-500 animate-pulse"></i>
-                    </div>
-                </div>
+                <!-- Live Order Tracking Map Container (Google Maps Styled) -->
+                <div id="tracking-map" class="w-full h-72 bg-slate-100 rounded-3xl border border-slate-200/60 mb-10 shadow-md relative z-0"></div>
 
                 <!-- Vertical Timeline Container -->
                 <div class="relative pl-10 space-y-12">
@@ -874,29 +839,27 @@
             const fillEl = document.getElementById('tracking-progress-fill');
             fillEl.style.height = (step * 33.33) + '%';
 
-            // Map animation coordination
-            const mapBike = document.getElementById('map-delivery-bike');
-            const mapRoadFill = document.getElementById('map-road-fill');
+            // Coordinate Leaflet Marker Animation
+            if (trackingMap && markerDelivery) {
+                const restCoords = [22.5487, 88.3516];
+                const homeCoords = [22.5532, 88.3615];
 
-            if (mapBike && mapRoadFill) {
                 if (step === 0 || step === 1) {
-                    // Start position (Restaurant)
-                    mapBike.style.transition = 'none';
-                    mapRoadFill.style.transition = 'none';
-                    mapBike.style.left = '48px';
-                    mapRoadFill.style.width = '0%';
+                    // Reset bike to Restaurant
+                    if (window.mapAnimationId) cancelAnimationFrame(window.mapAnimationId);
+                    markerDelivery.setLatLng(restCoords);
+                    if (activeRoutePolyline) activeRoutePolyline.setLatLngs([]);
+                    markerRestaurant.bindPopup("<b>Restaurant</b><br>Preparing your hot meal!").openPopup();
                 } else if (step === 2) {
-                    // Out for delivery - slide slowly over 5 seconds
-                    mapBike.style.transition = 'left 5000ms linear';
-                    mapRoadFill.style.transition = 'width 5000ms linear';
-                    mapBike.style.left = 'calc(100% - 64px)';
-                    mapRoadFill.style.width = 'calc(100% - 112px)';
+                    // Trigger smooth route sliding over 5 seconds
+                    markerRestaurant.closePopup();
+                    animateDeliveryMarker(mapRouteCoordinates, 5000);
                 } else if (step === 3) {
                     // Delivered
-                    mapBike.style.transition = 'all 1000ms ease-out';
-                    mapRoadFill.style.transition = 'width 1000ms ease-out';
-                    mapBike.style.left = 'calc(100% - 48px)';
-                    mapRoadFill.style.width = '100%';
+                    if (window.mapAnimationId) cancelAnimationFrame(window.mapAnimationId);
+                    markerDelivery.setLatLng(homeCoords);
+                    if (activeRoutePolyline) activeRoutePolyline.setLatLngs(mapRouteCoordinates);
+                    markerDelivery.bindPopup("<b>Delivery Executive</b><br>Enjoy your food! 🍔").openPopup();
                 }
             }
 
@@ -1357,6 +1320,11 @@
             trackingSection.classList.remove('hidden');
             trackingSection.scrollIntoView({ behavior: 'smooth' });
 
+            // Initialize Leaflet map instance (delayed slightly to wait for layout recalculation)
+            setTimeout(() => {
+                initLeafletMap();
+            }, 300);
+
             // Initialize simulation steps
             let currentStep = 0;
             updateTrackingProgress(currentStep);
@@ -1380,6 +1348,149 @@
             // Reset Cart badge/data
             cart = [];
             updateCartUI();
+        }
+
+        // Leaflet Maps State
+        let trackingMap = null;
+        let markerRestaurant = null;
+        let markerHome = null;
+        let markerDelivery = null;
+        let routePolyline = null;
+        let activeRoutePolyline = null;
+        let mapRouteCoordinates = [];
+        let mapAnimationId = null;
+
+        function initLeafletMap() {
+            const restCoords = [22.5487, 88.3516]; // Kolkata Park Street
+            const homeCoords = [22.5532, 88.3615]; // Nearby Ballygunge
+
+            if (trackingMap) {
+                try {
+                    trackingMap.remove();
+                } catch (e) {
+                    console.warn(e);
+                }
+                trackingMap = null;
+            }
+
+            // Create Leaflet Map instance
+            trackingMap = L.map('tracking-map', {
+                zoomControl: false,
+                attributionControl: false
+            }).setView(restCoords, 15);
+
+            // Google Maps-like Clean Light Tiles (CartoDB Positron)
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                maxZoom: 20
+            }).addTo(trackingMap);
+
+            // Custom Leaflet Icons styled with Tailwind classes
+            const restaurantIcon = L.divIcon({
+                html: `<div class="bg-white border-2 border-brand-500 p-2 rounded-2xl shadow-md flex items-center justify-center text-brand-500 text-xs w-9 h-9 relative z-10"><i class="fa-solid fa-shop"></i></div>`,
+                className: '',
+                iconSize: [36, 36],
+                iconAnchor: [18, 18]
+            });
+
+            const homeIcon = L.divIcon({
+                html: `<div class="bg-white border-2 border-emerald-500 p-2 rounded-2xl shadow-md flex items-center justify-center text-emerald-500 text-xs w-9 h-9 relative z-10"><i class="fa-solid fa-house-chimney"></i></div>`,
+                className: '',
+                iconSize: [36, 36],
+                iconAnchor: [18, 18]
+            });
+
+            const deliveryIcon = L.divIcon({
+                html: `<div class="bg-slate-900 text-white p-2 rounded-full shadow-lg border-2 border-white flex items-center justify-center text-xs w-9 h-9 animate-bounce"><i class="fa-solid fa-motorcycle text-brand-500"></i></div>`,
+                className: '',
+                iconSize: [36, 36],
+                iconAnchor: [18, 18]
+            });
+
+            // Set Markers
+            markerRestaurant = L.marker(restCoords, { icon: restaurantIcon }).addTo(trackingMap)
+                .bindPopup("<b>Restaurant</b><br>Preparing your order!").openPopup();
+            
+            markerHome = L.marker(homeCoords, { icon: homeIcon }).addTo(trackingMap);
+            markerDelivery = L.marker(restCoords, { icon: deliveryIcon }).addTo(trackingMap);
+
+            // Street intersections path coordinates
+            mapRouteCoordinates = [
+                restCoords,
+                [22.5487, 88.3550], // Road intersection 1
+                [22.5510, 88.3550], // Road intersection 2
+                [22.5510, 88.3615], // Road intersection 3
+                homeCoords
+            ];
+
+            // Grey Route Polyline Background
+            routePolyline = L.polyline(mapRouteCoordinates, {
+                color: '#e2e8f0',
+                weight: 5,
+                opacity: 0.8,
+                lineCap: 'round'
+            }).addTo(trackingMap);
+
+            // Orange Route Polyline Trail (following bike)
+            activeRoutePolyline = L.polyline([], {
+                color: '#fc8019',
+                weight: 5,
+                opacity: 1.0,
+                lineCap: 'round'
+            }).addTo(trackingMap);
+
+            // Adjust view boundaries
+            const bounds = L.latLngBounds([restCoords, homeCoords]);
+            trackingMap.fitBounds(bounds.pad(0.35));
+        }
+
+        // Animate marker along road coords over specific duration
+        function animateDeliveryMarker(routeCoords, durationMs) {
+            if (!markerDelivery || !trackingMap) return;
+
+            let startTime = null;
+
+            function interpolate(p1, p2, fraction) {
+                const lat = p1[0] + (p2[0] - p1[0]) * fraction;
+                const lng = p1[1] + (p2[1] - p1[1]) * fraction;
+                return [lat, lng];
+            }
+
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const elapsed = timestamp - startTime;
+                const progress = Math.min(elapsed / durationMs, 1);
+
+                const totalSegments = routeCoords.length - 1;
+                const rawSegment = progress * totalSegments;
+                const segmentIndex = Math.min(Math.floor(rawSegment), totalSegments - 1);
+                const segmentFraction = rawSegment - segmentIndex;
+
+                const currentPos = interpolate(
+                    routeCoords[segmentIndex],
+                    routeCoords[segmentIndex + 1],
+                    segmentFraction
+                );
+
+                // Update marker position
+                markerDelivery.setLatLng(currentPos);
+
+                // Update orange trail line
+                const activePath = routeCoords.slice(0, segmentIndex + 1);
+                activePath.push(currentPos);
+                if (activeRoutePolyline) {
+                    activeRoutePolyline.setLatLngs(activePath);
+                }
+
+                // Dynamic map follow panning
+                trackingMap.panTo(currentPos, { animate: true, duration: 0.1 });
+
+                if (progress < 1) {
+                    window.mapAnimationId = requestAnimationFrame(step);
+                }
+            }
+
+            if (window.mapAnimationId) cancelAnimationFrame(window.mapAnimationId);
+            window.mapAnimationId = requestAnimationFrame(step);
         }
 
         // On Page Load
