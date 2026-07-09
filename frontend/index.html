@@ -77,7 +77,7 @@
             </div>
 
             <!-- User Address Mock -->
-            <div class="hidden md:flex items-center gap-2 text-sm text-slate-600 font-medium bg-slate-50 py-2 px-4 rounded-full border border-slate-100">
+            <div onclick="openLocationPicker()" class="cursor-pointer hover:bg-slate-100 transition-all duration-300 hidden md:flex items-center gap-2 text-sm text-slate-650 font-bold bg-slate-50 py-2 px-4 rounded-full border border-slate-100">
                 <i class="fa-solid fa-location-dot text-brand-500"></i>
                 <span id="user-display-address">Park Street, Kolkata</span>
                 <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
@@ -666,6 +666,89 @@
         </div>
     </div>
 
+    <!-- Location Picker Modal -->
+    <div id="location-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
+        <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl p-6 sm:p-8 max-w-md w-full mx-4 relative">
+            <button onclick="closeLocationPicker()" class="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-955 hover:bg-slate-105 rounded-xl transition-all-300">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="text-center mb-6">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-xs font-semibold">
+                    <i class="fa-solid fa-location-dot text-brand-500"></i> Location Selector
+                </span>
+                <h3 class="text-2xl font-black text-slate-900 mt-2">Select your city</h3>
+                <p class="text-slate-400 text-xs font-semibold mt-1">Explore dining menus across different regions</p>
+            </div>
+            
+            <div class="space-y-3">
+                <div onclick="selectLocation('Kolkata', 'Park Street, Kolkata')" class="flex items-center justify-between border border-slate-100 hover:border-brand-500 p-4 rounded-2xl bg-slate-50/50 hover:bg-white hover:shadow-lg transition-all duration-300 cursor-pointer group text-left">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-orange-50 text-brand-500 p-2.5 rounded-xl group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-location-dot text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="block font-extrabold text-slate-900 text-sm">Kolkata</span>
+                            <span class="text-slate-450 text-[11px] font-semibold">Park Street</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                </div>
+                
+                <div onclick="selectLocation('Mumbai', 'Bandra West, Mumbai')" class="flex items-center justify-between border border-slate-100 hover:border-brand-500 p-4 rounded-2xl bg-slate-50/50 hover:bg-white hover:shadow-lg transition-all duration-300 cursor-pointer group text-left">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-orange-50 text-brand-500 p-2.5 rounded-xl group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-location-dot text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="block font-extrabold text-slate-900 text-sm">Mumbai</span>
+                            <span class="text-slate-450 text-[11px] font-semibold">Bandra West</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                </div>
+
+                <div onclick="selectLocation('Hyderabad', 'Gachibowli, Hyderabad')" class="flex items-center justify-between border border-slate-100 hover:border-brand-500 p-4 rounded-2xl bg-slate-50/50 hover:bg-white hover:shadow-lg transition-all duration-300 cursor-pointer group text-left">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-orange-50 text-brand-500 p-2.5 rounded-xl group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-location-dot text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="block font-extrabold text-slate-900 text-sm">Hyderabad</span>
+                            <span class="text-slate-450 text-[11px] font-semibold">Gachibowli</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                </div>
+
+                <div onclick="selectLocation('Bengaluru', 'Indiranagar, Bengaluru')" class="flex items-center justify-between border border-slate-100 hover:border-brand-500 p-4 rounded-2xl bg-slate-50/50 hover:bg-white hover:shadow-lg transition-all duration-300 cursor-pointer group text-left">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-orange-50 text-brand-500 p-2.5 rounded-xl group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-location-dot text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="block font-extrabold text-slate-900 text-sm">Bengaluru</span>
+                            <span class="text-slate-450 text-[11px] font-semibold">Indiranagar</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                </div>
+
+                <div onclick="selectLocation('Delhi', 'Connaught Place, Delhi')" class="flex items-center justify-between border border-slate-100 hover:border-brand-500 p-4 rounded-2xl bg-slate-50/50 hover:bg-white hover:shadow-lg transition-all duration-300 cursor-pointer group text-left">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-orange-50 text-brand-500 p-2.5 rounded-xl group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-location-dot text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="block font-extrabold text-slate-900 text-sm">Delhi</span>
+                            <span class="text-slate-450 text-[11px] font-semibold">Connaught Place</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Order for a Friend Modal -->
     <div id="friend-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
         <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl p-6 sm:p-8 max-w-md w-full mx-4 relative">
@@ -727,6 +810,7 @@
         let restaurants = [];
         let cart = [];
         let selectedRestaurant = null;
+        let currentCity = "Kolkata";
 
         // Mock data fallback in case backend is not running or accessed via file://
         const fallbackRestaurants = [
@@ -799,7 +883,16 @@
         ];
 
         // Fetch restaurants from Backend API, falling back to static JSON or hardcoded mock data
+        // Fetch restaurants from Backend API, falling back to static JSON or hardcoded mock data
         async function fetchRestaurants() {
+            // Check locationDatabases first to support dynamic multi-region switching seamlessly
+            if (typeof locationDatabases !== 'undefined' && locationDatabases[currentCity]) {
+                restaurants = locationDatabases[currentCity];
+                renderRestaurants();
+                updatePersonalizedGreeting();
+                return;
+            }
+
             // Check if page is loaded locally via file:// protocol
             if (window.location.protocol === 'file:') {
                 console.log('Running locally via file:// protocol. Using mock fallback data.');
@@ -2112,127 +2205,71 @@
             const hour = new Date().getHours();
             let timeOfDay = "evening";
             let weather = "Rainy (24°C)";
-            let recommendations = [];
 
-            if (hour >= 6 && hour < 11) {
+            if (hour >= 5 && hour < 12) {
                 timeOfDay = "morning";
                 weather = "Breezy Morning (25°C)";
-                recommendations = [
-                    {
-                        name: "Traditional Filter Coffee Combo",
-                        restaurantName: "Southern Spice",
-                        restaurantId: 3,
-                        description: "Hot Masala Dosa, 2 Pcs Idli Sambar, and premium Filter Coffee.",
-                        price: 260,
-                        image: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=200&auto=format&fit=crop&q=80"
-                    },
-                    {
-                        name: "Cafe Latte Breakfast Sandwich",
-                        restaurantName: "Cafe Coffee Day",
-                        restaurantId: 8,
-                        description: "Creamy Hot Cafe Latte with a fresh Chicken Club Sandwich.",
-                        price: 330,
-                        image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200&auto=format&fit=crop&q=80"
-                    },
-                    {
-                        name: "Waffle Morning Delicacy",
-                        restaurantName: "Waffle World",
-                        restaurantId: 34,
-                        description: "Classic Honey Butter Waffle topped with Vanilla Scoop Addon.",
-                        price: 170,
-                        image: "https://images.unsplash.com/photo-1562376502-6f769499c886?w=200&auto=format&fit=crop&q=80"
-                    }
-                ];
-            } else if (hour >= 11 && hour < 16) {
+            } else if (hour >= 12 && hour < 17) {
                 timeOfDay = "afternoon";
                 weather = "Warm Afternoon (31°C)";
-                recommendations = [
-                    {
-                        name: "Comforting Lentil Stew & Rice (Bisi Bele Bath)",
-                        restaurantName: "Udupi Vihar",
-                        restaurantId: 22,
-                        description: "Piping hot lentil rice mash cooked with ghee, carrots, beans, and South Indian spices.",
-                        price: 120,
-                        image: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?w=200&auto=format&fit=crop&q=80"
-                    },
-                    {
-                        name: "Your Favorite Regular Biryani",
-                        restaurantName: "Kolkata Biryani House",
-                        restaurantId: 2,
-                        description: "Aromatic Basmati rice layered with tender Chicken Biryani and egg.",
-                        price: 280,
-                        image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200&auto=format&fit=crop&q=80"
-                    },
-                    {
-                        name: "Fast-delivery Indo-Chinese Combo",
-                        restaurantName: "Biryani Junction",
-                        restaurantId: 11,
-                        description: "Spicy Egg Chowmein served with tasty hot Chilli Chicken.",
-                        price: 320,
-                        image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=200&auto=format&fit=crop&q=80"
-                    }
-                ];
-            } else if (hour >= 16 && hour < 22) {
+            } else if (hour >= 17 && hour < 22) {
                 timeOfDay = "evening";
                 weather = "Rainy Evening (24°C)";
-                recommendations = [
-                    {
-                        name: "Comforting Khichuri & Beguni Combo",
-                        restaurantName: "Southern Spice",
-                        restaurantId: 3,
-                        description: "Hearty lentil khichuri served with crispy fried eggplant (beguni) and aloo bhaja.",
-                        price: 180,
-                        image: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?w=200&auto=format&fit=crop&q=80"
-                    },
-                    {
-                        name: "Your Favorite Regular Biryani",
-                        restaurantName: "Kolkata Biryani House",
-                        restaurantId: 2,
-                        description: "Classic Kolkata-style Chicken Biryani with potato and soft egg.",
-                        price: 280,
-                        image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200&auto=format&fit=crop&q=80"
-                    },
-                    {
-                        name: "Fast-delivery Indo-Chinese Combo",
-                        restaurantName: "Biryani Junction",
-                        restaurantId: 11,
-                        description: "Hot Egg Chowmein served with saucy, delicious Chilli Chicken.",
-                        price: 320,
-                        image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=200&auto=format&fit=crop&q=80"
-                    }
-                ];
             } else {
                 timeOfDay = "late night";
                 weather = "Cool Night (21°C)";
-                recommendations = [
-                    {
-                        name: "Paneer Tikka Late Night Roll",
-                        restaurantName: "Punjab Rasoi",
-                        restaurantId: 16,
-                        description: "Spicy roasted paneer wrapped in a warm flatbread with onions and chutney.",
-                        price: 150,
-                        image: "https://images.unsplash.com/photo-1628294895520-73f248f572a1?w=200&auto=format&fit=crop&q=80"
-                    },
-                    {
-                        name: "Your Favorite Regular Biryani",
-                        restaurantName: "Kolkata Biryani House",
-                        restaurantId: 2,
-                        description: "Late night cravings savior: Chicken Biryani with raita.",
-                        price: 280,
-                        image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200&auto=format&fit=crop&q=80"
-                    },
-                    {
-                        name: "Kitkat Waffle Crunch Delicacy",
-                        restaurantName: "Waffle World",
-                        restaurantId: 34,
-                        description: "Warm chocolate waffle topped with Kitkat crunch and dark chocolate drizzle.",
-                        price: 180,
-                        image: "https://images.unsplash.com/photo-1562376502-6f769499c886?w=200&auto=format&fit=crop&q=80"
-                    }
-                ];
             }
 
-            contextText.innerText = `Based on the ${weather} and this ${timeOfDay} hour, here are 3 curated comfort meals just for you:`;
+            contextText.innerText = `Based on the ${weather} and this ${timeOfDay} hour, here are 3 curated comfort meals just for you in ${currentCity}:`;
+
+            // Extract recommendations dynamically from active restaurants
+            const rawRecs = [];
+            restaurants.forEach(rest => {
+                rest.menu.forEach(item => {
+                    const nameLower = item.name.toLowerCase();
+                    
+                    // Classification
+                    let isMorning = nameLower.includes('dosa') || nameLower.includes('idli') || nameLower.includes('coffee') || nameLower.includes('latte') || nameLower.includes('chai') || nameLower.includes('breakfast') || nameLower.includes('sandwich') || nameLower.includes('waffle') || nameLower.includes('toast') || nameLower.includes('pav');
+                    let isAfternoon = nameLower.includes('biryani') || nameLower.includes('rice') || nameLower.includes('korma') || nameLower.includes('chicken') || nameLower.includes('bath') || nameLower.includes('haleem') || nameLower.includes('meals') || nameLower.includes('pizza') || nameLower.includes('burger');
+                    let isEvening = !isMorning; // Fallback
+
+                    rawRecs.push({
+                        name: item.name,
+                        restaurantName: rest.name,
+                        restaurantId: rest.id,
+                        description: item.description,
+                        price: item.price,
+                        image: getDishImage(item.name),
+                        isMorning: isMorning,
+                        isAfternoon: isAfternoon,
+                        isEvening: isEvening
+                    });
+                });
+            });
+
+            // Filter based on time
+            let filtered = [];
+            if (timeOfDay === "morning") {
+                filtered = rawRecs.filter(r => r.isMorning);
+            } else if (timeOfDay === "afternoon") {
+                filtered = rawRecs.filter(r => r.isAfternoon);
+            } else {
+                filtered = rawRecs.filter(r => r.isEvening);
+            }
+
+            // If empty or less than 3, fill it up from all raw recommendations
+            if (filtered.length < 3) {
+                const uniqueNames = new Set(filtered.map(f => f.name));
+                rawRecs.forEach(r => {
+                    if (filtered.length < 3 && !uniqueNames.has(r.name)) {
+                        filtered.push(r);
+                        uniqueNames.add(r.name);
+                    }
+                });
+            }
+
+            // Slice to exactly 3 recommendations
+            const recommendations = filtered.slice(0, 3);
 
             // Display recommendations
             setTimeout(() => {
@@ -2375,23 +2412,214 @@
             }, 2500);
         }
 
+        // Areas mapping for weather telemetry subtitles
+        const areas = {
+            "Kolkata": "Park Street",
+            "Mumbai": "Bandra West",
+            "Bengaluru": "Indiranagar",
+            "Hyderabad": "Gachibowli",
+            "Delhi": "Connaught Place"
+        };
+
+        // Multi-region restaurant databases
+        const locationDatabases = {
+            "Kolkata": [
+                {
+                    "id": 1,
+                    "name": "Kolkata Biryani House",
+                    "rating": 4.5,
+                    "menu": [
+                        { "name": "Chicken Biryani", "price": 280, "description": "Fragrant basmati rice cooked with chicken, potato, and egg." },
+                        { "name": "Mutton Rezala", "price": 320, "description": "Tender mutton cooked in yogurt-based cashew gravy." },
+                        { "name": "Phirni", "price": 90, "description": "Creamy rice pudding served in earthen pot." }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "name": "Southern Spice",
+                    "rating": 4.6,
+                    "menu": [
+                        { "name": "Masala Dosa", "price": 120, "description": "Crispy crepe filled with potato masala." },
+                        { "name": "Idli Sambar (2 Pcs)", "price": 80, "description": "Steamed rice cakes served with sambar and coconut chutney." },
+                        { "name": "Filter Coffee", "price": 60, "description": "South Indian drip-brewed coffee." }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "name": "Biryani Junction",
+                    "rating": 4.2,
+                    "menu": [
+                        { "name": "Egg Chowmein", "price": 140, "description": "Stir-fried noodles with egg and veggies." },
+                        { "name": "Chilli Chicken", "price": 240, "description": "Spicy Indo-Chinese chicken chunks." }
+                    ]
+                }
+            ],
+            "Mumbai": [
+                {
+                    "id": 4,
+                    "name": "Bandra Biryani Co.",
+                    "rating": 4.4,
+                    "menu": [
+                        { "name": "Chicken Tikka Biryani", "price": 290, "description": "Tender chicken tikka cooked with fragrant spices and layered rice." },
+                        { "name": "Mutton Seekh Kebab", "price": 260, "description": "Juicy minced mutton skewers grilled in tandoor." }
+                    ]
+                },
+                {
+                    "id": 5,
+                    "name": "Juhu Chowpatty Treats",
+                    "rating": 4.7,
+                    "menu": [
+                        { "name": "Pav Bhaji Special", "price": 130, "description": "Spiced mashed vegetable gravy served with hot buttered pav." },
+                        { "name": "Vada Pav (2 Pcs)", "price": 60, "description": "Spicy potato fritters sandwiched in soft buns with garlic chutney." },
+                        { "name": "Cutting Chai", "price": 40, "description": "Strong spiced ginger milk tea served Mumbai style." }
+                    ]
+                },
+                {
+                    "id": 6,
+                    "name": "Bombay Pizzeria",
+                    "rating": 4.3,
+                    "menu": [
+                        { "name": "Mumbai Masala Pizza", "price": 310, "description": "Local spiced veggies and cheese on hand-tossed base." }
+                    ]
+                }
+            ],
+            "Hyderabad": [
+                {
+                    "id": 7,
+                    "name": "Paradise Hyderabadi House",
+                    "rating": 4.8,
+                    "menu": [
+                        { "name": "Hyderabadi Chicken Biryani", "price": 310, "description": "Authentic kacchi yakhni slow-cooked chicken biryani with mirchi ka salan." },
+                        { "name": "Double Ka Meetha", "price": 80, "description": "Crispy fried bread pudding soaked in milk syrup and saffron." }
+                    ]
+                },
+                {
+                    "id": 8,
+                    "name": "Chutneys Gachibowli",
+                    "rating": 4.5,
+                    "menu": [
+                        { "name": "Guntur Idli (4 Pcs)", "price": 90, "description": "Button idlis coated in spicy Guntur podi and pure ghee." },
+                        { "name": "Babai Hotel Dosa", "price": 140, "description": "White butter-drenched thick dosa served with four house chutneys." }
+                    ]
+                },
+                {
+                    "id": 9,
+                    "name": "Charminar Haleem",
+                    "rating": 4.6,
+                    "menu": [
+                        { "name": "Mutton Haleem", "price": 220, "description": "Rich stew of mutton, lentils, and broken wheat slow cooked to paste." }
+                    ]
+                }
+            ],
+            "Bengaluru": [
+                {
+                    "id": 10,
+                    "name": "MTR Indiranagar",
+                    "rating": 4.7,
+                    "menu": [
+                        { "name": "Rava Dosa Bengaluru Style", "price": 110, "description": "Crispy semolina crepe with cashews and ghee." },
+                        { "name": "Bisi Bele Bath", "price": 120, "description": "Traditional hot lentil rice mash cooked with tamarind and ghee." },
+                        { "name": "Premium Filter Coffee", "price": 70, "description": "Richly frothed chicory blend." }
+                    ]
+                },
+                {
+                    "id": 11,
+                    "name": "Corner House Ice Creams",
+                    "rating": 4.9,
+                    "menu": [
+                        { "name": "Death By Chocolate", "price": 250, "description": "Cake, vanilla ice cream, chocolate sauce, whipped cream, and nuts." }
+                    ]
+                },
+                {
+                    "id": 12,
+                    "name": "Koramangala Burger Club",
+                    "rating": 4.4,
+                    "menu": [
+                        { "name": "Crunchy Chicken Burger", "price": 190, "description": "Spicy fried chicken breast with garlic mayo." }
+                    ]
+                }
+            ],
+            "Delhi": [
+                {
+                    "id": 13,
+                    "name": "Karim's Old Delhi",
+                    "rating": 4.6,
+                    "menu": [
+                        { "name": "Mutton Korma", "price": 340, "description": "Classic rich mutton curry with brown onions and spices." },
+                        { "name": "Khamiri Roti", "price": 40, "description": "Fluffy tandoori yeast-leavened flatbread." }
+                    ]
+                },
+                {
+                    "id": 14,
+                    "name": "Moti Mahal Deluxe",
+                    "rating": 4.5,
+                    "menu": [
+                        { "name": "Original Butter Chicken", "price": 320, "description": "Clay-oven smoked chicken cooked in velvety tomato butter sauce." },
+                        { "name": "Dal Makhani", "price": 210, "description": "Black lentils slow-cooked overnight with cream and butter." }
+                    ]
+                },
+                {
+                    "id": 15,
+                    "name": "Chandni Chowk Sweets",
+                    "rating": 4.3,
+                    "menu": [
+                        { "name": "Rabri Jalebi Combo", "price": 120, "description": "Rabri-topped crispy sweet jalebis." }
+                    ]
+                }
+            ]
+        };
+
+        // Dish images mapper helper
+        function getDishImage(name) {
+            const n = name.toLowerCase();
+            if (n.includes('biryani')) return 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200&auto=format&fit=crop&q=80';
+            if (n.includes('dosa') || n.includes('idli')) return 'https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=200&auto=format&fit=crop&q=80';
+            if (n.includes('coffee') || n.includes('latte') || n.includes('chai')) return 'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200&auto=format&fit=crop&q=80';
+            if (n.includes('pizza')) return 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=200&auto=format&fit=crop&q=80';
+            if (n.includes('burger')) return 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&auto=format&fit=crop&q=80';
+            if (n.includes('pav bhaji') || n.includes('vada pav')) return 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=200&auto=format&fit=crop&q=80';
+            if (n.includes('kebab') || n.includes('korma') || n.includes('chicken')) return 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=200&auto=format&fit=crop&q=80';
+            if (n.includes('jalebi') || n.includes('phirni') || n.includes('meetha') || n.includes('chocolate')) return 'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=200&auto=format&fit=crop&q=80';
+            return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200&auto=format&fit=crop&q=80';
+        }
+
+        // Location Picker Handlers
+        function openLocationPicker() {
+            document.getElementById('location-modal').classList.remove('hidden');
+        }
+
+        function closeLocationPicker() {
+            document.getElementById('location-modal').classList.add('hidden');
+        }
+
+        function selectLocation(city, address) {
+            currentCity = city;
+            document.getElementById('user-display-address').innerText = address;
+            closeLocationPicker();
+            fetchRestaurants();
+            showToast(`Switched location to ${city}!`);
+        }
+
         // Dynamically tailor copy & weather telemetry based on time of day
         function updatePersonalizedGreeting() {
             const hour = new Date().getHours();
-            let heading = "What are we eating today, Rahul? 🌙";
-            let subtitle = "Rainy evening in Park Street? Let our AI handle dinner.";
-            let socialProof = "dinners decided in Kolkata tonight";
+            const area = areas[currentCity] || "Park Street";
+            const city = currentCity;
+
+            let heading = `What are we eating today, Rahul? 🌙`;
+            let subtitle = `Rainy evening in ${area}? Let our AI handle dinner.`;
+            let socialProof = `dinners decided in ${city} tonight`;
             let modalTitle = "Let us handle dinner.";
 
             if (hour >= 5 && hour < 12) {
-                heading = "What are we eating today, Rahul? 🌅";
-                subtitle = "Sunny morning in Park Street? Let our AI handle breakfast.";
-                socialProof = "breakfasts decided in Kolkata today";
+                heading = `What are we eating today, Rahul? 🌅`;
+                subtitle = `Sunny morning in ${area}? Let our AI handle breakfast.`;
+                socialProof = `breakfasts decided in ${city} today`;
                 modalTitle = "Let us handle breakfast.";
             } else if (hour >= 12 && hour < 17) {
-                heading = "What are we eating today, Rahul? ☀️";
-                subtitle = "Hot afternoon in Park Street? Let our AI handle lunch.";
-                socialProof = "lunches decided in Kolkata today";
+                heading = `What are we eating today, Rahul? ☀️`;
+                subtitle = `Hot afternoon in ${area}? Let our AI handle lunch.`;
+                socialProof = `lunches decided in ${city} today`;
                 modalTitle = "Let us handle lunch.";
             }
 
