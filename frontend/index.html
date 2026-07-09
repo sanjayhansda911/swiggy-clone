@@ -353,11 +353,13 @@
 
             <!-- Invoice details -->
             <div class="bg-slate-50 border border-slate-100 rounded-3xl p-5 mb-8 space-y-3">
-                <div class="flex justify-between items-center text-sm">
-                    <span class="text-slate-400 font-semibold">Ordering:</span>
-                    <span id="payment-item-name" class="font-extrabold text-slate-800">Pizza</span>
+                <div class="space-y-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Order Summary</span>
+                    <div id="payment-items-list" class="space-y-1.5 text-sm font-medium text-slate-800 max-h-32 overflow-y-auto">
+                        <!-- Injected dynamically -->
+                    </div>
                 </div>
-                <div class="flex justify-between items-center text-sm">
+                <div class="flex justify-between items-center text-sm pt-2 border-t border-slate-200/40">
                     <span class="text-slate-400 font-semibold">From:</span>
                     <span id="payment-restaurant-name" class="font-extrabold text-slate-800">The Pizza Palace</span>
                 </div>
@@ -736,62 +738,16 @@
 
         // Place mock order and start tracking status
         function placeOrder() {
-            // Generate order ID
-            const orderId = `#HB-${Math.floor(100000 + Math.random() * 900000)}`;
-            document.getElementById('tracking-order-id').innerText = orderId;
-
-            // Render ordered items summary
-            const itemsList = document.getElementById('tracking-items-list');
-            itemsList.innerHTML = '';
-            cart.forEach(item => {
-                itemsList.innerHTML += `
-                    <div class="flex justify-between items-center">
-                        <span>${item.name} <span class="text-slate-400 text-xs font-semibold">x ${item.quantity}</span></span>
-                        <span class="font-bold text-slate-700">₹${(item.price * item.quantity).toFixed(2)}</span>
-                    </div>
-                `;
-            });
-
+            if (cart.length === 0) return;
+            
             // Close shopping cart panel
             toggleCart(false);
 
-            // Hide normal website sections
-            document.getElementById('hero-section').classList.add('hidden');
-            document.getElementById('restaurants-section').classList.add('hidden');
-            document.getElementById('menu-section').classList.add('hidden');
+            // Find current restaurant context (we can use the selectedRestaurant or default to first matched)
+            const rest = selectedRestaurant || restaurants[0];
 
-            // Reset step banner and button
-            document.getElementById('delivered-badge').classList.add('hidden');
-            document.getElementById('order-complete-actions').classList.add('hidden');
-
-            // Show and scroll to Order Tracking Panel
-            const trackingSection = document.getElementById('order-tracking-section');
-            trackingSection.classList.remove('hidden');
-            trackingSection.scrollIntoView({ behavior: 'smooth' });
-
-            // Initialize simulation steps
-            let currentStep = 0;
-            updateTrackingProgress(currentStep);
-
-            // Clear any old simulation if running
-            if (window.trackingInterval) clearInterval(window.trackingInterval);
-
-            // Start 5-second interval simulation
-            window.trackingInterval = setInterval(() => {
-                currentStep++;
-                if (currentStep <= 3) {
-                    updateTrackingProgress(currentStep);
-                } else {
-                    clearInterval(window.trackingInterval);
-                    // Show completion actions
-                    document.getElementById('delivered-badge').classList.remove('hidden');
-                    document.getElementById('order-complete-actions').classList.remove('hidden');
-                }
-            }, 5000);
-
-            // Clear cart data
-            cart = [];
-            updateCartUI();
+            // Show payment screen for all items in the cart
+            showPaymentScreen(rest, cart);
         }
 
         // Update CSS classes dynamically based on step index
@@ -963,24 +919,34 @@
             document.getElementById('voice-modal').classList.add('hidden');
         }
 
-        // Voice Command Parsing
+        // Dictionary to parse spoken quantity words to numbers
+        const numberMap = {
+            "one": 1, "1": 1,
+            "two": 2, "to": 2, "too": 2, "2": 2,
+            "three": 3, "3": 3,
+            "four": 4, "for": 4, "4": 4,
+            "five": 5, "5": 5,
+            "six": 6, "6": 6,
+            "seven": 7, "7": 7,
+            "eight": 8, "ate": 8, "8": 8,
+            "nine": 9, "9": 9,
+            "ten": 10, "10": 10
+        };
+
+        // Voice Command Parsing supporting quantities and multi-item ordering
         function processVoiceCommand(text) {
             const query = text.toLowerCase().trim();
             console.log("Analyzing command:", query);
 
-            let bestMatch = null;
-            let highestScore = 0;
-
+            // 1. Identify if a restaurant is mentioned anywhere in the query
+            let globalRestaurant = null;
+            let highestRestScore = 0;
             for (const rest of restaurants) {
                 const restNameLower = rest.name.toLowerCase();
-                
-                // Calculate restaurant match score
                 let restScore = 0;
-                // If query contains the full restaurant name, high score
                 if (query.includes(restNameLower)) {
-                    restScore += 100;
+                    restScore = 100;
                 } else {
-                    // Check if words of the restaurant name are in the query
                     const restWords = restNameLower.split(/\s+/);
                     restWords.forEach(word => {
                         if (word.length > 2 && query.includes(word)) {
@@ -988,53 +954,104 @@
                         }
                     });
                 }
-
-                for (const item of rest.menu) {
-                    const itemNameLower = item.name.toLowerCase();
-                    let itemScore = 0;
-
-                    // If query contains the exact item name, high score
-                    if (query.includes(itemNameLower)) {
-                        itemScore += 150;
-                    } else {
-                        // Check word overlap for the item name
-                        const itemWords = itemNameLower.split(/\s+/);
-                        itemWords.forEach(word => {
-                            if (word.length > 2 && query.includes(word)) {
-                                itemScore += 40; // e.g. "biryani" matches "chicken biryani"
-                            }
-                        });
-                    }
-
-                    // Total score is item score + restaurant score bonus
-                    // Only apply restaurant bonus if the item itself was matched at all
-                    let totalScore = itemScore;
-                    if (itemScore > 0) {
-                        totalScore += restScore;
-                    }
-
-                    if (totalScore > highestScore) {
-                        highestScore = totalScore;
-                        bestMatch = { restaurant: rest, item: item };
-                    }
+                if (restScore > highestRestScore) {
+                    highestRestScore = restScore;
+                    globalRestaurant = rest;
                 }
             }
+            // Bind global restaurant if we have a matched score
+            if (highestRestScore < 30) {
+                globalRestaurant = null;
+            }
 
-            // If we found a matching item with a significant score
-            if (bestMatch && highestScore >= 30) {
-                const { restaurant, item } = bestMatch;
-                speakText(`Perfect! Adding ${item.name} from ${restaurant.name}. Transitioning to checkout.`);
-                stopVoiceListening();
+            // 2. Split query by "and", "plus", or comma
+            const parts = query.split(/\b(?:and|plus)\b|,/);
+            const matchedOrders = [];
 
-                // Clear previous cart, put this new item
-                cart = [{ name: item.name, price: item.price, quantity: 1 }];
+            parts.forEach(part => {
+                let cleanPart = part.trim();
+                if (!cleanPart) return;
+
+                // Extract quantity from the start of the phrase
+                let quantity = 1;
+                const words = cleanPart.split(/\s+/);
+                
+                for (let idx = 0; idx < Math.min(words.length, 3); idx++) {
+                    const word = words[idx];
+                    if (numberMap[word] !== undefined) {
+                        quantity = numberMap[word];
+                        // Strip out the quantity word so it doesn't affect item matching
+                        cleanPart = cleanPart.replace(new RegExp(`\\b${word}\\b`, 'g'), '').trim();
+                        break;
+                    }
+                }
+
+                // Match remaining text to a dish
+                let bestItem = null;
+                let bestItemRest = null;
+                let highestItemScore = 0;
+
+                // Search database
+                const searchScope = globalRestaurant ? [globalRestaurant] : restaurants;
+                for (const rest of searchScope) {
+                    for (const item of rest.menu) {
+                        const itemNameLower = item.name.toLowerCase();
+                        let score = 0;
+
+                        if (cleanPart.includes(itemNameLower)) {
+                            score += 150;
+                        } else {
+                            const itemWords = itemNameLower.split(/\s+/);
+                            itemWords.forEach(w => {
+                                if (w.length > 2 && cleanPart.includes(w)) {
+                                    score += 40;
+                                }
+                            });
+                        }
+
+                        if (score > highestItemScore) {
+                            highestItemScore = score;
+                            bestItem = item;
+                            bestItemRest = rest;
+                        }
+                    }
+                }
+
+                if (bestItem && highestItemScore >= 30) {
+                    matchedOrders.push({
+                        item: bestItem,
+                        restaurant: bestItemRest,
+                        quantity: quantity
+                    });
+                }
+            });
+
+            // 3. Process matched orders
+            if (matchedOrders.length > 0) {
+                // Clear previous cart
+                cart = [];
+                
+                // Add all matched items to cart
+                matchedOrders.forEach(order => {
+                    cart.push({
+                        name: order.item.name,
+                        price: order.item.price,
+                        quantity: order.quantity
+                    });
+                });
                 updateCartUI();
 
+                const mainRestaurant = matchedOrders[0].restaurant;
+
+                // Prepare verbal feedback
+                const speakItems = matchedOrders.map(o => `${o.quantity} ${o.item.name}`).join(' and ');
+                speakText(`Adding ${speakItems} from ${mainRestaurant.name}. Transitioning to checkout.`);
+                stopVoiceListening();
+
                 // Trigger payment screen
-                showPaymentScreen(restaurant, item);
+                showPaymentScreen(mainRestaurant, cart);
             } else {
-                // Speak error
-                speakText("Sorry, I could not match that dish. Please try saying it again clearly.");
+                speakText("Sorry, I could not match those dishes. Please say it again clearly.");
                 document.getElementById('voice-transcript').innerText = "Couldn't match command. Try again.";
             }
         }
@@ -1042,7 +1059,6 @@
         // Voice Feedback Text-to-Speech Helper
         function speakText(msg) {
             if ('speechSynthesis' in window) {
-                // Cancel any ongoing speaking
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(msg);
                 utterance.rate = 1.0;
@@ -1050,18 +1066,32 @@
             }
         }
 
-        // Payment Processing Screen
-        function showPaymentScreen(restaurant, item) {
+        // Payment Processing Screen supporting multiple items
+        function showPaymentScreen(restaurant, items) {
             const paymentModal = document.getElementById('payment-modal');
             paymentModal.classList.remove('hidden');
 
-            // Setup Invoice details
-            document.getElementById('payment-item-name').innerText = item.name;
+            // Render Invoice items
+            const itemsList = document.getElementById('payment-items-list');
+            itemsList.innerHTML = '';
+            
+            let subtotal = 0;
+            items.forEach(ord => {
+                const totalItemPrice = ord.price * ord.quantity;
+                subtotal += totalItemPrice;
+                itemsList.innerHTML += `
+                    <div class="flex justify-between items-center text-xs text-slate-700">
+                        <span>${ord.name} <span class="text-slate-400 font-bold">x ${ord.quantity}</span></span>
+                        <span class="font-bold text-slate-800">₹${totalItemPrice.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+
             document.getElementById('payment-restaurant-name').innerText = restaurant.name;
             
             const deliveryFee = 30;
             const tax = 15;
-            const grandTotal = item.price + deliveryFee + tax;
+            const grandTotal = subtotal + deliveryFee + tax;
             document.getElementById('payment-grand-total').innerText = `₹${grandTotal.toFixed(2)}`;
 
             // Reset States
@@ -1076,30 +1106,33 @@
                 succState.classList.remove('hidden');
                 speakText("Payment Successful. Enjoy your tracking!");
 
-                // Wait another 1.5 seconds, then transition to Tracking Page
+                // Wait 1.5 seconds, then transition to Tracking Page
                 setTimeout(() => {
                     paymentModal.classList.add('hidden');
                     
                     // Directly place order & load tracking page
-                    placeOrderDirectly(restaurant, item, grandTotal);
+                    placeOrderDirectly(restaurant, items, grandTotal);
                 }, 1500);
             }, 2500);
         }
 
         // Direct placement for Voice Order (bypassing normal placeOrder alert)
-        function placeOrderDirectly(restaurant, item, grandTotal) {
+        function placeOrderDirectly(restaurant, items, grandTotal) {
             // Generate order ID
             const orderId = `#HB-${Math.floor(100000 + Math.random() * 900000)}`;
             document.getElementById('tracking-order-id').innerText = orderId;
 
             // Render ordered items summary in status panel
             const itemsList = document.getElementById('tracking-items-list');
-            itemsList.innerHTML = `
-                <div class="flex justify-between items-center">
-                    <span>${item.name} <span class="text-slate-400 text-xs font-semibold">x 1</span></span>
-                    <span class="font-bold text-slate-700">₹${item.price.toFixed(2)}</span>
-                </div>
-            `;
+            itemsList.innerHTML = '';
+            items.forEach(ord => {
+                itemsList.innerHTML += `
+                    <div class="flex justify-between items-center text-sm font-medium text-slate-600">
+                        <span>${ord.name} <span class="text-slate-400 text-xs font-semibold">x ${ord.quantity}</span></span>
+                        <span class="font-bold text-slate-700">₹${(ord.price * ord.quantity).toFixed(2)}</span>
+                    </div>
+                `;
+            });
 
             // Hide normal website sections
             document.getElementById('hero-section').classList.add('hidden');
