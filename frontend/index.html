@@ -1204,36 +1204,43 @@
                 }
             });
 
-            // Handle Ambiguity: Show option selection if restaurant isn't specified
-            if (ambiguityFound && !globalRestaurant) {
-                const firstAmbiguousItem = parsedItems.find(p => p.candidates.length > 1);
+            // Handle Ambiguity: Show option selection if multiple candidates match
+            if (ambiguityFound) {
+                // Find the first item that has ambiguity (optionally filtered by global restaurant context)
+                const firstAmbiguousItem = parsedItems.find(p => {
+                    let cands = p.candidates;
+                    if (globalRestaurant) {
+                        const filtered = cands.filter(c => c.restaurant.id === globalRestaurant.id);
+                        if (filtered.length > 0) cands = filtered;
+                    }
+                    return cands.length > 1;
+                });
                 
+                let filteredCands = firstAmbiguousItem.candidates;
+                if (globalRestaurant) {
+                    const filtered = filteredCands.filter(c => c.restaurant.id === globalRestaurant.id);
+                    if (filtered.length > 0) filteredCands = filtered;
+                }
+
                 // Update UI state inside voice overlay modal
-                document.getElementById('voice-status-title').innerText = "Select Restaurant";
-                document.getElementById('voice-transcript').innerText = `Where would you like to order "${firstAmbiguousItem.cleanPart}" from?`;
+                document.getElementById('voice-status-title').innerText = "Select Option";
+                document.getElementById('voice-transcript').innerText = `Which item would you like to choose?`;
 
                 const container = document.getElementById('voice-candidates-container');
                 const list = document.getElementById('voice-candidates-list');
                 list.innerHTML = '';
                 container.classList.remove('hidden');
 
-                // Extract unique candidate restaurants serving this item
-                const uniqueCandidates = [];
-                firstAmbiguousItem.candidates.forEach(c => {
-                    if (!uniqueCandidates.some(u => u.restaurant.id === c.restaurant.id)) {
-                        uniqueCandidates.push(c);
-                    }
-                });
-
                 // Generate choice selection buttons
-                uniqueCandidates.forEach(cand => {
+                filteredCands.forEach(cand => {
                     const btn = document.createElement('button');
                     btn.className = "w-full bg-slate-50 hover:bg-brand-50 text-slate-800 hover:text-brand-600 font-extrabold py-3 px-4 rounded-xl text-left border border-slate-100 hover:border-brand-200 transition-all duration-300 flex items-center justify-between text-xs sm:text-sm";
                     btn.innerHTML = `
-                        <span>${cand.restaurant.name}</span>
-                        <span class="text-[10px] text-slate-400 font-semibold flex items-center gap-1">
-                            <i class="fa-solid fa-star text-amber-500"></i> ${cand.restaurant.rating}
-                        </span>
+                        <div class="flex flex-col text-left">
+                            <span class="font-extrabold text-slate-900">${cand.item.name}</span>
+                            <span class="text-[10px] text-slate-400 font-semibold mt-0.5">${cand.restaurant.name}</span>
+                        </div>
+                        <span class="font-black text-brand-500">₹${cand.item.price.toFixed(2)}</span>
                     `;
                     btn.onclick = () => confirmRestaurantVoiceSelection(cand.restaurant, parsedItems);
                     list.appendChild(btn);
@@ -1248,8 +1255,8 @@
                 window.lastParsedItems = parsedItems;
                 window.lastResolvedOrders = resolvedOrders;
 
-                speakText(`I found ${firstAmbiguousItem.cleanPart} at multiple restaurants. Please choose a restaurant from the screen.`);
-            } else {
+                speakText(`I found multiple options. Please choose one from the screen.`);
+            } else if (resolvedOrders.length > 0) {
                 // No ambiguity - direct checkout!
                 const finalRestaurant = globalRestaurant || (resolvedOrders[0] ? resolvedOrders[0].restaurant : null);
                 
@@ -1258,6 +1265,9 @@
                 window.lastResolvedOrders = resolvedOrders;
 
                 executeDirectCheckout(finalRestaurant, resolvedOrders);
+            } else {
+                speakText("Sorry, I could not match those dishes. Please say it again clearly.");
+                document.getElementById('voice-transcript').innerText = "Couldn't match command. Try again.";
             }
         }
 
