@@ -1162,11 +1162,15 @@
                 candidates.sort((a, b) => b.score - a.score);
 
                 if (candidates.length > 0) {
+                    // Only keep candidates with the maximum matching score for this item
+                    const topScore = candidates[0].score;
+                    const topTierCandidates = candidates.filter(c => c.score === topScore);
+
                     parsedItems.push({
                         rawPart: part.trim(),
                         cleanPart: cleanPart,
                         quantity: quantity,
-                        candidates: candidates
+                        candidates: topTierCandidates
                     });
                 }
             });
