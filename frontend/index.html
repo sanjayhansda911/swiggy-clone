@@ -67,9 +67,15 @@
 
             <!-- Action Buttons -->
             <div class="flex items-center gap-3">
-                <!-- Voice Assistant Trigger -->
-                <button onclick="startVoiceListening()" class="bg-brand-50 text-brand-500 hover:bg-brand-500 hover:text-white p-3.5 rounded-2xl font-bold flex items-center justify-center transition-all-300 shadow-md shadow-brand-500/5 hover:shadow-brand-500/10 active:scale-95 group" title="Order by Voice">
-                    <i class="fa-solid fa-microphone text-xl animate-pulse"></i>
+                <!-- Super Quick Voice Order Pill -->
+                <button onclick="startVoiceListening()" class="bg-slate-900 text-white hover:bg-brand-500 px-4.5 py-3 rounded-2xl font-extrabold flex items-center gap-2.5 shadow-lg shadow-slate-900/5 hover:shadow-brand-500/20 transition-all duration-300 transform active:scale-95 group" title="Super Quick Voice Order">
+                    <span class="relative flex h-3.5 w-3.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-brand-500 flex items-center justify-center text-[8px] text-white">
+                            <i class="fa-solid fa-microphone text-[8px]"></i>
+                        </span>
+                    </span>
+                    <span class="text-xs tracking-wide">Quick Voice Order ⚡</span>
                 </button>
 
                 <!-- Cart Trigger Button -->
@@ -107,14 +113,19 @@
 
         <!-- Restaurant Grid Section -->
         <section id="restaurants-section" class="mb-16">
-            <div class="flex items-center justify-between mb-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
                 <div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Popular Restaurants</h2>
                     <p class="text-slate-400 text-sm mt-1">Handpicked fine dining spots near you</p>
                 </div>
-                <div class="text-sm font-semibold text-brand-500 hover:text-brand-600 flex items-center gap-1 cursor-pointer">
-                    <span>See All</span>
-                    <i class="fa-solid fa-arrow-right"></i>
+                
+                <!-- Search text field with attached mic icon -->
+                <div class="relative flex items-center w-full md:max-w-md">
+                    <input type="text" id="search-input" oninput="filterCatalog()" placeholder="Search dishes or restaurants..." class="w-full bg-white border border-slate-200 rounded-2xl pl-11 pr-11 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-brand-500 shadow-sm focus:ring-4 focus:ring-brand-500/5 focus:bg-white transition-all duration-300">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 text-sm"></i>
+                    <button onclick="startSearchVoice()" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-brand-500 transition-colors p-1.5 rounded-xl hover:bg-slate-50" title="Voice Search">
+                        <i class="fa-solid fa-microphone text-base"></i>
+                    </button>
                 </div>
             </div>
 
@@ -632,7 +643,7 @@
         ];
 
         // Render restaurants in grid
-        function renderRestaurants() {
+        function renderRestaurants(list) {
             const grid = document.getElementById('restaurants-grid');
             const loader = document.getElementById('restaurants-loader');
             
@@ -640,7 +651,9 @@
             loader.classList.add('hidden');
             grid.classList.remove('hidden');
 
-            restaurants.forEach(rest => {
+            const listToRender = list || restaurants;
+
+            listToRender.forEach(rest => {
                 const imgUrl = foodImages[(rest.id - 1) % foodImages.length];
                 
                 const card = `
@@ -1489,8 +1502,95 @@
                 }
             }
 
-            if (window.mapAnimationId) cancelAnimationFrame(window.mapAnimationId);
-            window.mapAnimationId = requestAnimationFrame(step);
+        // Text Catalog Filter Search
+        function filterCatalog() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            const grid = document.getElementById('restaurants-grid');
+
+            if (!restaurants || restaurants.length === 0) return;
+
+            if (!query) {
+                renderRestaurants(restaurants);
+                return;
+            }
+
+            const filtered = restaurants.filter(rest => {
+                const restNameMatch = rest.name.toLowerCase().includes(query);
+                const dishMatch = rest.menu.some(item => 
+                    item.name.toLowerCase().includes(query) || 
+                    item.description.toLowerCase().includes(query)
+                );
+                return restNameMatch || dishMatch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+                        <div class="w-16 h-16 bg-slate-50 text-slate-450 rounded-2xl flex items-center justify-center text-2xl mb-4 border border-slate-100/80 shadow-inner">
+                            <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+                        </div>
+                        <h4 class="font-extrabold text-slate-800 text-lg">No Matching Dishes or Restaurants</h4>
+                        <p class="text-slate-400 text-sm mt-1.5 max-w-sm mx-auto font-medium">We couldn't find anything matching "${query}". Try searching for biryani, pizza, burger, or naan.</p>
+                    </div>
+                `;
+            } else {
+                renderRestaurants(filtered);
+            }
+        }
+
+        // Voice Search Recognition for search text input
+        let searchRecognition = null;
+
+        function startSearchVoice() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("Speech recognition is not supported in this browser. Please use Chrome or Edge.");
+                return;
+            }
+
+            if (!searchRecognition) {
+                searchRecognition = new SpeechRecognition();
+                searchRecognition.continuous = false;
+                searchRecognition.lang = 'en-IN';
+                searchRecognition.interimResults = false;
+
+                searchRecognition.onstart = () => {
+                    const input = document.getElementById('search-input');
+                    input.classList.add('border-brand-500', 'bg-brand-50/10', 'ring-4', 'ring-brand-500/10');
+                    input.placeholder = "Listening... Speak your dish name!";
+                    input.value = "";
+                };
+
+                searchRecognition.onerror = (event) => {
+                    console.error("Voice search error:", event.error);
+                    resetSearchInput();
+                };
+
+                searchRecognition.onend = () => {
+                    resetSearchInput();
+                };
+
+                searchRecognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    const input = document.getElementById('search-input');
+                    // Remove ending period if added by speech engine
+                    const cleanTranscript = transcript.endsWith('.') ? transcript.slice(0, -1) : transcript;
+                    input.value = cleanTranscript;
+                    filterCatalog();
+                };
+            }
+
+            try {
+                searchRecognition.start();
+            } catch (e) {
+                console.warn("Search recognition already started or error:", e);
+            }
+        }
+
+        function resetSearchInput() {
+            const input = document.getElementById('search-input');
+            input.classList.remove('border-brand-500', 'bg-brand-50/10', 'ring-4', 'ring-brand-500/10');
+            input.placeholder = "Search dishes or restaurants...";
         }
 
         // On Page Load
