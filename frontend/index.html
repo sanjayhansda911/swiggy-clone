@@ -780,20 +780,20 @@
     </div>
 
     <!-- Intent Gateway Overlay Panel (Centered over blurred Catalog at Document Root) -->
-    <div id="intent-overlay" class="fixed inset-0 z-60 flex flex-col items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 overflow-y-auto transition-all duration-500">
-        <div class="bg-white rounded-[3rem] p-8 sm:p-12 max-w-4xl w-full border border-slate-100 shadow-2xl text-center relative animate-fade-in my-8">
+    <div id="intent-overlay" class="fixed inset-0 z-60 flex flex-col items-center justify-start md:justify-center bg-slate-900/60 backdrop-blur-sm p-3 sm:p-4 overflow-y-auto transition-all duration-500">
+        <div class="bg-white rounded-3xl md:rounded-[3rem] p-4 sm:p-10 max-w-4xl w-full border border-slate-100 shadow-2xl text-center relative animate-fade-in my-2 sm:my-8">
             
             <!-- Welcome Header -->
-            <div class="mb-8">
-                <h1 id="personalized-headline" class="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight leading-tight">
+            <div class="mb-5 sm:mb-8">
+                <h1 id="personalized-headline" class="text-xl sm:text-3xl md:text-4xl font-black text-slate-950 tracking-tight leading-tight">
                     What are we eating today, Rahul? 🌙
                 </h1>
-                <p class="text-slate-500 text-sm mt-2 max-w-md mx-auto font-bold">
+                <p class="text-slate-500 text-xs sm:text-sm mt-1 sm:mt-2 max-w-md mx-auto font-bold">
                     Pick how you want to order, or let us handle it.
                 </p>
                 
                 <!-- D2C Social Proof Avatar Stack -->
-                <div class="flex items-center justify-center gap-2 mt-4">
+                <div class="flex items-center justify-center gap-2 mt-2.5 sm:mt-4">
                     <div class="flex -space-x-2">
                         <img class="w-6.5 h-6.5 rounded-full border-2 border-white object-cover shadow-sm" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50&auto=format&fit=crop&q=80" />
                         <img class="w-6.5 h-6.5 rounded-full border-2 border-white object-cover shadow-sm" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&auto=format&fit=crop&q=80" />
@@ -806,63 +806,63 @@
             </div>
 
             <!-- Balanced 2x2 Grid of 4 Navigation Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-left">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6 mb-6 sm:mb-8 text-left">
                 <!-- Card 1: Go to Catalog -->
-                <div id="card-catalog" onclick="animateAndSelect('catalog')" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden active:scale-95">
+                <div id="card-catalog" onclick="animateAndSelect('catalog')" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 flex items-start gap-3 sm:gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden active:scale-95">
                     <div class="absolute -right-4 -bottom-4 text-slate-50/50 group-hover:text-brand-50/50 text-8xl transition-colors duration-300 font-bold z-0">
                         <i class="fa-solid fa-list-check"></i>
                     </div>
-                    <div class="bg-orange-50 text-brand-500 p-4.5 rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300 z-10">
-                        <i class="fa-solid fa-list-check text-2xl"></i>
+                    <div class="bg-orange-50 text-brand-500 p-3.5 sm:p-4.5 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300 z-10 flex-shrink-0">
+                        <i class="fa-solid fa-list-check text-xl sm:text-2xl"></i>
                     </div>
                     <div class="z-10 relative">
-                        <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-brand-500 transition-colors duration-300">Go to Catalog</h3>
-                        <p class="text-[#4A5568] text-xs font-bold mt-1">Browse nearby restaurants, deals, and full menus.</p>
+                        <h3 class="font-extrabold text-slate-900 text-sm sm:text-base md:text-lg group-hover:text-brand-500 transition-colors duration-300">Go to Catalog</h3>
+                        <p class="text-[#4A5568] text-[11px] sm:text-xs font-bold mt-0.5 sm:mt-1">Browse nearby restaurants, deals, and full menus.</p>
                     </div>
                 </div>
 
                 <!-- Card 2: SuperQuick Voice Checkout -->
-                <div id="card-voice" onclick="animateAndSelect('voice')" class="bg-white border-2 border-slate-100 hover:border-slate-950 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-slate-955/5 group relative overflow-hidden active:scale-95">
+                <div id="card-voice" onclick="animateAndSelect('voice')" class="bg-white border-2 border-slate-100 hover:border-slate-950 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 flex items-start gap-3 sm:gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-slate-955/5 group relative overflow-hidden active:scale-95">
                     <div class="absolute -right-4 -bottom-4 text-slate-50/50 group-hover:text-slate-100 text-8xl transition-colors duration-300 font-bold z-0">
                         <i class="fa-solid fa-microphone-lines"></i>
                     </div>
-                    <div class="bg-slate-900 text-white p-4.5 rounded-2xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 z-10">
-                        <i class="fa-solid fa-microphone-lines text-2xl text-brand-500 animate-pulse"></i>
+                    <div class="bg-slate-900 text-white p-3.5 sm:p-4.5 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 z-10 flex-shrink-0">
+                        <i class="fa-solid fa-microphone-lines text-xl sm:text-2xl text-brand-500 animate-pulse"></i>
                     </div>
                     <div class="z-10 relative">
-                        <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-slate-950 transition-colors duration-300">SuperQuick Voice Checkout</h3>
-                        <p class="text-[#4A5568] text-xs font-bold mt-1">Speak your order and checkout in seconds.</p>
+                        <h3 class="font-extrabold text-slate-900 text-sm sm:text-base md:text-lg group-hover:text-slate-950 transition-colors duration-300">SuperQuick Voice Checkout</h3>
+                        <p class="text-[#4A5568] text-[11px] sm:text-xs font-bold mt-0.5 sm:mt-1">Speak your order and checkout in seconds.</p>
                     </div>
                 </div>
 
                 <!-- Card 3: Choose for Me -->
-                <div id="card-choose" onclick="animateAndSelect('choose')" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden active:scale-95">
+                <div id="card-choose" onclick="animateAndSelect('choose')" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 flex items-start gap-3 sm:gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden active:scale-95">
                     <div class="absolute -right-4 -bottom-4 text-brand-50/20 group-hover:text-brand-50/30 text-8xl transition-colors duration-300 font-bold z-0">
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
                     </div>
-                    <div class="bg-brand-50 text-brand-650 p-4.5 rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300 z-10">
-                        <i class="fa-solid fa-wand-magic-sparkles text-2xl animate-pulse text-brand-500"></i>
+                    <div class="bg-brand-50 text-brand-650 p-3.5 sm:p-4.5 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300 z-10 flex-shrink-0">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xl sm:text-2xl animate-pulse text-brand-500"></i>
                     </div>
                     <div class="z-10 relative">
                         <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-black bg-brand-100 text-brand-700 mb-1 tracking-wide uppercase animate-pulse">
                             <i class="fa-solid fa-bolt text-amber-500 text-[8px]"></i> Avg decision time: 45s
                         </span>
-                        <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-brand-500 transition-colors duration-300">Choose for Me</h3>
-                        <p id="choose-me-subtitle" class="text-[#4A5568] text-xs font-bold mt-1">Feeling decision fatigue? Let our AI handle your meal.</p>
+                        <h3 class="font-extrabold text-slate-900 text-sm sm:text-base md:text-lg group-hover:text-brand-500 transition-colors duration-300">Choose for Me</h3>
+                        <p id="choose-me-subtitle" class="text-[#4A5568] text-[11px] sm:text-xs font-bold mt-0.5 sm:mt-1">Feeling decision fatigue? Let our AI handle your meal.</p>
                     </div>
                 </div>
 
                 <!-- Card 4: Order for a Friend -->
-                <div id="card-friend" onclick="animateAndSelect('friend')" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden active:scale-95">
+                <div id="card-friend" onclick="animateAndSelect('friend')" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 flex items-start gap-3 sm:gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden active:scale-95">
                     <div class="absolute -right-4 -bottom-4 text-slate-50/50 group-hover:text-brand-50/50 text-8xl transition-colors duration-300 font-bold z-0">
                         <i class="fa-solid fa-gift"></i>
                     </div>
-                    <div class="bg-rose-50 text-rose-500 p-4.5 rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300 z-10">
-                        <i class="fa-solid fa-gift text-2xl"></i>
+                    <div class="bg-rose-50 text-rose-500 p-3.5 sm:p-4.5 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300 z-10 flex-shrink-0">
+                        <i class="fa-solid fa-gift text-xl sm:text-2xl"></i>
                     </div>
                     <div class="z-10 relative">
-                        <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-rose-500 transition-colors duration-300">Order for a Friend</h3>
-                        <p class="text-[#4A5568] text-xs font-bold mt-1">Send a meal to parents, partners, or loved ones.</p>
+                        <h3 class="font-extrabold text-slate-900 text-sm sm:text-base md:text-lg group-hover:text-rose-500 transition-colors duration-300">Order for a Friend</h3>
+                        <p class="text-[#4A5568] text-[11px] sm:text-xs font-bold mt-0.5 sm:mt-1">Send a meal to parents, partners, or loved ones.</p>
                     </div>
                 </div>
             </div>
