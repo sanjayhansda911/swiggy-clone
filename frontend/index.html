@@ -364,6 +364,14 @@
                 <span id="voice-transcript">Speak now...</span>
             </div>
 
+            <!-- Restaurant candidates selection (shown only if dish is ambiguous) -->
+            <div id="voice-candidates-container" class="hidden mb-4">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2.5">Available at multiple restaurants. Select one:</p>
+                <div id="voice-candidates-list" class="flex flex-col gap-2 max-h-40 overflow-y-auto pr-1">
+                    <!-- Dynamic choice buttons injected here -->
+                </div>
+            </div>
+
             <div id="voice-error-msg" class="text-red-500 text-xs font-bold hidden mb-2"></div>
         </div>
     </div>
@@ -1024,6 +1032,9 @@
             // Dismiss coachmark tip upon first interaction
             dismissCoachmark();
 
+            // Hide candidates choices list from previous inputs
+            document.getElementById('voice-candidates-container').classList.add('hidden');
+
             if (!recognition) {
                 initVoice();
             }
@@ -1067,10 +1078,13 @@
             "ten": 10, "10": 10
         };
 
-        // Voice Command Parsing supporting quantities and multi-item ordering
+        // Voice Command Parsing supporting quantities, multi-item, and restaurant ambiguity checks
         function processVoiceCommand(text) {
             const query = text.toLowerCase().trim();
             console.log("Analyzing command:", query);
+
+            // Hide candidates lists initially
+            document.getElementById('voice-candidates-container').classList.add('hidden');
 
             // 1. Identify if a restaurant is mentioned anywhere in the query
             let globalRestaurant = null;
@@ -1100,7 +1114,7 @@
 
             // 2. Split query by "and", "plus", or comma
             const parts = query.split(/\b(?:and|plus)\b|,/);
-            const matchedOrders = [];
+            const parsedItems = [];
 
             parts.forEach(part => {
                 let cleanPart = part.trim();
@@ -1120,14 +1134,9 @@
                     }
                 }
 
-                // Match remaining text to a dish
-                let bestItem = null;
-                let bestItemRest = null;
-                let highestItemScore = 0;
-
-                // Search database
-                const searchScope = globalRestaurant ? [globalRestaurant] : restaurants;
-                for (const rest of searchScope) {
+                // Match remaining text to a dish across all restaurants
+                const candidates = [];
+                for (const rest of restaurants) {
                     for (const item of rest.menu) {
                         const itemNameLower = item.name.toLowerCase();
                         let score = 0;
@@ -1143,51 +1152,145 @@
                             });
                         }
 
-                        if (score > highestItemScore) {
-                            highestItemScore = score;
-                            bestItem = item;
-                            bestItemRest = rest;
+                        if (score >= 30) {
+                            candidates.push({ restaurant: rest, item: item, score: score });
                         }
                     }
                 }
 
-                if (bestItem && highestItemScore >= 30) {
-                    matchedOrders.push({
-                        item: bestItem,
-                        restaurant: bestItemRest,
-                        quantity: quantity
+                // Sort candidates by score descending
+                candidates.sort((a, b) => b.score - a.score);
+
+                if (candidates.length > 0) {
+                    parsedItems.push({
+                        rawPart: part.trim(),
+                        cleanPart: cleanPart,
+                        quantity: quantity,
+                        candidates: candidates
                     });
                 }
             });
 
-            // 3. Process matched orders
-            if (matchedOrders.length > 0) {
-                // Clear previous cart
-                cart = [];
-                
-                // Add all matched items to cart
-                matchedOrders.forEach(order => {
-                    cart.push({
-                        name: order.item.name,
-                        price: order.item.price,
-                        quantity: order.quantity
-                    });
-                });
-                updateCartUI();
-
-                const mainRestaurant = matchedOrders[0].restaurant;
-
-                // Prepare verbal feedback
-                const speakItems = matchedOrders.map(o => `${o.quantity} ${o.item.name}`).join(' and ');
-                speakText(`Adding ${speakItems} from ${mainRestaurant.name}. Transitioning to checkout.`);
-                stopVoiceListening();
-
-                // Trigger payment screen
-                showPaymentScreen(mainRestaurant, cart);
-            } else {
+            // 3. Process matched items
+            if (parsedItems.length === 0) {
                 speakText("Sorry, I could not match those dishes. Please say it again clearly.");
                 document.getElementById('voice-transcript').innerText = "Couldn't match command. Try again.";
+                return;
             }
+
+            // Analyze candidate lists to resolve store ambiguity
+            const resolvedOrders = [];
+            let ambiguityFound = false;
+
+            parsedItems.forEach(parsed => {
+                // If a global restaurant context was detected, restrict candidates to it
+                let itemCandidates = parsed.candidates;
+                if (globalRestaurant) {
+                    const filtered = itemCandidates.filter(c => c.restaurant.id === globalRestaurant.id);
+                    if (filtered.length > 0) {
+                        itemCandidates = filtered;
+                    }
+                }
+
+                // Check if multiple restaurant sources still exist for this item
+                if (itemCandidates.length > 1) {
+                    ambiguityFound = true;
+                } else if (itemCandidates.length === 1) {
+                    resolvedOrders.push({
+                        item: itemCandidates[0].item,
+                        restaurant: itemCandidates[0].restaurant,
+                        quantity: parsed.quantity
+                    });
+                }
+            });
+
+            // Handle Ambiguity: Show option selection if restaurant isn't specified
+            if (ambiguityFound && !globalRestaurant) {
+                const firstAmbiguousItem = parsedItems.find(p => p.candidates.length > 1);
+                
+                // Update UI state inside voice overlay modal
+                document.getElementById('voice-status-title').innerText = "Select Restaurant";
+                document.getElementById('voice-transcript').innerText = `Where would you like to order "${firstAmbiguousItem.cleanPart}" from?`;
+
+                const container = document.getElementById('voice-candidates-container');
+                const list = document.getElementById('voice-candidates-list');
+                list.innerHTML = '';
+                container.classList.remove('hidden');
+
+                // Extract unique candidate restaurants serving this item
+                const uniqueCandidates = [];
+                firstAmbiguousItem.candidates.forEach(c => {
+                    if (!uniqueCandidates.some(u => u.restaurant.id === c.restaurant.id)) {
+                        uniqueCandidates.push(c);
+                    }
+                });
+
+                // Generate choice selection buttons
+                uniqueCandidates.forEach(cand => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full bg-slate-50 hover:bg-brand-50 text-slate-800 hover:text-brand-600 font-extrabold py-3 px-4 rounded-xl text-left border border-slate-100 hover:border-brand-200 transition-all duration-300 flex items-center justify-between text-xs sm:text-sm";
+                    btn.innerHTML = `
+                        <span>${cand.restaurant.name}</span>
+                        <span class="text-[10px] text-slate-400 font-semibold flex items-center gap-1">
+                            <i class="fa-solid fa-star text-amber-500"></i> ${cand.restaurant.rating}
+                        </span>
+                    `;
+                    btn.onclick = () => confirmRestaurantVoiceSelection(cand.restaurant, parsedItems);
+                    list.appendChild(btn);
+                });
+
+                // Turn off speech listener since user has choices to select
+                if (recognition) {
+                    try { recognition.stop(); } catch(e) {}
+                }
+
+                speakText(`I found ${firstAmbiguousItem.cleanPart} at multiple restaurants. Please choose a restaurant from the screen.`);
+            } else {
+                // No ambiguity - direct checkout!
+                const finalRestaurant = globalRestaurant || resolvedOrders[0].restaurant;
+                executeDirectCheckout(finalRestaurant, resolvedOrders);
+            }
+        }
+
+        // Complete checkout with the user's manual selection
+        function confirmRestaurantVoiceSelection(restaurant, parsedItems) {
+            const resolvedOrders = [];
+            parsedItems.forEach(parsed => {
+                // Filter matches for this selected restaurant, or default to highest score
+                const matchedCand = parsed.candidates.find(c => c.restaurant.id === restaurant.id) || parsed.candidates[0];
+                resolvedOrders.push({
+                    item: matchedCand.item,
+                    restaurant: matchedCand.restaurant,
+                    quantity: parsed.quantity
+                });
+            });
+
+            executeDirectCheckout(restaurant, resolvedOrders);
+        }
+
+        // Construct final cart order list and open invoice
+        function executeDirectCheckout(restaurant, resolvedOrders) {
+            document.getElementById('voice-candidates-container').classList.add('hidden');
+
+            // Clear previous cart
+            cart = [];
+            
+            // Add items to cart
+            resolvedOrders.forEach(order => {
+                cart.push({
+                    name: order.item.name,
+                    price: order.item.price,
+                    quantity: order.quantity
+                });
+            });
+            updateCartUI();
+
+            const speakItems = resolvedOrders.map(o => `${o.quantity} ${o.item.name}`).join(' and ');
+            speakText(`Adding ${speakItems} from ${restaurant.name}. Transitioning to checkout.`);
+            stopVoiceListening();
+
+            // Trigger payment screen
+            showPaymentScreen(restaurant, cart);
         }
 
         // Voice Feedback Text-to-Speech Helper
