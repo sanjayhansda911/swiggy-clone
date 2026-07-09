@@ -67,16 +67,27 @@
 
             <!-- Action Buttons -->
             <div class="flex items-center gap-2 sm:gap-3">
-                <!-- Super Quick Voice Order Pill -->
-                <button onclick="startVoiceListening()" class="bg-slate-900 text-white hover:bg-slate-950 px-3.5 py-3 md:px-4.5 md:py-3 rounded-2xl font-extrabold flex items-center gap-2 shadow-lg shadow-slate-900/10 transition-all duration-300 transform active:scale-95 border border-slate-800 group" title="Super Quick Voice Order">
-                    <span class="relative flex h-4 w-4 flex-shrink-0">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-500/40 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-4 w-4 bg-brand-500 flex items-center justify-center text-[10px] text-white">
-                            <i class="fa-solid fa-microphone text-[8px]"></i>
+                <!-- Super Quick Voice Order Container with Coachmark -->
+                <div class="relative">
+                    <button onclick="startVoiceListening()" class="bg-slate-900 text-white hover:bg-slate-950 px-3.5 py-3 md:px-4.5 md:py-3 rounded-2xl font-extrabold flex items-center gap-2 shadow-lg shadow-slate-900/10 transition-all duration-300 transform active:scale-95 border border-slate-800 group" title="Super Quick Voice Order">
+                        <span class="relative flex h-4 w-4 flex-shrink-0">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-500/40 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-4 w-4 bg-brand-500 flex items-center justify-center text-[10px] text-white">
+                                <i class="fa-solid fa-microphone text-[8px]"></i>
+                            </span>
                         </span>
-                    </span>
-                    <span class="text-xs tracking-wide hidden md:inline ml-1 font-black text-slate-100">Quick Voice Order <span class="text-brand-500">⚡</span></span>
-                </button>
+                        <span class="text-xs tracking-wide hidden md:inline ml-1 font-black text-slate-100">Quick Voice Order <span class="text-brand-500">⚡</span></span>
+                    </button>
+                    
+                    <!-- Floating Feature Onboarding Coachmark Tooltip -->
+                    <div id="voice-coachmark" class="absolute -bottom-11 right-0 bg-brand-500 text-white text-[10px] font-black px-2.5 py-1 rounded-xl shadow-lg shadow-brand-500/20 flex items-center gap-1.5 whitespace-nowrap animate-bounce z-40 transition-all duration-300">
+                        <i class="fa-solid fa-bolt text-[9px] text-amber-300"></i>
+                        <span>Voice Checkout! ⚡</span>
+                        <button onclick="dismissCoachmark(event)" class="ml-1.5 text-white/70 hover:text-white border-l border-white/20 pl-1.5" title="Dismiss">
+                            <i class="fa-solid fa-xmark text-[9px]"></i>
+                        </button>
+                    </div>
+                </div>
 
                 <!-- Cart Trigger Button -->
                 <button onclick="toggleCart(true)" class="relative bg-slate-900 text-white px-4 py-3 md:px-5 md:py-3 rounded-2xl font-bold flex items-center gap-2.5 hover:bg-brand-500 shadow-lg shadow-slate-900/10 hover:shadow-brand-500/20 transition-all duration-300 transform active:scale-95 border border-slate-800 group">
@@ -1010,6 +1021,9 @@
         }
 
         function startVoiceListening() {
+            // Dismiss coachmark tip upon first interaction
+            dismissCoachmark();
+
             if (!recognition) {
                 initVoice();
             }
@@ -1588,6 +1602,15 @@
                 searchRecognition.start();
             } catch (e) {
                 console.warn("Search recognition already started or error:", e);
+            }
+        }
+
+        // Onboarding Coachmark Tooltip dismissal
+        function dismissCoachmark(e) {
+            if (e) e.stopPropagation();
+            const coachmark = document.getElementById('voice-coachmark');
+            if (coachmark) {
+                coachmark.classList.add('hidden');
             }
         }
 
