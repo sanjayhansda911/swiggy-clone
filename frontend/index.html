@@ -175,7 +175,7 @@
                             <i class="fa-solid fa-bolt text-amber-500 text-[8px]"></i> Avg decision time: 45s
                         </span>
                         <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-brand-500 transition-colors duration-300">Choose for Me</h3>
-                        <p id="choose-me-subtitle" class="text-[#4A5568] text-xs font-bold mt-1">Feeling decision fatigue? Let our AI handle dinner.</p>
+                        <p id="choose-me-subtitle" class="text-[#4A5568] text-xs font-bold mt-1">Feeling decision fatigue? Let our AI handle your meal.</p>
                     </div>
                 </div>
 
@@ -2379,14 +2379,14 @@
         function updatePersonalizedGreeting() {
             const hour = new Date().getHours();
             let heading = "What are we eating today, Rahul? 🌙";
-            let subtitle = "Rainy evening in Park Street? Tap for hot comfort foods.";
+            let subtitle = "Rainy evening in Park Street? Let our AI handle dinner.";
 
             if (hour >= 5 && hour < 12) {
                 heading = "What are we eating today, Rahul? 🌅";
-                subtitle = "Sunny morning in Park Street? Tap for fresh breakfast options.";
+                subtitle = "Sunny morning in Park Street? Let our AI handle breakfast.";
             } else if (hour >= 12 && hour < 17) {
                 heading = "What are we eating today, Rahul? ☀️";
-                subtitle = "Hot afternoon in Park Street? Tap for refreshing cool meals.";
+                subtitle = "Hot afternoon in Park Street? Let our AI handle lunch.";
             }
 
             const headlineEl = document.getElementById('personalized-headline');
