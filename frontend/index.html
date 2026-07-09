@@ -530,8 +530,8 @@
     </main>
 
     <!-- Slide-Out Shopping Cart Sidebar -->
-    <div id="cart-sidebar-backdrop" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden transition-all duration-300" onclick="toggleCart(false)"></div>
-    <aside id="cart-sidebar" class="fixed top-0 right-0 z-50 h-full w-full sm:w-[450px] bg-white shadow-2xl border-l border-slate-100 transform translate-x-full transition-transform duration-300 flex flex-col">
+    <div id="cart-sidebar-backdrop" class="fixed inset-0 z-[150] bg-slate-900/40 backdrop-blur-sm hidden transition-all duration-300" onclick="toggleCart(false)"></div>
+    <aside id="cart-sidebar" class="fixed top-0 right-0 z-[150] h-full w-full sm:w-[450px] bg-white shadow-2xl border-l border-slate-100 transform translate-x-full transition-transform duration-300 flex flex-col">
         <!-- Cart Header -->
         <div class="p-6 border-b border-slate-100 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -589,7 +589,7 @@
     </aside>
 
     <!-- Voice Modal Overlay -->
-    <div id="voice-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
+    <div id="voice-modal" class="fixed inset-0 z-[150] bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
         <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl p-8 max-w-md w-full text-center mx-4 relative">
             <button onclick="stopVoiceListening()" class="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-950 hover:bg-slate-100 rounded-xl transition-all-300">
                 <i class="fa-solid fa-xmark text-lg"></i>
@@ -624,7 +624,7 @@
     </div>
 
     <!-- Mock Payment Screen Overlay -->
-    <div id="payment-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
+    <div id="payment-modal" class="fixed inset-0 z-[150] bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
         <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl p-6 sm:p-8 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto relative">
             <!-- Close button for review mode -->
             <button id="payment-close-btn" onclick="closePaymentModal()" class="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-950 hover:bg-slate-100 rounded-xl transition-all-300">
@@ -749,7 +749,7 @@
     </div>
 
     <!-- Choose For Me Empathy Modal -->
-    <div id="choose-me-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
+    <div id="choose-me-modal" class="fixed inset-0 z-[150] bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
         <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl p-6 sm:p-8 max-w-xl w-full mx-4 max-h-[90vh] overflow-y-auto relative">
             <button onclick="closeChooseMe()" class="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-950 hover:bg-slate-100 rounded-xl transition-all-300">
                 <i class="fa-solid fa-xmark text-lg"></i>
@@ -769,7 +769,7 @@
     </div>
 
     <!-- Location Picker Modal -->
-    <div id="location-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
+    <div id="location-modal" class="fixed inset-0 z-[150] bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
         <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl p-6 sm:p-8 max-w-md w-full mx-4 relative">
             <button onclick="closeLocationPicker()" class="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-955 hover:bg-slate-105 rounded-xl transition-all-300">
                 <i class="fa-solid fa-xmark text-lg"></i>
@@ -852,7 +852,7 @@
     </div>
 
     <!-- Order for a Friend Modal -->
-    <div id="friend-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
+    <div id="friend-modal" class="fixed inset-0 z-[150] bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
         <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl p-6 sm:p-8 max-w-md w-full mx-4 relative">
             <button onclick="closeOrderForFriend()" class="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-950 hover:bg-slate-100 rounded-xl transition-all-300">
                 <i class="fa-solid fa-xmark text-lg"></i>
