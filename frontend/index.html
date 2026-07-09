@@ -37,6 +37,24 @@
         .transition-all-300 {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        
+        /* Hide scrollbars on carousel views */
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-none {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Empathy Screen Fade-in Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
     </style>
     <!-- Leaflet Maps CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -48,7 +66,7 @@
     <header class="sticky top-0 z-40 bg-white border-b border-slate-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <!-- Logo -->
-            <div class="flex items-center gap-3 cursor-pointer">
+            <div onclick="showGateway()" class="flex items-center gap-3 cursor-pointer">
                 <div class="bg-brand-500 text-white p-2.5 rounded-2xl flex items-center justify-center shadow-md shadow-brand-500/20 transform hover:scale-105 transition-all-300">
                     <i class="fa-solid fa-utensils text-2xl"></i>
                 </div>
@@ -61,12 +79,18 @@
             <!-- User Address Mock -->
             <div class="hidden md:flex items-center gap-2 text-sm text-slate-600 font-medium bg-slate-50 py-2 px-4 rounded-full border border-slate-100">
                 <i class="fa-solid fa-location-dot text-brand-500"></i>
-                <span>Park Street, Kolkata</span>
+                <span id="user-display-address">Park Street, Kolkata</span>
                 <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
             </div>
 
             <!-- Action Buttons -->
             <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Home / Gateway Navigation Button -->
+                <button onclick="showGateway()" class="bg-white border-2 border-slate-100 hover:border-brand-500 text-slate-700 hover:text-brand-500 px-3 py-2.5 rounded-2xl font-extrabold flex items-center gap-2 shadow-sm transition-all duration-300 transform active:scale-95 group" title="Return to Landing Page">
+                    <i class="fa-solid fa-house text-xs group-hover:scale-110 transition-transform"></i>
+                    <span class="text-xs tracking-wide hidden md:inline font-bold">Home</span>
+                </button>
+
                 <!-- Super Quick Voice Order Container with Coachmark -->
                 <div class="relative">
                     <button onclick="startVoiceListening()" class="bg-slate-900 text-white hover:bg-slate-950 px-3.5 py-3 md:px-4.5 md:py-3 rounded-2xl font-extrabold flex items-center gap-2 shadow-lg shadow-slate-900/10 transition-all duration-300 transform active:scale-95 border border-slate-800 group" title="Super Quick Voice Order">
@@ -101,56 +125,182 @@
 
     <!-- Main Content Area -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-        <!-- Hero Section -->
-        <section id="hero-section" class="bg-gradient-to-r from-orange-50 to-brand-100/30 rounded-[2.5rem] p-8 sm:p-12 mb-12 flex flex-col md:flex-row items-center justify-between gap-8 border border-orange-100/50 shadow-sm relative overflow-hidden">
-            <div class="absolute -right-16 -top-16 w-64 h-64 bg-orange-100 rounded-full blur-3xl opacity-60"></div>
-            <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-brand-100 rounded-full blur-3xl opacity-60"></div>
-            
-            <div class="relative z-10 max-w-xl">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-brand-100 text-brand-700 mb-4">
-                    <i class="fa-solid fa-bolt text-[10px]"></i> Lightning Fast Delivery
+        <!-- Intent Gateway Landing Section -->
+        <section id="gateway-section" class="block py-6 animate-fade-in max-w-4xl mx-auto">
+            <!-- Empathetic Welcome Header -->
+            <div class="text-center mb-10 mt-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-brand-100 text-brand-700 mb-3 animate-pulse">
+                    <i class="fa-solid fa-heart text-brand-500"></i> Empathetic Intent Gateway
                 </span>
-                <h1 class="text-4xl sm:text-5xl font-black text-slate-900 leading-tight mb-4">
-                    Delicious food, delivered <span class="text-brand-500 underline decoration-brand-100 decoration-8 underline-offset-4">straight to your door</span>.
+                <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                    Hello there! <span class="text-brand-500 underline decoration-brand-100 decoration-8 underline-offset-4">Let's make dinner simple.</span>
                 </h1>
-                <p class="text-slate-500 text-lg mb-0 font-medium">
-                    Order from Kolkata's premium restaurants and enjoy hot, freshly-prepared meals delivered in minutes.
+                <p class="text-slate-500 text-sm mt-2 max-w-md mx-auto font-medium">
+                    Feeling decision fatigue? Pick how you want to order, or let us handle it.
                 </p>
             </div>
-            <div class="hidden md:block w-72 h-72 lg:w-80 lg:h-80 relative flex-shrink-0 bg-white p-4 rounded-[2rem] shadow-xl shadow-brand-500/5 rotate-3 hover:rotate-0 transition-transform duration-500">
-                <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=80" alt="Biryani bowl" class="w-full h-full object-cover rounded-2xl" />
+
+            <!-- 4 Navigation Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+                <!-- Card 1: Show Catalog -->
+                <div onclick="showCatalog()" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden text-left">
+                    <div class="absolute -right-4 -bottom-4 text-slate-50/50 group-hover:text-brand-50/50 text-8xl transition-colors duration-300 font-bold z-0">
+                        <i class="fa-solid fa-list"></i>
+                    </div>
+                    <div class="bg-orange-50 text-brand-500 p-4 rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300 z-10">
+                        <i class="fa-solid fa-utensils text-2xl"></i>
+                    </div>
+                    <div class="z-10 relative">
+                        <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-brand-500 transition-colors duration-300">Show Catalog</h3>
+                        <p class="text-slate-400 text-xs font-semibold mt-1">Browse nearby restaurants, deals, and full menus.</p>
+                    </div>
+                </div>
+
+                <!-- Card 2: SuperQuick Voice Checkout -->
+                <div onclick="triggerVoiceGateway()" class="bg-white border-2 border-slate-100 hover:border-slate-950 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-slate-950/5 group relative overflow-hidden text-left">
+                    <div class="absolute -right-4 -bottom-4 text-slate-50/50 group-hover:text-slate-100 text-8xl transition-colors duration-300 font-bold z-0">
+                        <i class="fa-solid fa-microphone"></i>
+                    </div>
+                    <div class="bg-slate-900 text-white p-4 rounded-2xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 z-10">
+                        <i class="fa-solid fa-microphone text-2xl animate-pulse text-brand-500"></i>
+                    </div>
+                    <div class="z-10 relative">
+                        <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-slate-950 transition-colors duration-300">SuperQuick Voice Checkout</h3>
+                        <p class="text-slate-400 text-xs font-semibold mt-1">Speak your order and checkout in seconds.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Choose for Me -->
+                <div onclick="openChooseForMe()" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden text-left">
+                    <div class="absolute -right-4 -bottom-4 text-slate-50/50 group-hover:text-brand-50/50 text-8xl transition-colors duration-300 font-bold z-0">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div class="bg-brand-50 text-brand-650 p-4 rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300 z-10">
+                        <i class="fa-solid fa-wand-magic-sparkles text-2xl"></i>
+                    </div>
+                    <div class="z-10 relative">
+                        <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-brand-500 transition-colors duration-300">Choose for Me</h3>
+                        <p class="text-slate-400 text-xs font-semibold mt-1">Feeling decision fatigue? Let our AI handle dinner.</p>
+                    </div>
+                </div>
+
+                <!-- Card 4: Order for a Friend -->
+                <div onclick="openOrderForFriend()" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden text-left">
+                    <div class="absolute -right-4 -bottom-4 text-slate-50/50 group-hover:text-brand-50/50 text-8xl transition-colors duration-300 font-bold z-0">
+                        <i class="fa-solid fa-gift"></i>
+                    </div>
+                    <div class="bg-rose-50 text-rose-500 p-4 rounded-2xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300 z-10">
+                        <i class="fa-solid fa-gift text-2xl"></i>
+                    </div>
+                    <div class="z-10 relative">
+                        <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-rose-500 transition-colors duration-300">Order for a Friend</h3>
+                        <p class="text-slate-400 text-xs font-semibold mt-1">Send a meal to parents, partners, or loved ones.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Favorites Carousel Tray -->
+            <div class="mt-8 border-t border-slate-100 pt-8">
+                <h4 class="font-black text-slate-800 text-xs tracking-wider uppercase mb-4 flex items-center gap-1.5 justify-center">
+                    <i class="fa-solid fa-rotate-left text-brand-500"></i>
+                    <span>Your Regular Favorites / Quick Reorder</span>
+                </h4>
+                <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-none justify-center px-2">
+                    <!-- Chicken Biryani -->
+                    <div onclick="quickReorder('Chicken Biryani', 280, 2)" class="flex-shrink-0 bg-white border border-slate-100 hover:border-brand-500 rounded-2xl p-3 w-56 flex items-center gap-3 cursor-pointer shadow-sm hover:shadow-md transition-all duration-305 group text-left">
+                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=100&auto=format&fit=crop&q=80" class="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
+                        <div class="flex-grow min-w-0">
+                            <h5 class="font-bold text-slate-805 text-xs truncate group-hover:text-brand-500 transition-colors duration-300">Chicken Biryani</h5>
+                            <span class="text-[9px] text-slate-400 font-semibold block mt-0.5 truncate">Kolkata Biryani House</span>
+                            <span class="text-xs font-extrabold text-slate-800">₹280</span>
+                        </div>
+                        <div class="bg-brand-50 text-brand-500 p-1.5 rounded-lg group-hover:bg-brand-500 group-hover:text-white transition-colors duration-300 flex-shrink-0">
+                            <i class="fa-solid fa-plus text-[10px]"></i>
+                        </div>
+                    </div>
+
+                    <!-- Egg Chowmein -->
+                    <div onclick="quickReorder('Egg Chowmein', 140, 11)" class="flex-shrink-0 bg-white border border-slate-100 hover:border-brand-500 rounded-2xl p-3 w-56 flex items-center gap-3 cursor-pointer shadow-sm hover:shadow-md transition-all duration-305 group text-left">
+                        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?w=100&auto=format&fit=crop&q=80" class="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
+                        <div class="flex-grow min-w-0">
+                            <h5 class="font-bold text-slate-805 text-xs truncate group-hover:text-brand-500 transition-colors duration-300">Egg Chowmein</h5>
+                            <span class="text-[9px] text-slate-400 font-semibold block mt-0.5 truncate">Biryani Junction</span>
+                            <span class="text-xs font-extrabold text-slate-800">₹140</span>
+                        </div>
+                        <div class="bg-brand-50 text-brand-500 p-1.5 rounded-lg group-hover:bg-brand-500 group-hover:text-white transition-colors duration-300 flex-shrink-0">
+                            <i class="fa-solid fa-plus text-[10px]"></i>
+                        </div>
+                    </div>
+
+                    <!-- Paneer Tikka Wrap (Paneer Roll) -->
+                    <div onclick="quickReorder('Paneer Tikka Roll', 150, 16)" class="flex-shrink-0 bg-white border border-slate-100 hover:border-brand-500 rounded-2xl p-3 w-56 flex items-center gap-3 cursor-pointer shadow-sm hover:shadow-md transition-all duration-305 group text-left">
+                        <img src="https://images.unsplash.com/photo-1628294895520-73f248f572a1?w=100&auto=format&fit=crop&q=80" class="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
+                        <div class="flex-grow min-w-0">
+                            <h5 class="font-bold text-slate-805 text-xs truncate group-hover:text-brand-500 transition-colors duration-300">Paneer Tikka Roll</h5>
+                            <span class="text-[9px] text-slate-400 font-semibold block mt-0.5 truncate">Punjab Rasoi</span>
+                            <span class="text-xs font-extrabold text-slate-800">₹150</span>
+                        </div>
+                        <div class="bg-brand-50 text-brand-500 p-1.5 rounded-lg group-hover:bg-brand-500 group-hover:text-white transition-colors duration-300 flex-shrink-0">
+                            <i class="fa-solid fa-plus text-[10px]"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Restaurant Grid Section -->
-        <section id="restaurants-section" class="mb-16">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Popular Restaurants</h2>
-                    <p class="text-slate-400 text-sm mt-1">Handpicked fine dining spots near you</p>
-                </div>
+        <!-- Standard Catalog Grid Container -->
+        <div id="catalog-container" class="hidden">
+            <!-- Hero Section -->
+            <section id="hero-section" class="bg-gradient-to-r from-orange-50 to-brand-100/30 rounded-[2.5rem] p-8 sm:p-12 mb-12 flex flex-col md:flex-row items-center justify-between gap-8 border border-orange-100/50 shadow-sm relative overflow-hidden">
+                <div class="absolute -right-16 -top-16 w-64 h-64 bg-orange-100 rounded-full blur-3xl opacity-60"></div>
+                <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-brand-100 rounded-full blur-3xl opacity-60"></div>
                 
-                <!-- Search text field with attached mic icon -->
-                <div class="relative flex items-center w-full md:max-w-md">
-                    <input type="text" id="search-input" oninput="filterCatalog()" placeholder="Search dishes or restaurants..." class="w-full bg-white border border-slate-200 rounded-2xl pl-11 pr-11 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-brand-500 shadow-sm focus:ring-4 focus:ring-brand-500/5 focus:bg-white transition-all duration-300">
-                    <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 text-sm"></i>
-                    <button onclick="startSearchVoice()" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-brand-500 transition-colors p-1.5 rounded-xl hover:bg-slate-50" title="Voice Search">
-                        <i class="fa-solid fa-microphone text-base"></i>
-                    </button>
+                <div class="relative z-10 max-w-xl">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-brand-100 text-brand-700 mb-4">
+                        <i class="fa-solid fa-bolt text-[10px]"></i> Lightning Fast Delivery
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl font-black text-slate-900 leading-tight mb-4">
+                        Delicious food, delivered <span class="text-brand-500 underline decoration-brand-100 decoration-8 underline-offset-4">straight to your door</span>.
+                    </h1>
+                    <p class="text-slate-500 text-lg mb-0 font-medium">
+                        Order from Kolkata's premium restaurants and enjoy hot, freshly-prepared meals delivered in minutes.
+                    </p>
                 </div>
-            </div>
+                <div class="hidden md:block w-72 h-72 lg:w-80 lg:h-80 relative flex-shrink-0 bg-white p-4 rounded-[2rem] shadow-xl shadow-brand-500/5 rotate-3 hover:rotate-0 transition-transform duration-500">
+                    <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=80" alt="Biryani bowl" class="w-full h-full object-cover rounded-2xl" />
+                </div>
+            </section>
 
-            <!-- Loader -->
-            <div id="restaurants-loader" class="flex flex-col items-center justify-center py-16">
-                <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-200 border-t-brand-500 mb-4"></div>
-                <p class="text-slate-500 font-medium">Fetching live restaurants database...</p>
-            </div>
+            <!-- Restaurant Grid Section -->
+            <section id="restaurants-section" class="mb-16">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Popular Restaurants</h2>
+                        <p class="text-slate-400 text-sm mt-1">Handpicked fine dining spots near you</p>
+                    </div>
+                    
+                    <!-- Search text field with attached mic icon -->
+                    <div class="relative flex items-center w-full md:max-w-md">
+                        <input type="text" id="search-input" oninput="filterCatalog()" placeholder="Search dishes or restaurants..." class="w-full bg-white border border-slate-200 rounded-2xl pl-11 pr-11 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-brand-500 shadow-sm focus:ring-4 focus:ring-brand-500/5 focus:bg-white transition-all duration-300">
+                        <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 text-sm"></i>
+                        <button onclick="startSearchVoice()" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-brand-500 transition-colors p-1.5 rounded-xl hover:bg-slate-50" title="Voice Search">
+                            <i class="fa-solid fa-microphone text-base"></i>
+                        </button>
+                    </div>
+                </div>
 
-            <!-- Grid Container -->
-            <div id="restaurants-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8 hidden">
-                <!-- Injected via JavaScript -->
-            </div>
-        </section>
+                <!-- Loader -->
+                <div id="restaurants-loader" class="flex flex-col items-center justify-center py-16">
+                    <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-200 border-t-brand-500 mb-4"></div>
+                    <p class="text-slate-500 font-medium">Fetching live restaurants database...</p>
+                </div>
+
+                <!-- Grid Container -->
+                <div id="restaurants-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8 hidden">
+                    <!-- Injected via JavaScript -->
+                </div>
+            </section>
+        </div>
 
         <!-- Menu Section (Visible when a restaurant is selected) -->
         <section id="menu-section" class="mb-16 hidden scroll-mt-24">
@@ -498,6 +648,71 @@
                 <h4 class="font-extrabold text-emerald-600 text-xl">Payment Successful!</h4>
                 <p class="text-slate-500 text-sm mt-1">Redirecting to order tracking...</p>
             </div>
+        </div>
+    </div>
+
+    <!-- Choose For Me Empathy Modal -->
+    <div id="choose-me-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
+        <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl p-6 sm:p-8 max-w-xl w-full mx-4 max-h-[90vh] overflow-y-auto relative">
+            <button onclick="closeChooseMe()" class="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-950 hover:bg-slate-100 rounded-xl transition-all-300">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="text-center mb-6">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-xs font-semibold">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i> AI Empathy Engine
+                </span>
+                <h3 class="text-2xl font-black text-slate-900 mt-2">Let us handle dinner.</h3>
+                <p id="choose-me-context" class="text-slate-400 text-xs font-semibold mt-1">Based on the current weather and time, we curated these comfort meals for you:</p>
+            </div>
+            
+            <div id="choose-me-options" class="space-y-4 mb-6">
+                <!-- Curated Options Injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Order for a Friend Modal -->
+    <div id="friend-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center transition-all duration-300">
+        <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl p-6 sm:p-8 max-w-md w-full mx-4 relative">
+            <button onclick="closeOrderForFriend()" class="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-950 hover:bg-slate-100 rounded-xl transition-all-300">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="text-center mb-6">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-rose-50 text-rose-600 rounded-full text-xs font-semibold">
+                    <i class="fa-solid fa-heart"></i> Gift a Meal
+                </span>
+                <h3 class="text-2xl font-black text-slate-900 mt-2">Order for a Loved One</h3>
+                <p class="text-slate-400 text-xs font-semibold mt-1">Send food directly to their address with dietary preferences.</p>
+            </div>
+            
+            <div class="space-y-4 mb-6 text-left">
+                <div>
+                    <label class="text-[10px] font-extrabold text-slate-450 uppercase tracking-wider block mb-1">Friend's Name</label>
+                    <input type="text" id="friend-name" placeholder="Enter recipient's name" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:border-brand-500 focus:bg-white transition-all">
+                </div>
+                <div>
+                    <label class="text-[10px] font-extrabold text-slate-450 uppercase tracking-wider block mb-1">Contact Number</label>
+                    <input type="text" id="friend-phone" placeholder="Enter mobile number" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:border-brand-500 focus:bg-white transition-all">
+                </div>
+                <div>
+                    <label class="text-[10px] font-extrabold text-slate-450 uppercase tracking-wider block mb-1">Delivery Address</label>
+                    <textarea id="friend-address" placeholder="Enter friend's full address" rows="2" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:border-brand-500 focus:bg-white transition-all resize-none"></textarea>
+                </div>
+                <div>
+                    <label class="text-[10px] font-extrabold text-slate-450 uppercase tracking-wider block mb-1.5">Dietary Tag / Preference</label>
+                    <div class="flex flex-wrap gap-2" id="friend-dietary-tags">
+                        <span onclick="selectFriendTag(this, 'Low Spice')" class="cursor-pointer px-3 py-1.5 rounded-full border border-slate-200 text-slate-500 text-xs font-semibold hover:border-brand-500 hover:text-brand-500 transition-colors">Low Spice</span>
+                        <span onclick="selectFriendTag(this, 'Healthy Comfort')" class="cursor-pointer px-3 py-1.5 rounded-full border border-slate-200 text-slate-500 text-xs font-semibold hover:border-brand-500 hover:text-brand-500 transition-colors">Healthy Comfort</span>
+                        <span onclick="selectFriendTag(this, 'Diabetic Friendly')" class="cursor-pointer px-3 py-1.5 rounded-full border border-slate-200 text-slate-500 text-xs font-semibold hover:border-brand-500 hover:text-brand-500 transition-colors">Diabetic Friendly</span>
+                        <span onclick="selectFriendTag(this, 'Jain Meal')" class="cursor-pointer px-3 py-1.5 rounded-full border border-slate-200 text-slate-500 text-xs font-semibold hover:border-brand-500 hover:text-brand-500 transition-colors">Jain Meal</span>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="saveFriendDetails()" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-extrabold py-3.5 px-6 rounded-2xl shadow-lg shadow-rose-500/20 hover:shadow-rose-500/30 transition-all duration-300 flex items-center justify-center gap-2 transform active:scale-[0.98]">
+                <span>Confirm & Browse Food</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
         </div>
     </div>
 
@@ -930,7 +1145,7 @@
             }
         }
 
-        // Reset application back to initial restaurant catalog state
+        // Reset application back to initial state (Intent Gateway page)
         function resetApp() {
             // Stop tracking
             if (window.trackingInterval) clearInterval(window.trackingInterval);
@@ -938,12 +1153,12 @@
             // Hide tracking panel
             document.getElementById('order-tracking-section').classList.add('hidden');
 
-            // Restore normal listing
-            document.getElementById('hero-section').classList.remove('hidden');
-            document.getElementById('restaurants-section').classList.remove('hidden');
+            // Reset friend details if any
+            window.friendDetails = null;
+            document.getElementById('user-display-address').innerText = 'Park Street, Kolkata';
 
-            // Scroll back to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Return to Gateway landing screen
+            showGateway();
         }
 
         // Voice Recognition Functions
@@ -1369,6 +1584,23 @@
                 `;
             });
 
+            // If ordering for a friend, append metadata
+            if (window.friendDetails) {
+                itemsList.innerHTML += `
+                    <div class="mt-4 p-3.5 bg-rose-50/50 rounded-2xl border border-rose-100/50 text-left">
+                        <span class="block text-[9px] font-black text-rose-500 uppercase tracking-wider mb-1.5">
+                            <i class="fa-solid fa-gift mr-1 text-[10px]"></i> Ordering for Friend
+                        </span>
+                        <div class="text-[10px] font-semibold text-slate-650 space-y-1">
+                            <div>Name: <span class="text-slate-800 font-extrabold">${window.friendDetails.name}</span></div>
+                            <div>Phone: <span class="text-slate-800 font-extrabold">${window.friendDetails.phone}</span></div>
+                            <div>Address: <span class="text-slate-800 font-extrabold">${window.friendDetails.address}</span></div>
+                            <div>Dietary Preference: <span class="px-2 py-0.5 bg-brand-500 text-white rounded-full font-black text-[9px] ml-1 shadow-sm shadow-brand-500/10">${window.friendDetails.tag}</span></div>
+                        </div>
+                    </div>
+                `;
+            }
+
             if (subtotal === 0) {
                 itemsList.innerHTML += `
                     <div class="text-red-500 text-xs font-black p-3 bg-red-50 rounded-2xl border border-red-100 mt-2 text-left">
@@ -1523,16 +1755,33 @@
                 const name = ord.name || ord.item?.name || "Dish";
 
                 itemsList.innerHTML += `
-                    <div class="flex justify-between items-center text-sm font-medium text-slate-600">
+                    <div class="flex justify-between items-center text-sm font-medium text-slate-600 py-1 border-b border-slate-100 last:border-0">
                         <span>${name} <span class="text-slate-400 text-xs font-semibold">x ${qty}</span></span>
                         <span class="font-bold text-slate-700">₹${(price * qty).toFixed(2)}</span>
                     </div>
                 `;
             });
 
+            // If ordering for a friend, append receipt details to tracking screen
+            if (window.friendDetails) {
+                itemsList.innerHTML += `
+                    <div class="mt-4 p-3.5 bg-rose-50/50 rounded-2xl border border-rose-100/50 text-left">
+                        <span class="block text-[9px] font-black text-rose-500 uppercase tracking-wider mb-1.5">
+                            <i class="fa-solid fa-gift mr-1 text-[10px]"></i> Sending Gift to Friend
+                        </span>
+                        <div class="text-[10px] font-semibold text-slate-650 space-y-1">
+                            <div>Recipient Name: <span class="text-slate-800 font-extrabold">${window.friendDetails.name}</span></div>
+                            <div>Contact Number: <span class="text-slate-800 font-extrabold">${window.friendDetails.phone}</span></div>
+                            <div>Delivery Address: <span class="text-slate-800 font-extrabold">${window.friendDetails.address}</span></div>
+                            <div>Dietary Preference: <span class="px-2 py-0.5 bg-brand-500 text-white rounded-full font-black text-[9px] ml-1 shadow-sm shadow-brand-500/10">${window.friendDetails.tag}</span></div>
+                        </div>
+                    </div>
+                `;
+            }
+
             // Hide normal website sections
-            document.getElementById('hero-section').classList.add('hidden');
-            document.getElementById('restaurants-section').classList.add('hidden');
+            document.getElementById('gateway-section').classList.add('hidden');
+            document.getElementById('catalog-container').classList.add('hidden');
             document.getElementById('menu-section').classList.add('hidden');
 
             // Reset step banner and button
@@ -1811,10 +2060,324 @@
             }
         }
 
-        function resetSearchInput() {
-            const input = document.getElementById('search-input');
-            input.classList.remove('border-brand-500', 'bg-brand-50/10', 'ring-4', 'ring-brand-500/10');
-            input.placeholder = "Search dishes or restaurants...";
+        // Intent Gateway Navigation & Mode Controllers
+        function showGateway() {
+            document.getElementById('gateway-section').classList.remove('hidden');
+            document.getElementById('catalog-container').classList.add('hidden');
+            document.getElementById('menu-section').classList.add('hidden');
+            document.getElementById('order-tracking-section').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showCatalog() {
+            document.getElementById('gateway-section').classList.add('hidden');
+            document.getElementById('catalog-container').classList.remove('hidden');
+            document.getElementById('menu-section').classList.add('hidden');
+            document.getElementById('order-tracking-section').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Card 2: SuperQuick Voice Checkout simulated prompt
+        function triggerVoiceGateway() {
+            // Open voice modal overlay
+            document.getElementById('voice-modal').classList.remove('hidden');
+            
+            // Turn on listening visual state and instruct user
+            document.getElementById('voice-status-title').innerText = "Listening...";
+            document.getElementById('voice-transcript').innerText = "Speak now...";
+            document.getElementById('voice-instructions').innerHTML = `Listening... Try saying:<br><span class="text-brand-500 font-extrabold">"Order my usual Chicken Biryani from Moghal Empire"</span>`;
+            document.getElementById('voice-mic-glow').querySelector('.animate-ping').classList.remove('hidden');
+            document.getElementById('voice-error-msg').classList.add('hidden');
+
+            // Initialize Speech Recognition and start listening
+            if (!recognition) initVoice();
+            if (recognition) {
+                try {
+                    recognition.start();
+                } catch(e) {
+                    console.warn("Recognition already active", e);
+                }
+            }
+        }
+
+        // Card 3: Choose for Me Empathy Engine
+        function openChooseForMe() {
+            const modal = document.getElementById('choose-me-modal');
+            const optionsContainer = document.getElementById('choose-me-options');
+            const contextText = document.getElementById('choose-me-context');
+            
+            modal.classList.remove('hidden');
+            optionsContainer.innerHTML = `
+                <div class="flex items-center justify-center py-6">
+                    <div class="animate-spin rounded-full h-8 w-8 border-4 border-slate-200 border-t-brand-500"></div>
+                </div>
+            `;
+
+            // Calculate context based on time
+            const hour = new Date().getHours();
+            let timeOfDay = "evening";
+            let weather = "Rainy (24°C)";
+            let recommendations = [];
+
+            if (hour >= 6 && hour < 11) {
+                timeOfDay = "morning";
+                weather = "Breezy Morning (25°C)";
+                recommendations = [
+                    {
+                        name: "Traditional Filter Coffee Combo",
+                        restaurantName: "Southern Spice",
+                        restaurantId: 3,
+                        description: "Hot Masala Dosa, 2 Pcs Idli Sambar, and premium Filter Coffee.",
+                        price: 260,
+                        image: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=200&auto=format&fit=crop&q=80"
+                    },
+                    {
+                        name: "Cafe Latte Breakfast Sandwich",
+                        restaurantName: "Cafe Coffee Day",
+                        restaurantId: 8,
+                        description: "Creamy Hot Cafe Latte with a fresh Chicken Club Sandwich.",
+                        price: 330,
+                        image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200&auto=format&fit=crop&q=80"
+                    },
+                    {
+                        name: "Waffle Morning Delicacy",
+                        restaurantName: "Waffle World",
+                        restaurantId: 34,
+                        description: "Classic Honey Butter Waffle topped with Vanilla Scoop Addon.",
+                        price: 170,
+                        image: "https://images.unsplash.com/photo-1562376502-6f769499c886?w=200&auto=format&fit=crop&q=80"
+                    }
+                ];
+            } else if (hour >= 11 && hour < 16) {
+                timeOfDay = "afternoon";
+                weather = "Warm Afternoon (31°C)";
+                recommendations = [
+                    {
+                        name: "Comforting Lentil Stew & Rice (Bisi Bele Bath)",
+                        restaurantName: "Udupi Vihar",
+                        restaurantId: 22,
+                        description: "Piping hot lentil rice mash cooked with ghee, carrots, beans, and South Indian spices.",
+                        price: 120,
+                        image: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?w=200&auto=format&fit=crop&q=80"
+                    },
+                    {
+                        name: "Your Favorite Regular Biryani",
+                        restaurantName: "Kolkata Biryani House",
+                        restaurantId: 2,
+                        description: "Aromatic Basmati rice layered with tender Chicken Biryani and egg.",
+                        price: 280,
+                        image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200&auto=format&fit=crop&q=80"
+                    },
+                    {
+                        name: "Fast-delivery Indo-Chinese Combo",
+                        restaurantName: "Biryani Junction",
+                        restaurantId: 11,
+                        description: "Spicy Egg Chowmein served with tasty hot Chilli Chicken.",
+                        price: 320,
+                        image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=200&auto=format&fit=crop&q=80"
+                    }
+                ];
+            } else if (hour >= 16 && hour < 22) {
+                timeOfDay = "evening";
+                weather = "Rainy Evening (24°C)";
+                recommendations = [
+                    {
+                        name: "Comforting Khichuri & Beguni Combo",
+                        restaurantName: "Southern Spice",
+                        restaurantId: 3,
+                        description: "Hearty lentil khichuri served with crispy fried eggplant (beguni) and aloo bhaja.",
+                        price: 180,
+                        image: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?w=200&auto=format&fit=crop&q=80"
+                    },
+                    {
+                        name: "Your Favorite Regular Biryani",
+                        restaurantName: "Kolkata Biryani House",
+                        restaurantId: 2,
+                        description: "Classic Kolkata-style Chicken Biryani with potato and soft egg.",
+                        price: 280,
+                        image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200&auto=format&fit=crop&q=80"
+                    },
+                    {
+                        name: "Fast-delivery Indo-Chinese Combo",
+                        restaurantName: "Biryani Junction",
+                        restaurantId: 11,
+                        description: "Hot Egg Chowmein served with saucy, delicious Chilli Chicken.",
+                        price: 320,
+                        image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=200&auto=format&fit=crop&q=80"
+                    }
+                ];
+            } else {
+                timeOfDay = "late night";
+                weather = "Cool Night (21°C)";
+                recommendations = [
+                    {
+                        name: "Paneer Tikka Late Night Roll",
+                        restaurantName: "Punjab Rasoi",
+                        restaurantId: 16,
+                        description: "Spicy roasted paneer wrapped in a warm flatbread with onions and chutney.",
+                        price: 150,
+                        image: "https://images.unsplash.com/photo-1628294895520-73f248f572a1?w=200&auto=format&fit=crop&q=80"
+                    },
+                    {
+                        name: "Your Favorite Regular Biryani",
+                        restaurantName: "Kolkata Biryani House",
+                        restaurantId: 2,
+                        description: "Late night cravings savior: Chicken Biryani with raita.",
+                        price: 280,
+                        image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200&auto=format&fit=crop&q=80"
+                    },
+                    {
+                        name: "Kitkat Waffle Crunch Delicacy",
+                        restaurantName: "Waffle World",
+                        restaurantId: 34,
+                        description: "Warm chocolate waffle topped with Kitkat crunch and dark chocolate drizzle.",
+                        price: 180,
+                        image: "https://images.unsplash.com/photo-1562376502-6f769499c886?w=200&auto=format&fit=crop&q=80"
+                    }
+                ];
+            }
+
+            contextText.innerText = `Based on the ${weather} and this ${timeOfDay} hour, here are 3 curated comfort meals just for you:`;
+
+            // Display recommendations
+            setTimeout(() => {
+                optionsContainer.innerHTML = '';
+                recommendations.forEach(rec => {
+                    optionsContainer.innerHTML += `
+                        <div class="flex flex-col sm:flex-row items-center border border-slate-100 hover:border-brand-500 rounded-3xl p-4 gap-4 bg-slate-50/50 hover:bg-white hover:shadow-lg transition-all duration-300 group text-left">
+                            <img src="${rec.image}" class="w-20 h-20 rounded-2xl object-cover flex-shrink-0" />
+                            <div class="flex-grow min-w-0">
+                                <h4 class="font-extrabold text-slate-900 text-sm leading-snug group-hover:text-brand-500 transition-colors truncate">${rec.name}</h4>
+                                <span class="text-[10px] text-slate-400 font-bold block mt-0.5">${rec.restaurantName}</span>
+                                <p class="text-slate-450 text-[11px] font-medium leading-relaxed mt-1 line-clamp-2">${rec.description}</p>
+                            </div>
+                            <div class="flex flex-col items-end justify-between self-stretch flex-shrink-0">
+                                <span class="font-black text-slate-800 text-sm">₹${rec.price}</span>
+                                <button onclick="selectCuratedMeal('${rec.name}', ${rec.price}, ${rec.restaurantId})" class="bg-brand-500 hover:bg-brand-600 text-white font-extrabold text-xs py-2 px-3 rounded-xl mt-3 flex items-center gap-1 shadow-md shadow-brand-500/10 hover:shadow-brand-500/20 transition-all active:scale-95">
+                                    <span>Order This</span>
+                                    <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }, 300);
+        }
+
+        function closeChooseMe() {
+            document.getElementById('choose-me-modal').classList.add('hidden');
+        }
+
+        // Bypasses catalog drawer and goes directly to review checkout page
+        function selectCuratedMeal(itemName, itemPrice, restaurantId) {
+            closeChooseMe();
+            
+            // Find restaurant object
+            const rest = restaurants.find(r => r.id === restaurantId);
+            if (!rest) return;
+
+            // Clear cart and add this meal
+            cart = [{
+                name: itemName,
+                price: itemPrice,
+                quantity: 1
+            }];
+            updateCartUI();
+
+            speakText(`Curating your choice meal. Bypassing catalog and opening checkout.`);
+
+            // Open payment screen directly
+            showPaymentScreen(rest, cart);
+        }
+
+        // Card 4: Order for a Friend logic
+        let selectedDietaryTag = '';
+        
+        function openOrderForFriend() {
+            document.getElementById('friend-modal').classList.remove('hidden');
+            // Preselect first tag
+            const firstTag = document.getElementById('friend-dietary-tags').firstElementChild;
+            selectFriendTag(firstTag, 'Low Spice');
+        }
+
+        function closeOrderForFriend() {
+            document.getElementById('friend-modal').classList.add('hidden');
+        }
+
+        function selectFriendTag(element, tag) {
+            selectedDietaryTag = tag;
+            // Reset tag styles
+            const tags = document.querySelectorAll('#friend-dietary-tags span');
+            tags.forEach(t => {
+                t.className = 'cursor-pointer px-3 py-1.5 rounded-full border border-slate-200 text-slate-500 text-xs font-semibold hover:border-brand-500 hover:text-brand-500 transition-colors';
+            });
+            // Mark selected
+            element.className = 'cursor-pointer px-3 py-1.5 rounded-full bg-brand-500 text-white text-xs font-bold shadow-md shadow-brand-500/20 border border-brand-500 transition-colors';
+        }
+
+        function saveFriendDetails() {
+            const name = document.getElementById('friend-name').value.trim();
+            const phone = document.getElementById('friend-phone').value.trim();
+            const address = document.getElementById('friend-address').value.trim();
+
+            if (!name || !address) {
+                alert("Please fill in recipient's name and delivery address.");
+                return;
+            }
+
+            window.friendDetails = {
+                name: name,
+                phone: phone || 'N/A',
+                address: address,
+                tag: selectedDietaryTag
+            };
+
+            // Update UI Address in header
+            document.getElementById('user-display-address').innerText = `Sent to: ${name} (${selectedDietaryTag})`;
+
+            closeOrderForFriend();
+            showToast(`Recipient details saved for ${name}! Please choose a meal.`);
+            
+            // Redirect to catalog
+            showCatalog();
+        }
+
+        // Quick Reorder Carousel trigger
+        function quickReorder(itemName, itemPrice, restaurantId) {
+            const rest = restaurants.find(r => r.id === restaurantId);
+            if (!rest) return;
+
+            const existing = cart.find(c => c.name === itemName);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({
+                    name: itemName,
+                    price: itemPrice,
+                    quantity: 1
+                });
+            }
+
+            updateCartUI();
+            showToast(`Added ${itemName} to cart!`);
+        }
+
+        // Toast visual alert system
+        function showToast(message) {
+            const existingToasts = document.querySelectorAll('.hunger-toast');
+            existingToasts.forEach(t => t.remove());
+
+            const toast = document.createElement('div');
+            toast.className = "hunger-toast fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs font-black px-5 py-3.5 rounded-2xl shadow-xl z-55 flex items-center gap-2 animate-bounce border border-slate-800";
+            toast.innerHTML = `
+                <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                setTimeout(() => toast.remove(), 500);
+            }, 2500);
         }
 
         // On Page Load
