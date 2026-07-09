@@ -47,13 +47,19 @@
             scrollbar-width: none;
         }
         
+        /* Backdrop Blur Overrides */
+        .backdrop-blur-xs {
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
         /* Empathy Screen Fade-in Animations */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(12px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         .animate-fade-in {
-            animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: fadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
     </style>
     <!-- Leaflet Maps CSS & JS -->
@@ -104,13 +110,16 @@
     <!-- Main Content Area -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         <!-- Intent Gateway Landing Section -->
-        <section id="gateway-section" class="block py-6 animate-fade-in max-w-4xl mx-auto">
-            <!-- Personalized welcome & CRO conversion headers -->
-            <div class="text-center mb-10 mt-4">
-                <h1 id="personalized-headline" class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+    <!-- Intent Gateway Overlay Panel (Centered over blurred Catalog) -->
+    <div id="intent-overlay" class="fixed inset-0 z-45 flex flex-col items-center justify-center bg-slate-950/70 backdrop-blur-xs p-4 overflow-y-auto transition-all duration-500">
+        <div class="bg-white/95 backdrop-blur-md rounded-[3rem] p-8 sm:p-12 max-w-4xl w-full border border-white/20 shadow-2xl text-center relative animate-fade-in my-8">
+            
+            <!-- Welcome Header -->
+            <div class="mb-8">
+                <h1 id="personalized-headline" class="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight leading-tight">
                     What are we eating today, Rahul? 🌙
                 </h1>
-                <p class="text-slate-500 text-sm mt-2 max-w-md mx-auto font-medium">
+                <p class="text-slate-500 text-sm mt-2 max-w-md mx-auto font-bold">
                     Pick how you want to order, or let us handle it.
                 </p>
                 
@@ -121,16 +130,16 @@
                         <img class="w-6.5 h-6.5 rounded-full border-2 border-white object-cover shadow-sm" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&auto=format&fit=crop&q=80" />
                         <img class="w-6.5 h-6.5 rounded-full border-2 border-white object-cover shadow-sm" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=50&auto=format&fit=crop&q=80" />
                     </div>
-                    <span class="text-[11px] font-bold text-slate-500">
-                        <span class="text-slate-850 font-black">14,200+</span> <span id="social-proof-desc">dinners decided in Kolkata tonight</span> <span class="text-amber-500">★</span> <span class="text-slate-800 font-extrabold">4.9/5</span>
+                    <span class="text-[11px] font-bold text-slate-650">
+                        <span class="text-slate-900 font-black">14,200+</span> <span id="social-proof-desc">dinners decided in Kolkata tonight</span> <span class="text-amber-500">★</span> <span class="text-slate-800 font-extrabold">4.9/5</span>
                     </span>
                 </div>
             </div>
 
             <!-- Balanced 2x2 Grid of 4 Navigation Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-                <!-- Card 1: Show Catalog -->
-                <div onclick="showCatalog()" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden text-left">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-left">
+                <!-- Card 1: Go to Catalog -->
+                <div id="card-catalog" onclick="animateAndSelect('catalog')" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden active:scale-95">
                     <div class="absolute -right-4 -bottom-4 text-slate-50/50 group-hover:text-brand-50/50 text-8xl transition-colors duration-300 font-bold z-0">
                         <i class="fa-solid fa-list-check"></i>
                     </div>
@@ -138,13 +147,13 @@
                         <i class="fa-solid fa-list-check text-2xl"></i>
                     </div>
                     <div class="z-10 relative">
-                        <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-brand-500 transition-colors duration-300">Show Catalog</h3>
+                        <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-brand-500 transition-colors duration-300">Go to Catalog</h3>
                         <p class="text-[#4A5568] text-xs font-bold mt-1">Browse nearby restaurants, deals, and full menus.</p>
                     </div>
                 </div>
 
                 <!-- Card 2: SuperQuick Voice Checkout -->
-                <div onclick="triggerVoiceGateway()" class="bg-white border-2 border-slate-100 hover:border-slate-950 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-slate-950/5 group relative overflow-hidden text-left">
+                <div id="card-voice" onclick="animateAndSelect('voice')" class="bg-white border-2 border-slate-100 hover:border-slate-950 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-slate-950/5 group relative overflow-hidden active:scale-95">
                     <div class="absolute -right-4 -bottom-4 text-slate-50/50 group-hover:text-slate-100 text-8xl transition-colors duration-300 font-bold z-0">
                         <i class="fa-solid fa-microphone-lines"></i>
                     </div>
@@ -158,7 +167,7 @@
                 </div>
 
                 <!-- Card 3: Choose for Me -->
-                <div onclick="openChooseForMe()" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden text-left">
+                <div id="card-choose" onclick="animateAndSelect('choose')" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden active:scale-95">
                     <div class="absolute -right-4 -bottom-4 text-brand-50/20 group-hover:text-brand-50/30 text-8xl transition-colors duration-300 font-bold z-0">
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
                     </div>
@@ -175,7 +184,7 @@
                 </div>
 
                 <!-- Card 4: Order for a Friend -->
-                <div onclick="openOrderForFriend()" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden text-left">
+                <div id="card-friend" onclick="animateAndSelect('friend')" class="bg-white border-2 border-slate-100 hover:border-brand-500 rounded-3xl p-6 flex items-start gap-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative overflow-hidden active:scale-95">
                     <div class="absolute -right-4 -bottom-4 text-slate-50/50 group-hover:text-brand-50/50 text-8xl transition-colors duration-300 font-bold z-0">
                         <i class="fa-solid fa-gift"></i>
                     </div>
@@ -189,55 +198,36 @@
                 </div>
             </div>
 
-            <!-- Bottom Favorites Carousel Tray -->
-            <div class="mt-8 border-t border-slate-100 pt-8">
-                <h4 class="font-black text-slate-800 text-xs tracking-wider uppercase mb-4 flex items-center gap-1.5 justify-center">
+            <!-- Regular Favorites inside Overlay -->
+            <div class="border-t border-slate-150 pt-6">
+                <h4 class="font-black text-slate-700 text-[10px] tracking-wider uppercase mb-3 flex items-center gap-1.5 justify-center">
                     <i class="fa-solid fa-rotate-left text-brand-500"></i>
-                    <span>Your Regular Favorites / Quick Reorder</span>
+                    <span>Quick Reorder Favorites</span>
                 </h4>
-                <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-none justify-center px-2">
+                <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-none justify-center px-2">
                     <!-- Chicken Biryani -->
-                    <div onclick="quickReorder('Chicken Biryani', 280, 2)" class="flex-shrink-0 bg-white border border-slate-100 hover:border-brand-500 rounded-2xl p-3 w-56 flex items-center gap-3 cursor-pointer shadow-sm hover:shadow-md transition-all duration-305 group text-left">
-                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=100&auto=format&fit=crop&q=80" class="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
+                    <div onclick="quickReorderFromOverlay('Chicken Biryani', 280, 2)" class="flex-shrink-0 bg-white border border-slate-100 hover:border-brand-500 rounded-2xl p-2.5 w-48 flex items-center gap-2 cursor-pointer shadow-sm hover:shadow-md transition-all group text-left">
+                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=80&auto=format&fit=crop&q=80" class="w-10 h-10 rounded-xl object-cover flex-shrink-0" />
                         <div class="flex-grow min-w-0">
-                            <h5 class="font-bold text-slate-805 text-xs truncate group-hover:text-brand-500 transition-colors duration-300">Chicken Biryani</h5>
-                            <span class="text-[9px] text-slate-400 font-semibold block mt-0.5 truncate">Kolkata Biryani House</span>
-                            <span class="text-xs font-extrabold text-slate-800">₹280</span>
-                        </div>
-                        <div class="bg-brand-500 hover:bg-brand-650 text-white p-2 rounded-xl transition-colors duration-300 flex-shrink-0 flex items-center justify-center shadow-md shadow-brand-500/10">
-                            <span class="text-[9px] font-black uppercase tracking-wider px-1">Add +</span>
+                            <h5 class="font-bold text-slate-800 text-[11px] truncate group-hover:text-brand-500 transition-colors">Chicken Biryani</h5>
+                            <span class="text-xs font-extrabold text-slate-850">₹280</span>
                         </div>
                     </div>
-
                     <!-- Egg Chowmein -->
-                    <div onclick="quickReorder('Egg Chowmein', 140, 11)" class="flex-shrink-0 bg-white border border-slate-100 hover:border-brand-500 rounded-2xl p-3 w-56 flex items-center gap-3 cursor-pointer shadow-sm hover:shadow-md transition-all duration-305 group text-left">
-                        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?w=100&auto=format&fit=crop&q=80" class="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
+                    <div onclick="quickReorderFromOverlay('Egg Chowmein', 140, 11)" class="flex-shrink-0 bg-white border border-slate-100 hover:border-brand-500 rounded-2xl p-2.5 w-48 flex items-center gap-2 cursor-pointer shadow-sm hover:shadow-md transition-all group text-left">
+                        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?w=80&auto=format&fit=crop&q=80" class="w-10 h-10 rounded-xl object-cover flex-shrink-0" />
                         <div class="flex-grow min-w-0">
-                            <h5 class="font-bold text-slate-805 text-xs truncate group-hover:text-brand-500 transition-colors duration-300">Egg Chowmein</h5>
-                            <span class="text-[9px] text-slate-400 font-semibold block mt-0.5 truncate">Biryani Junction</span>
-                            <span class="text-xs font-extrabold text-slate-800">₹140</span>
-                        </div>
-                        <div class="bg-brand-500 hover:bg-brand-650 text-white p-2 rounded-xl transition-colors duration-300 flex-shrink-0 flex items-center justify-center shadow-md shadow-brand-500/10">
-                            <span class="text-[9px] font-black uppercase tracking-wider px-1">Add +</span>
-                        </div>
-                    </div>
-
-                    <!-- Paneer Tikka Wrap (Paneer Roll) -->
-                    <div onclick="quickReorder('Paneer Tikka Roll', 150, 16)" class="flex-shrink-0 bg-white border border-slate-100 hover:border-brand-500 rounded-2xl p-3 w-56 flex items-center gap-3 cursor-pointer shadow-sm hover:shadow-md transition-all duration-305 group text-left">
-                        <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=100&auto=format&fit=crop&q=80" class="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
-                        <div class="flex-grow min-w-0">
-                            <h5 class="font-bold text-slate-805 text-xs truncate group-hover:text-brand-500 transition-colors duration-300">Paneer Tikka Roll</h5>
-                            <span class="text-[9px] text-slate-400 font-semibold block mt-0.5 truncate">Punjab Rasoi</span>
-                            <span class="text-xs font-extrabold text-slate-800">₹150</span>
-                        </div>
-                        <div class="bg-brand-500 hover:bg-brand-650 text-white p-2 rounded-xl transition-colors duration-300 flex-shrink-0 flex items-center justify-center shadow-md shadow-brand-500/10">
-                            <span class="text-[9px] font-black uppercase tracking-wider px-1">Add +</span>
+                            <h5 class="font-bold text-slate-800 text-[11px] truncate group-hover:text-brand-500 transition-colors">Egg Chowmein</h5>
+                            <span class="text-xs font-extrabold text-slate-850">₹140</span>
                         </div>
                     </div>
                 </div>
             </div>
-        <        <!-- Standard Catalog Grid Container -->
-        <div id="catalog-container" class="hidden animate-fade-in">
+        </div>
+    </div>
+
+        <!-- Standard Catalog Grid Container -->
+        <div id="catalog-container" class="filter blur-md pointer-events-none select-none transition-all duration-700 animate-fade-in">
             <!-- Swiggy Styled Premium Promo Banner Grid (Big Brand Heist, FLAT discounts, Buy One Get One) -->
             <section id="promo-section" class="mb-10">
                 <!-- Promo Header Banner -->
@@ -2012,8 +2002,10 @@
             }
 
             // Hide normal website sections
-            document.getElementById('gateway-section').classList.add('hidden');
-            document.getElementById('catalog-container').classList.add('hidden');
+            const overlay = document.getElementById('intent-overlay');
+            if (overlay) overlay.classList.add('opacity-0', 'pointer-events-none');
+            const catalog = document.getElementById('catalog-container');
+            if (catalog) catalog.classList.add('hidden');
             document.getElementById('menu-section').classList.add('hidden');
 
             // Reset step banner and button
@@ -2368,20 +2360,76 @@
         }
 
         // Intent Gateway Navigation & Mode Controllers
+        // Intent Gateway Navigation & Mode Controllers
         function showGateway() {
-            document.getElementById('gateway-section').classList.remove('hidden');
-            document.getElementById('catalog-container').classList.add('hidden');
+            const overlay = document.getElementById('intent-overlay');
+            if (overlay) {
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+            }
+            const catalog = document.getElementById('catalog-container');
+            if (catalog) {
+                catalog.classList.remove('hidden');
+                catalog.classList.add('filter', 'blur-md', 'pointer-events-none', 'select-none');
+            }
             document.getElementById('menu-section').classList.add('hidden');
             document.getElementById('order-tracking-section').classList.add('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function showCatalog() {
-            document.getElementById('gateway-section').classList.add('hidden');
-            document.getElementById('catalog-container').classList.remove('hidden');
+            closeIntentOverlay();
             document.getElementById('menu-section').classList.add('hidden');
             document.getElementById('order-tracking-section').classList.add('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeIntentOverlay() {
+            const overlay = document.getElementById('intent-overlay');
+            if (overlay) {
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+            }
+            const catalog = document.getElementById('catalog-container');
+            if (catalog) {
+                catalog.classList.remove('hidden', 'filter', 'blur-md', 'blur-lg', 'pointer-events-none', 'select-none');
+            }
+        }
+
+        function animateAndSelect(target) {
+            const cardMap = {
+                'catalog': 'card-catalog',
+                'voice': 'card-voice',
+                'choose': 'card-choose',
+                'friend': 'card-friend'
+            };
+            const cardId = cardMap[target];
+            const cardEl = document.getElementById(cardId);
+            
+            if (cardEl) {
+                cardEl.classList.add('scale-105', 'border-brand-500', 'shadow-2xl', 'ring-4', 'ring-brand-500/10');
+            }
+
+            setTimeout(() => {
+                if (cardEl) {
+                    cardEl.classList.remove('scale-105', 'border-brand-500', 'shadow-2xl', 'ring-4', 'ring-brand-500/10');
+                }
+                
+                if (target === 'catalog') {
+                    showCatalog();
+                } else if (target === 'voice') {
+                    triggerVoiceGateway();
+                } else if (target === 'choose') {
+                    openChooseForMe();
+                } else if (target === 'friend') {
+                    openOrderForFriend();
+                }
+            }, 250);
+        }
+
+        function quickReorderFromOverlay(name, price, restId) {
+            closeIntentOverlay();
+            setTimeout(() => {
+                quickReorder(name, price, restId);
+            }, 300);
         }
 
         // Card 2: SuperQuick Voice Checkout simulated prompt
