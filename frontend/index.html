@@ -253,7 +253,7 @@
                         Delicious food, delivered <span class="text-brand-500 underline decoration-brand-100 decoration-8 underline-offset-4">straight to your door</span>.
                     </h1>
                     <p class="text-slate-500 text-lg mb-0 font-medium">
-                        Order from Kolkata's premium restaurants and enjoy hot, freshly-prepared meals delivered in minutes.
+                        Order from <span id="premium-city-name" class="font-extrabold text-slate-800">Kolkata</span>'s premium restaurants and enjoy hot, freshly-prepared meals delivered in minutes.
                     </p>
                 </div>
                 <div class="hidden md:block w-72 h-72 lg:w-80 lg:h-80 relative flex-shrink-0 bg-white p-4 rounded-[2rem] shadow-xl shadow-brand-500/5 rotate-3 hover:rotate-0 transition-transform duration-500">
@@ -2666,6 +2666,11 @@
             const modalTitleEl = document.getElementById('choose-me-modal-title');
             if (modalTitleEl) {
                 modalTitleEl.innerText = modalTitle;
+            }
+
+            const premiumCityEl = document.getElementById('premium-city-name');
+            if (premiumCityEl) {
+                premiumCityEl.innerText = city;
             }
         }
 
