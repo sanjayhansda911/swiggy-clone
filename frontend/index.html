@@ -1308,6 +1308,7 @@
         let currentOrderData = { restaurant: null, items: null, grandTotal: 0 };
 
         function showPaymentScreen(restaurant, items) {
+            console.log("showPaymentScreen called with items:", items);
             const paymentModal = document.getElementById('payment-modal');
             paymentModal.classList.remove('hidden');
 
@@ -1316,12 +1317,18 @@
             itemsList.innerHTML = '';
             
             let subtotal = 0;
-            items.forEach(ord => {
-                const totalItemPrice = ord.price * ord.quantity;
+            const ordList = Array.isArray(items) ? items : [items];
+
+            ordList.forEach(ord => {
+                const price = parseFloat(ord.price || ord.item?.price || 0);
+                const qty = parseInt(ord.quantity || 1);
+                const name = ord.name || ord.item?.name || "Dish";
+
+                const totalItemPrice = price * qty;
                 subtotal += totalItemPrice;
                 itemsList.innerHTML += `
                     <div class="flex justify-between items-center text-xs text-slate-700">
-                        <span>${ord.name} <span class="text-slate-400 font-bold">x ${ord.quantity}</span></span>
+                        <span>${name} <span class="text-slate-400 font-bold">x ${qty}</span></span>
                         <span class="font-bold text-slate-800">₹${totalItemPrice.toFixed(2)}</span>
                     </div>
                 `;
@@ -1427,11 +1434,17 @@
             // Render ordered items summary in status panel
             const itemsList = document.getElementById('tracking-items-list');
             itemsList.innerHTML = '';
-            items.forEach(ord => {
+            
+            const ordList = Array.isArray(items) ? items : [items];
+            ordList.forEach(ord => {
+                const price = parseFloat(ord.price || ord.item?.price || 0);
+                const qty = parseInt(ord.quantity || 1);
+                const name = ord.name || ord.item?.name || "Dish";
+
                 itemsList.innerHTML += `
                     <div class="flex justify-between items-center text-sm font-medium text-slate-600">
-                        <span>${ord.name} <span class="text-slate-400 text-xs font-semibold">x ${ord.quantity}</span></span>
-                        <span class="font-bold text-slate-700">₹${(ord.price * ord.quantity).toFixed(2)}</span>
+                        <span>${name} <span class="text-slate-400 text-xs font-semibold">x ${qty}</span></span>
+                        <span class="font-bold text-slate-700">₹${(price * qty).toFixed(2)}</span>
                     </div>
                 `;
             });
