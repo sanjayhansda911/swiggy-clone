@@ -2421,152 +2421,182 @@
             "Delhi": "Connaught Place"
         };
 
-        // Multi-region restaurant databases
-        const locationDatabases = {
+        const locationRestaurantNames = {
             "Kolkata": [
-                {
-                    "id": 1,
-                    "name": "Kolkata Biryani House",
-                    "rating": 4.5,
-                    "menu": [
-                        { "name": "Chicken Biryani", "price": 280, "description": "Fragrant basmati rice cooked with chicken, potato, and egg." },
-                        { "name": "Mutton Rezala", "price": 320, "description": "Tender mutton cooked in yogurt-based cashew gravy." },
-                        { "name": "Phirni", "price": 90, "description": "Creamy rice pudding served in earthen pot." }
-                    ]
-                },
-                {
-                    "id": 2,
-                    "name": "Southern Spice",
-                    "rating": 4.6,
-                    "menu": [
-                        { "name": "Masala Dosa", "price": 120, "description": "Crispy crepe filled with potato masala." },
-                        { "name": "Idli Sambar (2 Pcs)", "price": 80, "description": "Steamed rice cakes served with sambar and coconut chutney." },
-                        { "name": "Filter Coffee", "price": 60, "description": "South Indian drip-brewed coffee." }
-                    ]
-                },
-                {
-                    "id": 3,
-                    "name": "Biryani Junction",
-                    "rating": 4.2,
-                    "menu": [
-                        { "name": "Egg Chowmein", "price": 140, "description": "Stir-fried noodles with egg and veggies." },
-                        { "name": "Chilli Chicken", "price": 240, "description": "Spicy Indo-Chinese chicken chunks." }
-                    ]
-                }
+                "Kolkata Biryani House", "Southern Spice", "Biryani Junction", "Peter Cat Style", "Aminia Heritage", 
+                "Arsalan Delight", "Bhojohori Manna", "6 Ballygunge Place", "Oudh 1590", "Mocambo Café", 
+                "Kusum Rolls", "Flurys Corner", "Mitra Cafe", "Girish Chandra Dey Sweet", "K.C. Das", 
+                "Balaram Mullick", "Sree Hari Mistanna", "Dada Boudi Biryani", "Kolkata Curry Co.", "Howrah Bridge Foods", 
+                "Victoria Memorial Treats", "Rabindra Sadan Snacks", "College Street Coffee House", "Gariahat Fish Market", "Kalighat Temple Bhog", 
+                "Salt Lake Diner", "New Market Bistro", "Park Street Grill", "Esplanade Chaat", "Shyambazar Five Point", 
+                "Hatibagan Fast Food", "Tangra Chinese Corner", "Golden Dragon Tangra", "Beijing Tangra", "Kim Ling Tangra", 
+                "Ahallya Pure Veg", "Sonar Bangla Rasoi", "Hooghly River Delights", "Kolkata Kathi Wrap", "Mughlai Mahal", 
+                "Maidan Sports Cafe", "Alipore Club Dining", "Tollygunge Club Grill", "Camac Street Café", "Lake Mall Treats", 
+                "South City Grill", "Garia Express", "Behala Bhojan", "Dum Dum Airport Inn", "Sodepur Biryani Corner"
             ],
             "Mumbai": [
-                {
-                    "id": 4,
-                    "name": "Bandra Biryani Co.",
-                    "rating": 4.4,
-                    "menu": [
-                        { "name": "Chicken Tikka Biryani", "price": 290, "description": "Tender chicken tikka cooked with fragrant spices and layered rice." },
-                        { "name": "Mutton Seekh Kebab", "price": 260, "description": "Juicy minced mutton skewers grilled in tandoor." }
-                    ]
-                },
-                {
-                    "id": 5,
-                    "name": "Juhu Chowpatty Treats",
-                    "rating": 4.7,
-                    "menu": [
-                        { "name": "Pav Bhaji Special", "price": 130, "description": "Spiced mashed vegetable gravy served with hot buttered pav." },
-                        { "name": "Vada Pav (2 Pcs)", "price": 60, "description": "Spicy potato fritters sandwiched in soft buns with garlic chutney." },
-                        { "name": "Cutting Chai", "price": 40, "description": "Strong spiced ginger milk tea served Mumbai style." }
-                    ]
-                },
-                {
-                    "id": 6,
-                    "name": "Bombay Pizzeria",
-                    "rating": 4.3,
-                    "menu": [
-                        { "name": "Mumbai Masala Pizza", "price": 310, "description": "Local spiced veggies and cheese on hand-tossed base." }
-                    ]
-                }
+                "Bandra West Biryani Co.", "Juhu Chowpatty Treats", "Bombay Pizzeria", "Leopold Cafe Style", "Britannia & Co. Legacy", 
+                "Yazdani Bakery Treats", "Mahesh Lunch Home", "Gajalee Seafood", "Bademiya Grill", "Bagdadi Restaurant", 
+                "Sardar Pav Bhaji", "Amar Juice Centre", "Elco Pani Puri", "Kirti College Vada Pav", "Guru Kripa Samosa", 
+                "Olympia Coffee House", "Kyani & Co. Heritage", "Jimmy Boy Parsi", "Status Veg Restaurant", "Shiv Sagar Veg", 
+                "Sukh Sagar Pav", "Cream Centre Bistro", "Giri Momos Bandra", "Hearsch Bakery", "Candies Bandra", 
+                "Theobroma Patisserie", "Gokal Cafeteria", "Swati Snacks", "Soam Gujarati", "Pancham Puriwala", 
+                "Ashok Vada Pav", "Ghatkopar Khau Galli", "Carter Road Shawarma", "Colaba Social Inn", "Gateway Bistro", 
+                "Marine Drive Cafe", "Worli Sea Face Grill", "Dadaji Bhojanalaya", "Charni Road Chaat", "Lamington Road Fast Food", 
+                "Grant Road Biryani", "Mazgaon Mutton House", "Byculla Bakery", "Crawford Market Cafe", "Kalbadevi Sweet Mart", 
+                "Zaveri Bazar Chaat", "Mulund Khau Galli", "Chembur Sindhi Camp", "Andheri Grill Room", "Versova Fish Fry"
             ],
             "Hyderabad": [
-                {
-                    "id": 7,
-                    "name": "Paradise Hyderabadi House",
-                    "rating": 4.8,
-                    "menu": [
-                        { "name": "Hyderabadi Chicken Biryani", "price": 310, "description": "Authentic kacchi yakhni slow-cooked chicken biryani with mirchi ka salan." },
-                        { "name": "Double Ka Meetha", "price": 80, "description": "Crispy fried bread pudding soaked in milk syrup and saffron." }
-                    ]
-                },
-                {
-                    "id": 8,
-                    "name": "Chutneys Gachibowli",
-                    "rating": 4.5,
-                    "menu": [
-                        { "name": "Guntur Idli (4 Pcs)", "price": 90, "description": "Button idlis coated in spicy Guntur podi and pure ghee." },
-                        { "name": "Babai Hotel Dosa", "price": 140, "description": "White butter-drenched thick dosa served with four house chutneys." }
-                    ]
-                },
-                {
-                    "id": 9,
-                    "name": "Charminar Haleem",
-                    "rating": 4.6,
-                    "menu": [
-                        { "name": "Mutton Haleem", "price": 220, "description": "Rich stew of mutton, lentils, and broken wheat slow cooked to paste." }
-                    ]
-                }
+                "Paradise Hyderabadi House", "Chutneys Gachibowli", "Charminar Haleem", "Bawarchi RTC X Roads", "Shadab Cafe", 
+                "Cafe Bahar", "Pista House", "Sarvi Mughlai", "Shah Ghouse", "Mehfil Restaurant", 
+                "Grand Hotel Abids", "Hotel Rumaan", "Nimrah Cafe Charminar", "Subhan Bakery", "Karachi Bakery", 
+                "Santosh Dhaba", "Taj Mahal Hotel", "Pragathi Tiffins", "Ram Ki Bandi", "Nanking Chinese", 
+                "Minerva Coffee Shop", "Ohris Tansen", "Golkonda Grill", "Rayalaseema Ruchulu", "Kakatiya Mess", 
+                "Spicy Venue", "Southern Heritage", "Hyderabad House", "Platform 65", "Exotica Hitech City", 
+                "Absolute Barbecues", "Barbeque Nation", "Flechazo Diner", "Sigree Grill", "Gachibowli Tiffins", 
+                "Madhapur Biryani Point", "Jubilee Hills Bistro", "Banjara Hills Kitchen", "Konda Pur Curry Point", "Kukatpally Curry House", 
+                "Miyapur Meals", "Chandanagar Tiffin Box", "Secunderabad Club Dining", "Begumpet Bistro", "Somajiguda Sweets", 
+                "Ameerpet Tandoor", "Panjagutta Pulao", "Nampally Biryani", "Tolichowki Shawarma", "Mehdipatnam Grill"
             ],
             "Bengaluru": [
-                {
-                    "id": 10,
-                    "name": "MTR Indiranagar",
-                    "rating": 4.7,
-                    "menu": [
-                        { "name": "Rava Dosa Bengaluru Style", "price": 110, "description": "Crispy semolina crepe with cashews and ghee." },
-                        { "name": "Bisi Bele Bath", "price": 120, "description": "Traditional hot lentil rice mash cooked with tamarind and ghee." },
-                        { "name": "Premium Filter Coffee", "price": 70, "description": "Richly frothed chicory blend." }
-                    ]
-                },
-                {
-                    "id": 11,
-                    "name": "Corner House Ice Creams",
-                    "rating": 4.9,
-                    "menu": [
-                        { "name": "Death By Chocolate", "price": 250, "description": "Cake, vanilla ice cream, chocolate sauce, whipped cream, and nuts." }
-                    ]
-                },
-                {
-                    "id": 12,
-                    "name": "Koramangala Burger Club",
-                    "rating": 4.4,
-                    "menu": [
-                        { "name": "Crunchy Chicken Burger", "price": 190, "description": "Spicy fried chicken breast with garlic mayo." }
-                    ]
-                }
+                "MTR Indiranagar", "Corner House Ice Creams", "Koramangala Burger Club", "Vidyarthi Bhavan Gandhi Bazaar", "AECS Layout Tiffins", 
+                "CTR Malleshwaram", "Asha Food Camp", "Veena Stores", "Koshy's Cafe Parade", "Toit Brewpub Style", 
+                "Arbor Diner", "Windmills Craftworks", "Hole in the Wall Cafe", "Truffles Koramangala", "Empire Restaurant", 
+                "Siddique Kabab Centre", "Chikkanna Tiffin Room", "Sagar Fast Food", "Adyar Ananda Bhavan", "Sri Krishna Cafe", 
+                "Nagarjuna Andhra Meals", "Bhimas Veg", "Mani's Dum Biryani", "Ammi's Biryani", "Meghana Foods", 
+                "Biryani Zone", "Leon Grill", "California Burrito", "Glen's Bakehouse", "Smoor Chocolates", 
+                "Matteo Coffea", "Third Wave Coffee", "Blue Tokai Coffee", "Indian Coffee House", "Koshy's Legacy", 
+                "Albert Bakery", "Taza Thindi", "Udupi Grand", "Janatha Deluxe", "Hallimane Heritage", 
+                "Kamath Lokaruchi", "Santi Sagar", "Shanti Sagar Veg", "Sukh Sagar Jayanagar", "Vasudev Adigas", 
+                "Woodlands Veg", "Salarpuria Food Court", "Whitefield Kitchen", "Marathahalli Meals", "Electronic City Dhaba"
             ],
             "Delhi": [
-                {
-                    "id": 13,
-                    "name": "Karim's Old Delhi",
-                    "rating": 4.6,
-                    "menu": [
-                        { "name": "Mutton Korma", "price": 340, "description": "Classic rich mutton curry with brown onions and spices." },
-                        { "name": "Khamiri Roti", "price": 40, "description": "Fluffy tandoori yeast-leavened flatbread." }
-                    ]
-                },
-                {
-                    "id": 14,
-                    "name": "Moti Mahal Deluxe",
-                    "rating": 4.5,
-                    "menu": [
-                        { "name": "Original Butter Chicken", "price": 320, "description": "Clay-oven smoked chicken cooked in velvety tomato butter sauce." },
-                        { "name": "Dal Makhani", "price": 210, "description": "Black lentils slow-cooked overnight with cream and butter." }
-                    ]
-                },
-                {
-                    "id": 15,
-                    "name": "Chandni Chowk Sweets",
-                    "rating": 4.3,
-                    "menu": [
-                        { "name": "Rabri Jalebi Combo", "price": 120, "description": "Rabri-topped crispy sweet jalebis." }
-                    ]
-                }
+                "Karim's Old Delhi", "Moti Mahal Deluxe", "Chandni Chowk Sweets", "Paranthe Wali Gali", "Kake Di Hatti", 
+                "Gulati Pandara Road", "Havemore Restaurant", "Rajinder Da Dhaba", "Wenger's Deli Connaught Place", "Kuremal Mohan Lal Kulfi", 
+                "Natraj Dahi Bhalla", "Jain Chawal Wale", "Giani's Ice Cream", "Sita Ram Diwan Chand", "Chache Di Hatti", 
+                "Bittoo Tikki Wala", "Bille Di Hatti", "Al Jawahar", "Aslam Chicken Old Delhi", "Qureshi Kabab Charminar", 
+                "Khan Chacha", "Salim's Kababs", "Big Yellow Door", "Cafeteria & Co.", "United Coffee House", 
+                "Indian Accent Inspired", "Chor Bizarre", "Pindi Pandara Road", "Bukhara Inspired", "Dum Pukht Inspired", 
+                "Dakshin inspired", "Delhi Club House", "Punjab Grill", "Sandoz Restaurant", "Grover Sweets", 
+                "Nathu's Sweets", "Bengali Sweet House", "Haldiram's Express", "Bikanervala", "Sagar Ratna", 
+                "Saravana Bhavan Janpath", "Chacha Ke Chole Bhature", "Lajpat Nagar Momos", "Kamla Nagar Fast Food", "Hudson Lane Cafes", 
+                "GTB Nagar Grill", "Rajouri Garden Dhaba", "Dwarka Food Court", "Saket Bistro", "Noida Sector 18 Dhaba"
             ]
+        };
+
+        const locationDishTemplates = {
+            "Kolkata": [
+                { "name": "Chicken Biryani", "price": 280, "description": "Fragrant basmati cooked with chicken, potato, and egg." },
+                { "name": "Mutton Rezala", "price": 320, "description": "Tender mutton cooked in creamy yogurt-based cashew gravy." },
+                { "name": "Phirni", "price": 90, "description": "Creamy rice pudding served chilled in traditional earthen pot." },
+                { "name": "Kolkata Chicken Roll", "price": 120, "description": "Flaky layered flatbread wrapped around hot grilled chicken pieces." },
+                { "name": "Double Egg Roll", "price": 90, "description": "Classic street wrap with eggs, green chillies, onions, and lemon." },
+                { "name": "Kosha Mangsho", "price": 340, "description": "Classic slow-cooked spicy mutton curry in thick black gravy." },
+                { "name": "Bhetki Paturi", "price": 290, "description": "Bhetki fish marinated in mustard and coconut, steamed in banana leaf." },
+                { "name": "Sondesh Classic", "price": 60, "description": "Fresh soft cottage cheese sweet with cardamom flavor." },
+                { "name": "Luchi Aloo Dum", "price": 110, "description": "Soft puffed fried flatbreads served with rich spiced baby potatoes." },
+                { "name": "Chilli Chicken Tangra", "price": 240, "description": "Spicy dark soy stir-fried chicken with green bell peppers." },
+                { "name": "Hilsa Mustard Curry", "price": 450, "description": "Traditional Hilsa fish cooked in hot mustard oil and green chillies." },
+                { "name": "Mishti Doi", "price": 80, "description": "Rich fermented sweet red yogurt in clay pot." }
+            ],
+            "Mumbai": [
+                { "name": "Pav Bhaji Special", "price": 130, "description": "Thick spiced mashed vegetables cooked with butter, served with soft pav." },
+                { "name": "Vada Pav (2 Pcs)", "price": 60, "description": "Battered fried potato dumplings inside bread rolls with red garlic dry chutney." },
+                { "name": "Cutting Chai", "price": 40, "description": "Strong milk tea boiled with fresh ginger and crushed cardamoms." },
+                { "name": "Mumbai Masala Pizza", "price": 310, "description": "Local house sauce, capsicum, onions, cheese, and street spices." },
+                { "name": "Chicken Tikka Biryani", "price": 290, "description": "Clay-oven smoked chicken cooked with spices and layered basmati." },
+                { "name": "Mutton Seekh Kebab", "price": 260, "description": "Charcoal grilled spiced minced mutton skewers." },
+                { "name": "Bombay Grill Sandwich", "price": 100, "description": "Toasted sandwich layered with potatoes, beets, mint sauce, and cheese." },
+                { "name": "Misal Pav Special", "price": 110, "description": "Spicy moth bean sprouts curry topped with lemon, onion, and farsan." },
+                { "name": "Keema Pav Classic", "price": 220, "description": "Fragrant minced mutton cooked with peas and Indian spices, served with pav." },
+                { "name": "Bhel Puri", "price": 80, "description": "Crisp puffed rice, sev, potatoes, mixed with tamarind and mint chutneys." },
+                { "name": "Tawa Pulav", "price": 160, "description": "Spicy pan-fried rice cooked with butter, veggies, and pav bhaji masala." },
+                { "name": "Rose Falooda", "price": 120, "description": "Chilled rose milk dessert with vermicelli, sweet basil seeds, and ice cream." }
+            ],
+            "Hyderabad": [
+                { "name": "Hyderabadi Chicken Biryani", "price": 310, "description": "Kacchi yakhni slow-cooked chicken and basmati layered with saffron." },
+                { "name": "Double Ka Meetha", "price": 80, "description": "Sweet fried bread soaked in thickened milk, cardamom, and saffron." },
+                { "name": "Guntur Idli (4 Pcs)", "price": 90, "description": "Soft steamed idlis tossed in hot ghee and spicy Guntur chilli podi." },
+                { "name": "Babai Hotel Dosa", "price": 140, "description": "Fluffy thick rice crepe roasted with local butter and ginger chutney." },
+                { "name": "Mutton Haleem", "price": 220, "description": "Traditional paste-like stew of mutton, lentils, and wheat slow-cooked." },
+                { "name": "Mirchi Bajji (4 Pcs)", "price": 70, "description": "Fried green chillies stuffed with tangy spices and peanuts." },
+                { "name": "Qubani Ka Meetha", "price": 110, "description": "Boiled apricot compote served with vanilla ice cream or fresh cream." },
+                { "name": "Chicken 65", "price": 230, "description": "Spicy yogurt-marinated deep-fried chicken bites flavored with curry leaves." },
+                { "name": "Pathar Ka Gosht", "price": 320, "description": "Tender lamb slices cooked on dry heated granite slabs with local spices." },
+                { "name": "Osmania Biscuits (10 Pcs)", "price": 80, "description": "Perfect tea-time salty sweet buttery cookies from old city bakery." },
+                { "name": "Irani Chai", "price": 35, "description": "Rich thick slow-cooked black tea blended with condensed milk." },
+                { "name": "Bagara Rice & Dalcha", "price": 180, "description": "Fragrant seasoned rice served with local mutton lentil gourd stew." }
+            ],
+            "Bengaluru": [
+                { "name": "Rava Dosa Bengaluru Style", "price": 110, "description": "Crispy lacy semolina pancake with peppercorns, cashews, and ghee." },
+                { "name": "Bisi Bele Bath", "price": 120, "description": "Warm tamarind lentil rice mash cooked with ghee, vegetables, and spices." },
+                { "name": "Premium Filter Coffee", "price": 70, "description": "Authentic South Indian chicory blend coffee served hot with foam." },
+                { "name": "Death By Chocolate", "price": 250, "description": "Chocolate cake, ice cream, hot chocolate fudge, nuts, and cherries." },
+                { "name": "Crunchy Chicken Burger", "price": 190, "description": "Crispy fried breast fillet, pickles, cheese, and house mayo." },
+                { "name": "Mangalore Buns (2 Pcs)", "price": 80, "description": "Sweet fried banana bread served with spicy coconut chutney." },
+                { "name": "Ghee Roast Masala Dosa", "price": 130, "description": "Crispy crepe roasted in pure ghee, stuffed with seasoned mashed potato." },
+                { "name": "Idli Vada Sambar Combo", "price": 95, "description": "Two soft steamed rice cakes and one crispy lentil doughnut." },
+                { "name": "Andhra Chilli Chicken", "price": 240, "description": "Fiery stir-fried chicken chunks with green chillies, garlic, and curry leaves." },
+                { "name": "Pineapple Kesari Bath", "price": 70, "description": "Sweet semolina dessert roasted with ghee, pineapple chunks, and raisins." },
+                { "name": "Ragi Mudde & Saaru", "price": 140, "description": "Steamed finger millet ball served with traditional spicy vegetable gravy." },
+                { "name": "Filter Coffee Shake", "price": 130, "description": "Creamy blended milkshake infused with real filter coffee decoction." }
+            ],
+            "Delhi": [
+                { "name": "Mutton Korma", "price": 340, "description": "Rich Mughlai mutton curry slow cooked with brown onions and spices." },
+                { "name": "Khamiri Roti", "price": 40, "description": "Thick pillowy tandoori flatbread, perfect for pairing with korma." },
+                { "name": "Original Butter Chicken", "price": 320, "description": "Tandoori chicken tikkas simmered in creamy butter tomato gravy." },
+                { "name": "Dal Makhani", "price": 210, "description": "Creamy black lentils slow-cooked overnight with spices and butter." },
+                { "name": "Rabri Jalebi Combo", "price": 120, "description": "Hot crispy jalebis paired with cool sweet thickened milk rabri." },
+                { "name": "Chole Bhature Special", "price": 140, "description": "Spicy chickpea gravy served with two giant fluffy deep-fried flatbreads." },
+                { "name": "Dahi Bhalla Classic", "price": 90, "description": "Soft lentil balls in sweet yogurt topped with tamarind and mint chutneys." },
+                { "name": "Aloo Parantha Ghee", "price": 110, "description": "Tawa parantha filled with potato, cooked with pure ghee, served with pickle." },
+                { "name": "Tandoori Chicken Half", "price": 260, "description": "Classic tandoor-roasted chicken marinated in spiced yogurt." },
+                { "name": "Rajma Chawal Bowl", "price": 130, "description": "Hearty home-style kidney beans curry served with steamed basmati rice." },
+                { "name": "Kulfi Falooda", "price": 100, "description": "Saffron milk kulfi topped with rose syrup and sweet rice noodles." },
+                { "name": "Paneer Makhani", "price": 240, "description": "Soft cottage cheese cubes cooked in rich creamy butter tomato gravy." }
+            ]
+        };
+
+        // Procedural database generator function
+        function generateLocationDatabase(city) {
+            const names = locationRestaurantNames[city] || locationRestaurantNames["Kolkata"];
+            const templates = locationDishTemplates[city] || locationDishTemplates["Kolkata"];
+            const list = [];
+            const offset = (city === "Kolkata" ? 0 : city === "Mumbai" ? 100 : city === "Hyderabad" ? 200 : city === "Bengaluru" ? 300 : 400);
+
+            for (let i = 0; i < 50; i++) {
+                const restName = names[i] || `${city} Restaurant ${i + 1}`;
+                const rating = (4.0 + Math.random() * 0.9).toFixed(1);
+                
+                // Shuffle templates and select exactly 10 dishes to satisfy requirement
+                const shuffled = [...templates].sort(() => 0.5 - Math.random());
+                const menu = shuffled.slice(0, 10).map((dish, idx) => {
+                    // Introduce slight price variance based on restaurant ID
+                    const priceOffset = (i % 5) * 10;
+                    return {
+                        name: dish.name,
+                        price: dish.price + priceOffset,
+                        description: dish.description
+                    };
+                });
+
+                list.push({
+                    id: offset + i + 1,
+                    name: restName,
+                    rating: parseFloat(rating),
+                    menu: menu
+                });
+            }
+            return list;
+        }
+
+        // Initialize locationDatabases procedurally for all 5 cities
+        const locationDatabases = {
+            "Kolkata": generateLocationDatabase("Kolkata"),
+            "Mumbai": generateLocationDatabase("Mumbai"),
+            "Hyderabad": generateLocationDatabase("Hyderabad"),
+            "Bengaluru": generateLocationDatabase("Bengaluru"),
+            "Delhi": generateLocationDatabase("Delhi")
         };
 
         // Dish images mapper helper
