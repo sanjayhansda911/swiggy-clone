@@ -84,23 +84,73 @@ def recommend_meals():
         
         # Creative dynamic rationales based on dish name and context
         def get_creative_fallback_rationale(item_name, rest_name, city_name, weather_condition, time_period):
-            templates_morning = [
-                f"Nothing beats a fresh {item_name} from {rest_name} to kickstart your day in {city_name}. It's the ultimate companion for this {weather_condition}!",
-                f"Fuel your morning with this mouth-watering {item_name} from {rest_name}. Hot, crispy, and satisfying—just what you need on a {weather_condition}.",
-                f"Craving a cozy breakfast? This signature {item_name} from {rest_name} hits all the right comfort notes for this {weather_condition}."
-            ]
+            name_l = item_name.lower()
+            is_beverage = any(kw in name_l for kw in ['chai', 'tea', 'coffee', 'latte', 'shake', 'lassi', 'drink', 'smoothie', 'milkshake', 'beverage'])
+            is_dessert = any(kw in name_l for kw in ['dessert', 'sweet', 'phirni', 'kulfi', 'cake', 'cheesecake', 'pie', 'muffin', 'halwa', 'tukda', 'gulab jamun', 'brownie'])
+            is_cold = any(kw in name_l for kw in ['cold', 'iced', 'shake', 'lassi', 'smoothie', 'milkshake', 'chilled', 'kulfi', 'ice cream', 'phirni'])
             
-            templates_afternoon = [
-                f"Treat yourself to this delicious {item_name} from {rest_name}. It is perfect for a satisfying lunch during this {weather_condition}.",
-                f"This legendary {item_name} from {rest_name} is slow-cooked to perfection—guaranteed comfort food for a {weather_condition} in {city_name}.",
-                f"Beat the mid-day slump with {item_name} from {rest_name}. The warm, rich flavors are ideal for this {weather_condition} hour."
-            ]
+            # Templates for morning
+            if is_beverage or is_dessert:
+                if is_cold:
+                    templates_morning = [
+                        f"Nothing beats a chilled, refreshing {item_name} from {rest_name} to start your day in {city_name}. The perfect companion for this {weather_condition}!",
+                        f"Fuel your morning with this cool and creamy {item_name} from {rest_name}. Sweet and satisfying—just what you need on a {weather_condition}.",
+                        f"Craving a sweet start? This signature {item_name} from {rest_name} hits all the right comforting notes for this {weather_condition}."
+                    ]
+                else:
+                    templates_morning = [
+                        f"Nothing beats a steaming cup of {item_name} from {rest_name} to start your day in {city_name}. The perfect companion for this {weather_condition}!",
+                        f"Fuel your morning with this aromatic, hot {item_name} from {rest_name}. Comforting and satisfying—just what you need on a {weather_condition}.",
+                        f"Craving a warm start? This signature {item_name} from {rest_name} hits all the right comforting notes for this {weather_condition}."
+                    ]
+            else:
+                templates_morning = [
+                    f"Nothing beats a fresh {item_name} from {rest_name} to kickstart your day in {city_name}. It's the ultimate companion for this {weather_condition}!",
+                    f"Fuel your morning with this mouth-watering {item_name} from {rest_name}. Hot, crispy, and satisfying—just what you need on a {weather_condition}.",
+                    f"Craving a cozy breakfast? This signature {item_name} from {rest_name} hits all the right comfort notes for this {weather_condition}."
+                ]
             
-            templates_evening = [
-                f"Wind down your day with the comforting flavors of {item_name} from {rest_name}. Perfect for a cozy {weather_condition} dinner in {city_name}.",
-                f"There's nothing quite like {rest_name}'s hot, flavorful {item_name} to warm you up during this {weather_condition} evening.",
-                f"A delicious plate of {item_name} from {rest_name} is the ultimate comfort meal to close out this {weather_condition} hour."
-            ]
+            # Templates for afternoon
+            if is_beverage or is_dessert:
+                if is_cold:
+                    templates_afternoon = [
+                        f"Cool down this afternoon with a chilled {item_name} from {rest_name}. It is perfect for a sweet refresh during this {weather_condition}.",
+                        f"This legendary {item_name} from {rest_name} is the ultimate refreshing treat—guaranteed comfort for a {weather_condition} in {city_name}.",
+                        f"Beat the mid-day heat with a cool, creamy {item_name} from {rest_name}. The flavors are ideal for this {weather_condition} hour."
+                    ]
+                else:
+                    templates_afternoon = [
+                        f"Warm up this afternoon with a freshly brewed {item_name} from {rest_name}. It is perfect for a rich refresh during this {weather_condition}.",
+                        f"This rich {item_name} from {rest_name} is brewed to perfection—guaranteed comfort for a {weather_condition} in {city_name}.",
+                        f"Beat the mid-day slump with a hot cup of {item_name} from {rest_name}. The aromatic flavors are ideal for this {weather_condition} hour."
+                    ]
+            else:
+                templates_afternoon = [
+                    f"Treat yourself to this delicious {item_name} from {rest_name}. It is perfect for a satisfying lunch during this {weather_condition}.",
+                    f"This legendary {item_name} from {rest_name} is slow-cooked to perfection—guaranteed comfort food for a {weather_condition} in {city_name}.",
+                    f"Beat the mid-day slump with {item_name} from {rest_name}. The warm, rich flavors are ideal for this {weather_condition} hour."
+                ]
+            
+            # Templates for evening
+            if is_beverage or is_dessert:
+                if is_cold:
+                    templates_evening = [
+                        f"Treat yourself to a chilled, comforting {item_name} from {rest_name}. Perfect for a cozy {weather_condition} evening in {city_name}.",
+                        f"There's nothing quite like {rest_name}'s creamy, refreshing {item_name} to satisfy your sweet cravings during this {weather_condition} evening.",
+                        f"A sweet serving of {item_name} from {rest_name} is the ultimate treat to close out this {weather_condition} hour."
+                    ]
+                else:
+                    templates_evening = [
+                        f"Wind down your day with a steaming, comforting cup of {item_name} from {rest_name}. Perfect for a cozy {weather_condition} evening in {city_name}.",
+                        f"There's nothing quite like {rest_name}'s hot, aromatic {item_name} to warm you up during this {weather_condition} evening.",
+                        f"A soothing cup of {item_name} from {rest_name} is the ultimate warm comfort to close out this {weather_condition} hour."
+                    ]
+            else:
+                templates_evening = [
+                    f"Wind down your day with the comforting flavors of {item_name} from {rest_name}. Perfect for a cozy {weather_condition} dinner in {city_name}.",
+                    f"There's nothing quite like {rest_name}'s hot, flavorful {item_name} to warm you up during this {weather_condition} evening.",
+                    f"A delicious plate of {item_name} from {rest_name} is the ultimate comfort meal to close out this {weather_condition} hour."
+                ]
             
             # Select templates bucket
             if time_period == "morning":

@@ -2551,21 +2551,66 @@
                 }
 
                 const recommendations = filtered.slice(0, 3).map(rec => {
-                    const templates_morning = [
-                        `Nothing beats a fresh ${rec.name} from ${rec.restaurantName} to kickstart your day in ${currentCity}. It's the ultimate companion for this ${weather}!`,
-                        `Fuel your morning with this mouth-watering ${rec.name} from ${rec.restaurantName}. Hot, crispy, and satisfying—just what you need on a ${weather}.`,
-                        `Craving a cozy breakfast? This signature ${rec.name} from ${rec.restaurantName} hits all the right comfort notes for this ${weather}.`
-                    ];
-                    const templates_afternoon = [
-                        `Treat yourself to this delicious ${rec.name} from ${rec.restaurantName}. It is perfect for a satisfying lunch during this ${weather}.`,
-                        `This legendary ${rec.name} from ${rec.restaurantName} is slow-cooked to perfection—guaranteed comfort food for a ${weather} in ${currentCity}.`,
-                        `Beat the mid-day slump with ${rec.name} from ${rec.restaurantName}. The warm, rich flavors are ideal for this ${weather} hour.`
-                    ];
-                    const templates_evening = [
-                        `Wind down your day with the comforting flavors of ${rec.name} from ${rec.restaurantName}. Perfect for a cozy ${weather} dinner in ${currentCity}.`,
-                        `There's nothing quite like ${rec.restaurantName}'s hot, flavorful ${rec.name} to warm you up during this ${weather} evening.`,
-                        `A delicious plate of ${rec.name} from ${rec.restaurantName} is the ultimate comfort meal to close out this ${weather} hour.`
-                    ];
+                    const name_l = rec.name.toLowerCase();
+                    const isBeverage = name_l.includes('chai') || name_l.includes('tea') || name_l.includes('coffee') || name_l.includes('latte') || name_l.includes('shake') || name_l.includes('lassi') || name_l.includes('drink') || name_l.includes('smoothie') || name_l.includes('milkshake') || name_l.includes('beverage');
+                    const isDessert = name_l.includes('dessert') || name_l.includes('sweet') || name_l.includes('phirni') || name_l.includes('kulfi') || name_l.includes('cake') || name_l.includes('cheesecake') || name_l.includes('pie') || name_l.includes('muffin') || name_l.includes('halwa') || name_l.includes('tukda') || name_l.includes('gulab jamun') || name_l.includes('brownie');
+                    const isCold = name_l.includes('cold') || name_l.includes('iced') || name_l.includes('shake') || name_l.includes('lassi') || name_l.includes('smoothie') || name_l.includes('milkshake') || name_l.includes('chilled') || name_l.includes('kulfi') || name_l.includes('ice cream') || name_l.includes('phirni');
+
+                    let templates_morning = [];
+                    let templates_afternoon = [];
+                    let templates_evening = [];
+
+                    if (isBeverage || isDessert) {
+                        if (isCold) {
+                            templates_morning = [
+                                `Nothing beats a chilled, refreshing ${rec.name} from ${rec.restaurantName} to start your day in ${currentCity}. The perfect companion for this ${weather}!`,
+                                `Fuel your morning with this cool and creamy ${rec.name} from ${rec.restaurantName}. Sweet and satisfying—just what you need on a ${weather}.`,
+                                `Craving a sweet start? This signature ${rec.name} from ${rec.restaurantName} hits all the right comforting notes for this ${weather}.`
+                            ];
+                            templates_afternoon = [
+                                `Cool down this afternoon with a chilled ${rec.name} from ${rec.restaurantName}. It is perfect for a sweet refresh during this ${weather}.`,
+                                `This legendary ${rec.name} from ${rec.restaurantName} is the ultimate refreshing treat—guaranteed comfort for a ${weather} in ${currentCity}.`,
+                                `Beat the mid-day heat with a cool, creamy ${rec.name} from ${rec.restaurantName}. The flavors are ideal for this ${weather} hour.`
+                            ];
+                            templates_evening = [
+                                `Treat yourself to a chilled, comforting ${rec.name} from ${rec.restaurantName}. Perfect for a cozy ${weather} evening in ${currentCity}.`,
+                                `There's nothing quite like ${rec.restaurantName}'s creamy, refreshing ${rec.name} to satisfy your sweet cravings during this ${weather} evening.`,
+                                `A sweet serving of ${rec.name} from ${rec.restaurantName} is the ultimate treat to close out this ${weather} hour.`
+                            ];
+                        } else {
+                            templates_morning = [
+                                `Nothing beats a steaming cup of ${rec.name} from ${rec.restaurantName} to start your day in ${currentCity}. The perfect companion for this ${weather}!`,
+                                `Fuel your morning with this aromatic, hot ${rec.name} from ${rec.restaurantName}. Comforting and satisfying—just what you need on a ${weather}.`,
+                                `Craving a warm start? This signature ${rec.name} from ${rec.restaurantName} hits all the right comforting notes for this ${weather}.`
+                            ];
+                            templates_afternoon = [
+                                `Warm up this afternoon with a freshly brewed ${rec.name} from ${rec.restaurantName}. It is perfect for a rich refresh during this ${weather}.`,
+                                `This rich ${rec.name} from ${rec.restaurantName} is brewed to perfection—guaranteed comfort for a ${weather} in ${currentCity}.`,
+                                `Beat the mid-day slump with a hot cup of ${rec.name} from ${rec.restaurantName}. The aromatic flavors are ideal for this ${weather} hour.`
+                            ];
+                            templates_evening = [
+                                `Wind down your day with a steaming, comforting cup of ${rec.name} from ${rec.restaurantName}. Perfect for a cozy ${weather} evening in ${currentCity}.`,
+                                `There's nothing quite like ${rec.restaurantName}'s hot, aromatic ${rec.name} to warm you up during this ${weather} evening.`,
+                                `A soothing cup of ${rec.name} from ${rec.restaurantName} is the ultimate warm comfort to close out this ${weather} hour.`
+                            ];
+                        }
+                    } else {
+                        templates_morning = [
+                            `Nothing beats a fresh ${rec.name} from ${rec.restaurantName} to kickstart your day in ${currentCity}. It's the ultimate companion for this ${weather}!`,
+                            `Fuel your morning with this mouth-watering ${rec.name} from ${rec.restaurantName}. Hot, crispy, and satisfying—just what you need on a ${weather}.`,
+                            `Craving a cozy breakfast? This signature ${rec.name} from ${rec.restaurantName} hits all the right comfort notes for this ${weather}.`
+                        ];
+                        templates_afternoon = [
+                            `Treat yourself to this delicious ${rec.name} from ${rec.restaurantName}. It is perfect for a satisfying lunch during this ${weather}.`,
+                            `This legendary ${rec.name} from ${rec.restaurantName} is slow-cooked to perfection—guaranteed comfort food for a ${weather} in ${currentCity}.`,
+                            `Beat the mid-day slump with ${rec.name} from ${rec.restaurantName}. The warm, rich flavors are ideal for this ${weather} hour.`
+                        ];
+                        templates_evening = [
+                            `Wind down your day with the comforting flavors of ${rec.name} from ${rec.restaurantName}. Perfect for a cozy ${weather} dinner in ${currentCity}.`,
+                            `There's nothing quite like ${rec.restaurantName}'s hot, flavorful ${rec.name} to warm you up during this ${weather} evening.`,
+                            `A delicious plate of ${rec.name} from ${rec.restaurantName} is the ultimate comfort meal to close out this ${weather} hour.`
+                        ];
+                    }
                     
                     const templates = timeOfDay === "morning" ? templates_morning : (timeOfDay === "afternoon" ? templates_afternoon : templates_evening);
                     const hash = rec.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
