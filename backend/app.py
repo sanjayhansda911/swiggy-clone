@@ -56,7 +56,6 @@ def recommend_meals():
     if not menu_items:
         return jsonify({"recommendations": []})
 
-    # Prepare fallback data in case Gemini fails or is not configured
     def get_fallback_recommendations():
         morning_kws = ['dosa', 'idli', 'coffee', 'latte', 'chai', 'breakfast', 'sandwich', 'waffle', 'toast', 'pav']
         afternoon_kws = ['biryani', 'rice', 'korma', 'chicken', 'bath', 'haleem', 'meals', 'pizza', 'burger']
@@ -83,6 +82,38 @@ def recommend_meals():
         
         top_3 = filtered[:3]
         
+        # Creative dynamic rationales based on dish name and context
+        def get_creative_fallback_rationale(item_name, rest_name, city_name, weather_condition, time_period):
+            templates_morning = [
+                f"Nothing beats a fresh {item_name} from {rest_name} to kickstart your day in {city_name}. It's the ultimate companion for this {weather_condition}!",
+                f"Fuel your morning with this mouth-watering {item_name} from {rest_name}. Hot, crispy, and satisfying—just what you need on a {weather_condition}.",
+                f"Craving a cozy breakfast? This signature {item_name} from {rest_name} hits all the right comfort notes for this {weather_condition}."
+            ]
+            
+            templates_afternoon = [
+                f"Treat yourself to this delicious {item_name} from {rest_name}. It is perfect for a satisfying lunch during this {weather_condition}.",
+                f"This legendary {item_name} from {rest_name} is slow-cooked to perfection—guaranteed comfort food for a {weather_condition} in {city_name}.",
+                f"Beat the mid-day slump with {item_name} from {rest_name}. The warm, rich flavors are ideal for this {weather_condition} hour."
+            ]
+            
+            templates_evening = [
+                f"Wind down your day with the comforting flavors of {item_name} from {rest_name}. Perfect for a cozy {weather_condition} dinner in {city_name}.",
+                f"There's nothing quite like {rest_name}'s hot, flavorful {item_name} to warm you up during this {weather_condition} evening.",
+                f"A delicious plate of {item_name} from {rest_name} is the ultimate comfort meal to close out this {weather_condition} hour."
+            ]
+            
+            # Select templates bucket
+            if time_period == "morning":
+                templates = templates_morning
+            elif time_period == "afternoon":
+                templates = templates_afternoon
+            else:
+                templates = templates_evening
+                
+            # Select template deterministically using name character sum hash
+            name_hash = sum(ord(c) for c in item_name)
+            return templates[name_hash % len(templates)]
+
         recs = []
         for x in top_3:
             recs.append({
@@ -90,7 +121,7 @@ def recommend_meals():
                 "restaurantName": x["restaurantName"],
                 "restaurantId": x["restaurantId"],
                 "price": x["price"],
-                "ai_rationale": f"Since it's a {weather} in {city} at this {time_of_day} hour, this warm {x['name']} from {x['restaurantName']} is selected as your absolute comfort meal."
+                "ai_rationale": get_creative_fallback_rationale(x["name"], x["restaurantName"], city, weather, time_of_day)
             })
         return recs
 

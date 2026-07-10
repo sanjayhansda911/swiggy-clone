@@ -2550,10 +2550,30 @@
                     });
                 }
 
-                const recommendations = filtered.slice(0, 3).map(rec => ({
-                    ...rec,
-                    ai_rationale: `Since it's a ${weather} in ${currentCity} at this ${timeOfDay} hour, this warm ${rec.name} from ${rec.restaurantName} is selected as your absolute comfort meal.`
-                }));
+                const recommendations = filtered.slice(0, 3).map(rec => {
+                    const templates_morning = [
+                        `Nothing beats a fresh ${rec.name} from ${rec.restaurantName} to kickstart your day in ${currentCity}. It's the ultimate companion for this ${weather}!`,
+                        `Fuel your morning with this mouth-watering ${rec.name} from ${rec.restaurantName}. Hot, crispy, and satisfying—just what you need on a ${weather}.`,
+                        `Craving a cozy breakfast? This signature ${rec.name} from ${rec.restaurantName} hits all the right comfort notes for this ${weather}.`
+                    ];
+                    const templates_afternoon = [
+                        `Treat yourself to this delicious ${rec.name} from ${rec.restaurantName}. It is perfect for a satisfying lunch during this ${weather}.`,
+                        `This legendary ${rec.name} from ${rec.restaurantName} is slow-cooked to perfection—guaranteed comfort food for a ${weather} in ${currentCity}.`,
+                        `Beat the mid-day slump with ${rec.name} from ${rec.restaurantName}. The warm, rich flavors are ideal for this ${weather} hour.`
+                    ];
+                    const templates_evening = [
+                        `Wind down your day with the comforting flavors of ${rec.name} from ${rec.restaurantName}. Perfect for a cozy ${weather} dinner in ${currentCity}.`,
+                        `There's nothing quite like ${rec.restaurantName}'s hot, flavorful ${rec.name} to warm you up during this ${weather} evening.`,
+                        `A delicious plate of ${rec.name} from ${rec.restaurantName} is the ultimate comfort meal to close out this ${weather} hour.`
+                    ];
+                    
+                    const templates = timeOfDay === "morning" ? templates_morning : (timeOfDay === "afternoon" ? templates_afternoon : templates_evening);
+                    const hash = rec.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                    return {
+                        ...rec,
+                        ai_rationale: templates[hash % templates.length]
+                    };
+                });
 
                 displayRecommendations(recommendations);
             }
