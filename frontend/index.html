@@ -2471,8 +2471,11 @@
             
             modal.classList.remove('hidden');
             optionsContainer.innerHTML = `
-                <div class="flex items-center justify-center py-6">
-                    <div class="animate-spin rounded-full h-8 w-8 border-4 border-slate-200 border-t-brand-500"></div>
+                <div class="flex items-center justify-center py-10">
+                    <div class="flex flex-col items-center gap-3">
+                        <div class="animate-spin rounded-full h-8 w-8 border-4 border-slate-200 border-t-brand-500"></div>
+                        <span class="text-xs font-bold text-slate-400 animate-pulse">Gemini AI is curating meals...</span>
+                    </div>
                 </div>
             `;
 
@@ -2497,66 +2500,78 @@
 
             contextText.innerText = `Based on the ${weather} and this ${timeOfDay} hour, here are 3 curated comfort meals just for you in ${currentCity}:`;
 
-            // Extract recommendations dynamically from active restaurants
-            const rawRecs = [];
+            // Gather all items from the current city's active database
+            const allItems = [];
             restaurants.forEach(rest => {
                 rest.menu.forEach(item => {
-                    const nameLower = item.name.toLowerCase();
-                    
-                    // Classification
-                    let isMorning = nameLower.includes('dosa') || nameLower.includes('idli') || nameLower.includes('coffee') || nameLower.includes('latte') || nameLower.includes('chai') || nameLower.includes('breakfast') || nameLower.includes('sandwich') || nameLower.includes('waffle') || nameLower.includes('toast') || nameLower.includes('pav');
-                    let isAfternoon = nameLower.includes('biryani') || nameLower.includes('rice') || nameLower.includes('korma') || nameLower.includes('chicken') || nameLower.includes('bath') || nameLower.includes('haleem') || nameLower.includes('meals') || nameLower.includes('pizza') || nameLower.includes('burger');
-                    let isEvening = !isMorning; // Fallback
-
-                    rawRecs.push({
+                    allItems.push({
                         name: item.name,
-                        restaurantName: rest.name,
-                        restaurantId: rest.id,
                         description: item.description,
                         price: item.price,
-                        image: getDishImage(item.name),
-                        isMorning: isMorning,
-                        isAfternoon: isAfternoon,
-                        isEvening: isEvening
+                        restaurantName: rest.name,
+                        restaurantId: rest.id
                     });
                 });
             });
 
-            // Filter based on time
-            let filtered = [];
-            if (timeOfDay === "morning") {
-                filtered = rawRecs.filter(r => r.isMorning);
-            } else if (timeOfDay === "afternoon") {
-                filtered = rawRecs.filter(r => r.isAfternoon);
-            } else {
-                filtered = rawRecs.filter(r => r.isEvening);
-            }
+            // Local fallback renderer function in case API fails
+            function renderFallback() {
+                const rawRecs = allItems.map(item => {
+                    const nameLower = item.name.toLowerCase();
+                    let isMorning = nameLower.includes('dosa') || nameLower.includes('idli') || nameLower.includes('coffee') || nameLower.includes('latte') || nameLower.includes('chai') || nameLower.includes('breakfast') || nameLower.includes('sandwich') || nameLower.includes('waffle') || nameLower.includes('toast') || nameLower.includes('pav');
+                    let isAfternoon = nameLower.includes('biryani') || nameLower.includes('rice') || nameLower.includes('korma') || nameLower.includes('chicken') || nameLower.includes('bath') || nameLower.includes('haleem') || nameLower.includes('meals') || nameLower.includes('pizza') || nameLower.includes('burger');
+                    let isEvening = !isMorning;
 
-            // If empty or less than 3, fill it up from all raw recommendations
-            if (filtered.length < 3) {
-                const uniqueNames = new Set(filtered.map(f => f.name));
-                rawRecs.forEach(r => {
-                    if (filtered.length < 3 && !uniqueNames.has(r.name)) {
-                        filtered.push(r);
-                        uniqueNames.add(r.name);
-                    }
+                    return {
+                        ...item,
+                        isMorning,
+                        isAfternoon,
+                        isEvening,
+                        image: getDishImage(item.name)
+                    };
                 });
+
+                let filtered = [];
+                if (timeOfDay === "morning") {
+                    filtered = rawRecs.filter(r => r.isMorning);
+                } else if (timeOfDay === "afternoon") {
+                    filtered = rawRecs.filter(r => r.isAfternoon);
+                } else {
+                    filtered = rawRecs.filter(r => r.isEvening);
+                }
+
+                if (filtered.length < 3) {
+                    const uniqueNames = new Set(filtered.map(f => f.name));
+                    rawRecs.forEach(r => {
+                        if (filtered.length < 3 && !uniqueNames.has(r.name)) {
+                            filtered.push(r);
+                            uniqueNames.add(r.name);
+                        }
+                    });
+                }
+
+                const recommendations = filtered.slice(0, 3).map(rec => ({
+                    ...rec,
+                    ai_rationale: `Since it's a ${weather} in ${currentCity} at this ${timeOfDay} hour, this warm ${rec.name} from ${rec.restaurantName} is selected as your absolute comfort meal.`
+                }));
+
+                displayRecommendations(recommendations);
             }
 
-            // Slice to exactly 3 recommendations
-            const recommendations = filtered.slice(0, 3);
-
-            // Display recommendations
-            setTimeout(() => {
+            function displayRecommendations(recommendations) {
                 optionsContainer.innerHTML = '';
                 recommendations.forEach(rec => {
+                    const img = getDishImage(rec.name);
                     optionsContainer.innerHTML += `
                         <div class="flex flex-col sm:flex-row items-center border border-slate-100 hover:border-brand-500 rounded-3xl p-4 gap-4 bg-slate-50/50 hover:bg-white hover:shadow-lg transition-all duration-300 group text-left">
-                            <img src="${rec.image}" class="w-20 h-20 rounded-2xl object-cover flex-shrink-0" />
+                            <img src="${img}" class="w-20 h-20 rounded-2xl object-cover flex-shrink-0" />
                             <div class="flex-grow min-w-0">
-                                <h4 class="font-extrabold text-slate-900 text-sm leading-snug group-hover:text-brand-500 transition-colors truncate">${rec.name}</h4>
+                                <div class="flex items-center gap-2">
+                                    <h4 class="font-extrabold text-slate-900 text-sm leading-snug group-hover:text-brand-500 transition-colors truncate">${rec.name}</h4>
+                                    <span class="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-amber-100 text-amber-800 flex items-center gap-0.5"><i class="fa-solid fa-sparkles text-[7px]"></i> AI Chosen</span>
+                                </div>
                                 <span class="text-[10px] text-slate-400 font-bold block mt-0.5">${rec.restaurantName}</span>
-                                <p class="text-slate-450 text-[11px] font-medium leading-relaxed mt-1 line-clamp-2">${rec.description}</p>
+                                <p class="text-brand-650 font-semibold text-[11px] leading-relaxed mt-1 italic">"${rec.ai_rationale}"</p>
                             </div>
                             <div class="flex flex-col items-end justify-between self-stretch flex-shrink-0">
                                 <span class="font-black text-slate-800 text-sm">₹${rec.price}</span>
@@ -2568,7 +2583,34 @@
                         </div>
                     `;
                 });
-            }, 300);
+            }
+
+            // Fetch curated recommendations from backend Flask API (which calls Gemini AI)
+            fetch('/api/recommend', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    city: currentCity,
+                    weather: weather,
+                    timeOfDay: timeOfDay,
+                    menuItems: allItems
+                })
+            })
+            .then(res => {
+                if (!res.ok) throw new Error('API server error');
+                return res.json();
+            })
+            .then(data => {
+                if (data && data.recommendations && data.recommendations.length >= 3) {
+                    displayRecommendations(data.recommendations);
+                } else {
+                    renderFallback();
+                }
+            })
+            .catch(err => {
+                console.warn("Gemini backend failed or key missing. Falling back to local curation.", err);
+                renderFallback();
+            });
         }
 
         function closeChooseMe() {
