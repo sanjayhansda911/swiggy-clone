@@ -235,6 +235,139 @@ Menu list of candidates:
         print(f"Gemini API Error: {e}")
         return jsonify({"recommendations": get_fallback_recommendations()})
 
+@app.route('/api/voice-parse', methods=['POST'])
+def voice_parse():
+    """
+    Parse a voice checkout transcript using Gemini NLU or a local rule-based fallback.
+    """
+    data = request.get_json() or {}
+    text = data.get("text", "")
+    menu_items = data.get("menuItems", [])
+
+    if not text or not menu_items:
+        return jsonify({
+            "action": "ERROR",
+            "items": [],
+            "speech_response": "I didn't hear anything. Could you please try again?",
+            "clarification_options": None
+        })
+
+    # Local fallback logic in case Gemini is not configured or fails
+    def local_fallback_voice_parse():
+        query = text.lower().strip()
+        number_map = {
+            "one": 1, "a": 1, "an": 1, "single": 1, "1": 1,
+            "two": 2, "double": 2, "couple": 2, "2": 2,
+            "three": 3, "triple": 3, "3": 3,
+            "four": 4, "4": 4, "five": 5, "5": 5
+        }
+        
+        import re
+        parts = re.split(r'\b(?:and|plus)\b|,', query)
+        parsed_items = []
+        
+        for part in parts:
+            clean_part = part.strip()
+            if not clean_part:
+                continue
+                
+            quantity = 1
+            words = clean_part.split()
+            for idx in range(min(len(words), 3)):
+                word = words[idx]
+                if word in number_map:
+                    quantity = number_map[word]
+                    clean_part = clean_part.replace(word, "").strip()
+                    break
+            
+            best_match = None
+            best_score = 0
+            for item in menu_items:
+                item_name_lower = item["name"].lower()
+                score = 0
+                if clean_part in item_name_lower:
+                    score += 150
+                else:
+                    item_words = item_name_lower.split()
+                    for w in item_words:
+                        if len(w) > 2 and w in clean_part:
+                            score += 40
+                if score > best_score and score >= 30:
+                    best_score = score
+                    best_match = item
+            
+            if best_match:
+                parsed_items.append({
+                    "name": best_match["name"],
+                    "quantity": quantity,
+                    "restaurantId": best_match["restaurantId"],
+                    "restaurantName": best_match["restaurantName"]
+                })
+        
+        if parsed_items:
+            item_desc = ", ".join([f"{x['quantity']}x {x['name']}" for x in parsed_items])
+            speech = f"Sure! Adding {item_desc} to your cart."
+            return {
+                "action": "ADD_TO_CART",
+                "items": [{"name": x["name"], "quantity": x["quantity"], "restaurantId": x["restaurantId"]} for x in parsed_items],
+                "speech_response": speech,
+                "clarification_options": None
+            }
+        else:
+            return {
+                "action": "ERROR",
+                "items": [],
+                "speech_response": f"I couldn't match any items for '{text}' in our menu. Could you please specify a dish?",
+                "clarification_options": None
+            }
+
+    api_key_check = os.environ.get("GEMINI_API_KEY")
+    if not api_key_check:
+        return jsonify(local_fallback_voice_parse())
+
+    try:
+        # Build prompt listing menu items
+        prompt = f"""
+You are Milo, the intelligent AI NLU parser for Swiggy HungerBites voice assistant.
+Your job is to analyze the user's spoken voice command and map it to specific menu items from the restaurant database.
+
+User Voice Command: "{text}"
+
+Available Menu Items:
+{json.dumps(menu_items)}
+
+Instructions:
+1. Identify all dishes the user wants to order.
+2. For each identified dish, match it to the most relevant dish in the "Available Menu Items" list. Look for semantic matches, abbreviations, or correct restaurants if specified in the text.
+3. Extract the requested quantity (default is 1 if not specified).
+4. If a dish matches multiple candidate options in different restaurants and the user did NOT specify which restaurant, set action to "CLARIFY" and list the ambiguous matches in "clarification_options".
+5. Otherwise, if successfully matched, set action to "ADD_TO_CART" and fill "items" with:
+   - "name": the exact name of the selected dish in the database.
+   - "quantity": the integer quantity.
+   - "restaurantId": the integer restaurant ID.
+6. Generate a friendly, conversational audio confirmation message under "speech_response" confirming what was added (or asking a clarification question if action is "CLARIFY").
+
+Respond in JSON format. The response must be a JSON object with:
+- "action": "ADD_TO_CART" or "CLARIFY" or "ERROR"
+- "items": [{"name": str, "quantity": int, "restaurantId": int}]
+- "speech_response": str
+- "clarification_options": [{"name": str, "restaurantName": str, "restaurantId": int, "price": float}] or null
+"""
+
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(
+            prompt,
+            generation_config={"response_mime_type": "application/json"}
+        )
+        
+        result = json.loads(response.text)
+        return jsonify(result)
+        
+    except Exception as e:
+        print(f"Gemini Voice Parse Error: {e}")
+        return jsonify(local_fallback_voice_parse())
+
+
 if __name__ == '__main__':
     # Running Flask app on localhost, port 5000 in debug mode
     app.run(host='127.0.0.1', port=5000, debug=True)
