@@ -61,24 +61,35 @@ def recommend_meals():
         afternoon_kws = ['biryani', 'rice', 'korma', 'chicken', 'bath', 'haleem', 'meals', 'pizza', 'burger']
         
         filtered = []
+        seen = set()
         for item in menu_items:
             name_lower = item['name'].lower()
+            if name_lower in seen:
+                continue
             is_morning = any(kw in name_lower for kw in morning_kws)
             is_afternoon = any(kw in name_lower for kw in afternoon_kws)
             
+            added = False
             if time_of_day == "morning" and is_morning:
                 filtered.append(item)
+                added = True
             elif time_of_day == "afternoon" and is_afternoon:
                 filtered.append(item)
+                added = True
             elif time_of_day not in ["morning", "afternoon"] and not is_morning:
                 filtered.append(item)
+                added = True
+
+            if added:
+                seen.add(name_lower)
 
         if len(filtered) < 3:
-            seen = {x['name'] for x in filtered}
+            seen_lower = {x['name'].lower() for x in filtered}
             for item in menu_items:
-                if len(filtered) < 3 and item['name'] not in seen:
+                name_l = item['name'].lower()
+                if len(filtered) < 3 and name_l not in seen_lower:
                     filtered.append(item)
-                    seen.add(item['name'])
+                    seen_lower.add(name_l)
         
         top_3 = filtered[:3]
         

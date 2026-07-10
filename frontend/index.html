@@ -2532,20 +2532,23 @@
                 });
 
                 let filtered = [];
-                if (timeOfDay === "morning") {
-                    filtered = rawRecs.filter(r => r.isMorning);
-                } else if (timeOfDay === "afternoon") {
-                    filtered = rawRecs.filter(r => r.isAfternoon);
-                } else {
-                    filtered = rawRecs.filter(r => r.isEvening);
-                }
+                const seenNames = new Set();
+                const candidates = timeOfDay === "morning" ? rawRecs.filter(r => r.isMorning) : (timeOfDay === "afternoon" ? rawRecs.filter(r => r.isAfternoon) : rawRecs.filter(r => r.isEvening));
+                
+                candidates.forEach(c => {
+                    const nameLower = c.name.toLowerCase();
+                    if (!seenNames.has(nameLower)) {
+                        filtered.push(c);
+                        seenNames.add(nameLower);
+                    }
+                });
 
                 if (filtered.length < 3) {
-                    const uniqueNames = new Set(filtered.map(f => f.name));
                     rawRecs.forEach(r => {
-                        if (filtered.length < 3 && !uniqueNames.has(r.name)) {
+                        const nameLower = r.name.toLowerCase();
+                        if (filtered.length < 3 && !seenNames.has(nameLower)) {
                             filtered.push(r);
-                            uniqueNames.add(r.name);
+                            seenNames.add(nameLower);
                         }
                     });
                 }
