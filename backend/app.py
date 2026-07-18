@@ -1,5 +1,6 @@
 import os
 import json
+import re
 from flask import Flask, jsonify, abort, request
 from dotenv import load_dotenv
 import google.generativeai as genai
@@ -363,6 +364,44 @@ Respond in JSON format. The response must be a JSON object with:
         )
         
         result = json.loads(response.text)
+        
+        # Enforce strict store ambiguity checks
+        if result.get("action") == "ADD_TO_CART" and result.get("items"):
+            for item in result["items"]:
+                dish_name = item.get("name")
+                selected_rest_id = item.get("restaurantId")
+                
+                # Check for other candidates in the same active menu list that sell this exact dish
+                matching_candidates = [m for m in menu_items if m["name"].lower() == dish_name.lower()]
+                
+                if len(matching_candidates) > 1:
+                    # Look if the user text contains any explicit restaurant names
+                    user_text_lower = text.lower()
+                    mentioned_rest = None
+                    for cand in matching_candidates:
+                        cand_name = cand["restaurantName"].lower()
+                        # Match if full name or core unique parts of restaurant name are mentioned
+                        # Ignore common keywords like "restaurant", "hotel", "point", "house", "kitchen", "cafe", "bistro", "dhaba", "grill"
+                        keywords = [w for w in re.split(r'\s+', cand_name) if len(w) > 3 and w not in ["restaurant", "hotel", "point", "house", "kitchen", "cafe", "bistro", "dhaba", "grill"]]
+                        if any(kw in user_text_lower for kw in keywords) or cand_name in user_text_lower:
+                            mentioned_rest = cand
+                            break
+                            
+                    if not mentioned_rest:
+                        # User did not specify which restaurant to order this from, and multiple options exist!
+                        result["action"] = "CLARIFY"
+                        result["clarification_options"] = [
+                            {
+                                "name": cand["name"],
+                                "restaurantName": cand["restaurantName"],
+                                "restaurantId": cand["restaurantId"],
+                                "price": cand["price"]
+                            } for cand in matching_candidates
+                        ]
+                        result["speech_response"] = f"I found {dish_name} at multiple restaurants. Which one would you like to choose?"
+                        result["items"] = []
+                        break
+        
         return jsonify(result)
         
     except Exception as e:
