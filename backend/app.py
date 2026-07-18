@@ -309,7 +309,7 @@ def voice_parse():
             speech = f"Sure! Adding {item_desc} to your cart."
             return {
                 "action": "ADD_TO_CART",
-                "items": [{"name": x["name"], "quantity": x["quantity"], "restaurantId": x["restaurantId"]} for x in parsed_items],
+                "items": [{"name": x["name"], "quantity": x["quantity"], "restaurantId": x["restaurantId"], "modifiers": []} for x in parsed_items],
                 "speech_response": speech,
                 "clarification_options": None
             }
@@ -340,16 +340,18 @@ Instructions:
 1. Identify all dishes the user wants to order.
 2. For each identified dish, match it to the most relevant dish in the "Available Menu Items" list. Look for semantic matches, abbreviations, or correct restaurants if specified in the text.
 3. Extract the requested quantity (default is 1 if not specified).
-4. If a dish matches multiple candidate options in different restaurants and the user did NOT specify which restaurant, set action to "CLARIFY" and list the ambiguous matches in "clarification_options".
-5. Otherwise, if successfully matched, set action to "ADD_TO_CART" and fill "items" with:
+4. Extract any customization modifiers (e.g., "extra cheese", "no onion", "spicy", "double shot", "less sugar", "chilled", "eggless") requested for the dish under the "modifiers" field as a list of strings.
+5. If a dish matches multiple candidate options in different restaurants and the user did NOT specify which restaurant, set action to "CLARIFY" and list the ambiguous matches in "clarification_options".
+6. Otherwise, if successfully matched, set action to "ADD_TO_CART" and fill "items" with:
    - "name": the exact name of the selected dish in the database.
    - "quantity": the integer quantity.
    - "restaurantId": the integer restaurant ID.
-6. Generate a friendly, conversational audio confirmation message under "speech_response" confirming what was added (or asking a clarification question if action is "CLARIFY").
+   - "modifiers": a list of strings representing extracted customization options.
+7. Generate a friendly, conversational audio confirmation message under "speech_response" confirming what was added (including customizations if specified), or asking a clarification question if action is "CLARIFY".
 
 Respond in JSON format. The response must be a JSON object with:
 - "action": "ADD_TO_CART" or "CLARIFY" or "ERROR"
-- "items": [{"name": str, "quantity": int, "restaurantId": int}]
+- "items": [{"name": str, "quantity": int, "restaurantId": int, "modifiers": [str]}]
 - "speech_response": str
 - "clarification_options": [{"name": str, "restaurantName": str, "restaurantId": int, "price": float}] or null
 """

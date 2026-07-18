@@ -1374,11 +1374,27 @@
                 const itemTotal = item.price * item.quantity;
                 subtotal += itemTotal;
 
+                let modifierBadgesHtml = '';
+                if (item.modifiers && item.modifiers.length > 0) {
+                    modifierBadgesHtml = `
+                        <div class="flex flex-wrap gap-1 mt-1">
+                            ${item.modifiers.map(mod => `
+                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-brand-50 text-brand-600 rounded text-[8px] font-bold border border-brand-100 uppercase tracking-wide">
+                                    <i class="fa-solid fa-wand-magic-sparkles text-[8px]"></i> ${mod}
+                                </span>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
                 const cartItemHtml = `
                     <div class="flex items-center justify-between py-3 border-b border-slate-50 last:border-0">
                         <div class="flex-grow pr-4">
                             <h5 class="font-bold text-slate-800 text-sm">${item.name}</h5>
-                            <span class="text-slate-400 text-xs font-semibold">₹${item.price.toFixed(2)} each</span>
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                <span class="text-slate-400 text-xs font-semibold">₹${item.price.toFixed(2)} each</span>
+                            </div>
+                            ${modifierBadgesHtml}
                         </div>
                         
                         <div class="flex items-center gap-3">
@@ -1625,7 +1641,7 @@
                 updateVoiceStep(3, 'active', 'Checking transcript confidence score...');
 
                 setTimeout(() => {
-                    if (confidence < 0.45) {
+                    if (confidence < 0.8) {
                         updateVoiceStep(3, 'error', `Low confidence score (${confidencePercentage}%). Ask to repeat.`);
                         speakText("I couldn't quite hear you. Could you please say that again?");
                         setTimeout(() => {
@@ -1996,7 +2012,8 @@
                                 resolvedOrders.push({
                                     item: item,
                                     restaurant: rest,
-                                    quantity: parsed.quantity
+                                    quantity: parsed.quantity,
+                                    modifiers: parsed.modifiers || []
                                 });
                                 if (!firstRestaurant) firstRestaurant = rest;
                             }
