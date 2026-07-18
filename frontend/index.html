@@ -3159,22 +3159,42 @@
 
         // Quick Reorder Carousel trigger
         function quickReorder(itemName, itemPrice, restaurantId) {
-            const rest = restaurants.find(r => r.id === restaurantId);
+            // Find a restaurant dynamically that sells this item to support city switching
+            let rest = restaurants.find(r => r.id === restaurantId);
+            if (!rest) {
+                // Try to find any active restaurant in the current city that sells this dish name
+                rest = restaurants.find(r => r.menu.some(m => m.name.toLowerCase() === itemName.toLowerCase()));
+            }
+            if (!rest) {
+                // If still not found, try to fuzzy match
+                rest = restaurants.find(r => r.menu.some(m => m.name.toLowerCase().includes(itemName.toLowerCase()) || itemName.toLowerCase().includes(m.name.toLowerCase())));
+            }
+            if (!rest) {
+                // Ultimate fallback
+                rest = restaurants[0];
+            }
             if (!rest) return;
 
-            const existing = cart.find(c => c.name === itemName);
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push({
-                    name: itemName,
-                    price: itemPrice,
-                    quantity: 1
-                });
-            }
+            // Find the actual price from the restaurant menu
+            const menuItem = rest.menu.find(m => m.name.toLowerCase() === itemName.toLowerCase()) || 
+                             rest.menu.find(m => m.name.toLowerCase().includes(itemName.toLowerCase()) || itemName.toLowerCase().includes(m.name.toLowerCase())) ||
+                             rest.menu[0];
+            
+            const finalPrice = menuItem ? menuItem.price : itemPrice;
+            const finalName = menuItem ? menuItem.name : itemName;
+
+            // Clear cart to populate only this reordered quick meal
+            cart = [];
+            cart.push({
+                name: finalName,
+                price: finalPrice,
+                quantity: 1
+            });
 
             updateCartUI();
-            showToast(`Added ${itemName} to cart!`);
+            
+            // Navigate directly to invoice review page
+            showPaymentScreen(rest, cart);
         }
 
         // Toast visual alert system
