@@ -619,6 +619,99 @@
                 </div>
             </div>
 
+            <!-- Voice Processing Stepper -->
+            <div id="voice-stepper" class="text-left border border-slate-100 rounded-3xl p-5 bg-slate-50/50 mt-4 space-y-3.5 max-h-[220px] overflow-y-auto hidden">
+                <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-2">Checkout Pipeline Progress</p>
+                
+                <!-- Step 1: User Speech -->
+                <div id="voice-step-1" class="flex items-start gap-3 text-slate-300 transition-all duration-300">
+                    <div class="w-5 h-5 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center flex-shrink-0 text-[10px] step-icon">
+                        <i class="fa-solid fa-microphone"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-xs font-extrabold leading-none step-title">1. Capture Speech</p>
+                        <p class="text-[10px] font-semibold text-slate-400 mt-0.5 step-details">Waiting for microphone...</p>
+                    </div>
+                </div>
+
+                <!-- Step 2: Speech-to-Text -->
+                <div id="voice-step-2" class="flex items-start gap-3 text-slate-300 transition-all duration-300">
+                    <div class="w-5 h-5 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center flex-shrink-0 text-[10px] step-icon">
+                        <i class="fa-solid fa-keyboard"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-xs font-extrabold leading-none step-title">2. Transcribing Speech</p>
+                        <p class="text-[10px] font-semibold text-slate-400 mt-0.5 step-details">Waiting for voice input...</p>
+                    </div>
+                </div>
+
+                <!-- Step 3: Transcript Confidence Check -->
+                <div id="voice-step-3" class="flex items-start gap-3 text-slate-300 transition-all duration-300">
+                    <div class="w-5 h-5 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center flex-shrink-0 text-[10px] step-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-xs font-extrabold leading-none step-title">3. Confidence Assessment</p>
+                        <p class="text-[10px] font-semibold text-slate-400 mt-0.5 step-details">Waiting for transcript...</p>
+                    </div>
+                </div>
+
+                <!-- Step 4: LLM/NLU Intent Extraction -->
+                <div id="voice-step-4" class="flex items-start gap-3 text-slate-300 transition-all duration-300">
+                    <div class="w-5 h-5 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center flex-shrink-0 text-[10px] step-icon">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-xs font-extrabold leading-none step-title">4. Milo NLU Parsing</p>
+                        <p class="text-[10px] font-semibold text-slate-400 mt-0.5 step-details">Waiting for NLU call...</p>
+                    </div>
+                </div>
+
+                <!-- Step 5: Menu Validation -->
+                <div id="voice-step-5" class="flex items-start gap-3 text-slate-300 transition-all duration-300">
+                    <div class="w-5 h-5 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center flex-shrink-0 text-[10px] step-icon">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-xs font-extrabold leading-none step-title">5. Menu Synchronization</p>
+                        <p class="text-[10px] font-semibold text-slate-400 mt-0.5 step-details">Waiting for validation...</p>
+                    </div>
+                </div>
+
+                <!-- Step 6: Cart Creation -->
+                <div id="voice-step-6" class="flex items-start gap-3 text-slate-300 transition-all duration-300">
+                    <div class="w-5 h-5 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center flex-shrink-0 text-[10px] step-icon">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-xs font-extrabold leading-none step-title">6. Basket Allocation</p>
+                        <p class="text-[10px] font-semibold text-slate-400 mt-0.5 step-details">Waiting for cart lock...</p>
+                    </div>
+                </div>
+
+                <!-- Step 7: Confirmation -->
+                <div id="voice-step-7" class="flex items-start gap-3 text-slate-300 transition-all duration-300">
+                    <div class="w-5 h-5 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center flex-shrink-0 text-[10px] step-icon">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-xs font-extrabold leading-none step-title">7. Audible Confirmation</p>
+                        <p class="text-[10px] font-semibold text-slate-400 mt-0.5 step-details">Waiting for speech synthesis...</p>
+                    </div>
+                </div>
+
+                <!-- Step 8: Checkout -->
+                <div id="voice-step-8" class="flex items-start gap-3 text-slate-300 transition-all duration-300">
+                    <div class="w-5 h-5 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center flex-shrink-0 text-[10px] step-icon">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-xs font-extrabold leading-none step-title">8. Redirect Checkout</p>
+                        <p class="text-[10px] font-semibold text-slate-400 mt-0.5 step-details">Waiting to route payment...</p>
+                    </div>
+                </div>
+            </div>
+
             <div id="voice-error-msg" class="text-red-500 text-xs font-bold hidden mb-2"></div>
         </div>
     </div>
@@ -1407,6 +1500,79 @@
             showGateway();
         }
 
+        // Voice Stepper Pipeline Controller
+        const voiceStepIcons = {
+            1: 'fa-microphone',
+            2: 'fa-keyboard',
+            3: 'fa-shield-halved',
+            4: 'fa-brain',
+            5: 'fa-clipboard-check',
+            6: 'fa-basket-shopping',
+            7: 'fa-volume-high',
+            8: 'fa-credit-card'
+        };
+
+        function updateVoiceStep(stepNum, status, details = "") {
+            const stepEl = document.getElementById(`voice-step-${stepNum}`);
+            if (!stepEl) return;
+
+            const iconContainer = stepEl.querySelector('.step-icon');
+            const detailsEl = stepEl.querySelector('.step-details');
+            const titleEl = stepEl.querySelector('.step-title');
+
+            // Reset classes
+            stepEl.className = "flex items-start gap-3 transition-all duration-300";
+            iconContainer.className = "w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] step-icon";
+            titleEl.className = "text-xs font-extrabold leading-none step-title";
+            detailsEl.className = "text-[10px] font-semibold mt-0.5 step-details";
+
+            if (details) {
+                detailsEl.innerText = details;
+            }
+
+            if (status === 'pending') {
+                stepEl.classList.add('text-slate-300');
+                iconContainer.classList.add('bg-slate-100', 'text-slate-400');
+                titleEl.classList.add('text-slate-300');
+                detailsEl.classList.add('text-slate-400');
+                iconContainer.innerHTML = `<i class="fa-solid ${voiceStepIcons[stepNum]}"></i>`;
+            } else if (status === 'active') {
+                stepEl.classList.add('text-brand-500');
+                iconContainer.classList.add('bg-brand-50', 'text-brand-500', 'font-extrabold', 'animate-pulse');
+                titleEl.classList.add('text-brand-500');
+                detailsEl.classList.add('text-brand-400', 'animate-pulse');
+                iconContainer.innerHTML = `<i class="fa-solid ${voiceStepIcons[stepNum]}"></i>`;
+            } else if (status === 'success') {
+                stepEl.classList.add('text-green-600');
+                iconContainer.classList.add('bg-green-50', 'text-green-600');
+                titleEl.classList.add('text-slate-800');
+                detailsEl.classList.add('text-green-500');
+                iconContainer.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
+            } else if (status === 'error') {
+                stepEl.classList.add('text-red-600');
+                iconContainer.classList.add('bg-red-50', 'text-red-600');
+                titleEl.classList.add('text-red-700');
+                detailsEl.classList.add('text-red-500');
+                iconContainer.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i>`;
+            }
+        }
+
+        function resetVoiceStepper() {
+            document.getElementById('voice-stepper').classList.remove('hidden');
+            for (let i = 1; i <= 8; i++) {
+                let defaultDetail = "Waiting...";
+                if (i === 1) defaultDetail = "Ready to listen...";
+                else if (i === 2) defaultDetail = "Waiting for audio...";
+                else if (i === 3) defaultDetail = "Waiting for transcription...";
+                else if (i === 4) defaultDetail = "Waiting for NLU...";
+                else if (i === 5) defaultDetail = "Waiting for menu match...";
+                else if (i === 6) defaultDetail = "Waiting for cart add...";
+                else if (i === 7) defaultDetail = "Waiting for response...";
+                else if (i === 8) defaultDetail = "Waiting for redirection...";
+                updateVoiceStep(i, 'pending', defaultDetail);
+            }
+        }
+
         // Voice Recognition Functions
         let recognition = null;
 
@@ -1426,6 +1592,7 @@
                 document.getElementById('voice-status-title').innerText = "Listening...";
                 document.getElementById('voice-mic-glow').querySelector('.animate-ping').classList.remove('hidden');
                 document.getElementById('voice-error-msg').classList.add('hidden');
+                updateVoiceStep(1, 'active', 'Capturing audio from microphone...');
             };
 
             recognition.onerror = (event) => {
@@ -1438,6 +1605,7 @@
                 document.getElementById('voice-error-msg').innerText = errorMsg;
                 document.getElementById('voice-error-msg').classList.remove('hidden');
                 document.getElementById('voice-mic-glow').querySelector('.animate-ping').classList.add('hidden');
+                updateVoiceStep(1, 'error', `Mic error: ${event.error}`);
             };
 
             recognition.onend = () => {
@@ -1446,13 +1614,31 @@
 
             recognition.onresult = (event) => {
                 const transcript = event.results[0][0].transcript;
+                const confidence = event.results[0][0].confidence || 0.85;
+                const confidencePercentage = Math.round(confidence * 100);
+
                 document.getElementById('voice-transcript').innerText = `"${transcript}"`;
-                speakText(`Processing: ${transcript}`);
                 
-                // Process the voice query
+                // Step 1 & 2 Completed
+                updateVoiceStep(1, 'success', 'Audio captured successfully.');
+                updateVoiceStep(2, 'success', `Transcribed: "${transcript}"`);
+                updateVoiceStep(3, 'active', 'Checking transcript confidence score...');
+
                 setTimeout(() => {
-                    processVoiceCommand(transcript);
-                }, 1000);
+                    if (confidence < 0.45) {
+                        updateVoiceStep(3, 'error', `Low confidence score (${confidencePercentage}%). Ask to repeat.`);
+                        speakText("I couldn't quite hear you. Could you please say that again?");
+                        setTimeout(() => {
+                            resetVoiceStepper();
+                            speakThenListen("Could you please repeat your order?");
+                        }, 2000);
+                    } else {
+                        updateVoiceStep(3, 'success', `Transcript confirmed (${confidencePercentage}% confidence).`);
+                        setTimeout(() => {
+                            processVoiceCommand(transcript);
+                        }, 800);
+                    }
+                }, 800);
             };
         }
 
@@ -1508,6 +1694,8 @@
             document.getElementById('voice-modal').classList.remove('hidden');
             document.getElementById('voice-error-msg').classList.add('hidden');
 
+            resetVoiceStepper();
+
             // Guide user verbally, then open microphone
             speakThenListen("Tell me what you would like to order.");
         }
@@ -1540,6 +1728,7 @@
         };
 
         // Voice Command Parsing supporting quantities, multi-item, and restaurant ambiguity checks
+        // Voice Command Parsing supporting quantities, multi-item, and restaurant ambiguity checks
         function processVoiceCommand(text) {
             const query = text.toLowerCase().trim();
             console.log("Analyzing command via Gemini NLU:", query);
@@ -1563,194 +1752,221 @@
             // Local fallback parser in case API fails or is not configured
             function runLocalFallback() {
                 console.log("Falling back to local voice parser...");
-                // 1. Identify if a restaurant is mentioned anywhere in the query
-                let globalRestaurant = null;
-                let highestRestScore = 0;
-                for (const rest of restaurants) {
-                    const restNameLower = rest.name.toLowerCase();
-                    let restScore = 0;
-                    if (query.includes(restNameLower)) {
-                        restScore = 100;
-                    } else {
-                        const restWords = restNameLower.split(/\s+/);
-                        restWords.forEach(word => {
-                            if (word.length > 2 && query.includes(word)) {
-                                restScore += 30; // e.g. "kolkata" matches "kolkata biryani house"
-                            }
-                        });
-                    }
-                    if (restScore > highestRestScore) {
-                        highestRestScore = restScore;
-                        globalRestaurant = rest;
-                    }
-                }
-                // Bind global restaurant if we have a matched score
-                if (highestRestScore < 30) {
-                    globalRestaurant = null;
-                }
-
-                // 2. Split query by "and", "plus", or comma
-                const parts = query.split(/\b(?:and|plus)\b|,/);
-                const parsedItems = [];
-
-                parts.forEach(part => {
-                    let cleanPart = part.trim();
-                    if (!cleanPart) return;
-
-                    // Extract quantity from the start of the phrase
-                    let quantity = 1;
-                    const words = cleanPart.split(/\s+/);
-                    
-                    for (let idx = 0; idx < Math.min(words.length, 3); idx++) {
-                        const word = words[idx];
-                        if (numberMap[word] !== undefined) {
-                            quantity = numberMap[word];
-                            // Strip out the quantity word so it doesn't affect item matching
-                            cleanPart = cleanPart.replace(new RegExp(`\\b${word}\\b`, 'g'), '').trim();
-                            break;
+                updateVoiceStep(4, 'active', 'Running local regex-based NLU fallback...');
+                
+                setTimeout(() => {
+                    // 1. Identify if a restaurant is mentioned anywhere in the query
+                    let globalRestaurant = null;
+                    let highestRestScore = 0;
+                    for (const rest of restaurants) {
+                        const restNameLower = rest.name.toLowerCase();
+                        let restScore = 0;
+                        if (query.includes(restNameLower)) {
+                            restScore = 100;
+                        } else {
+                            const restWords = restNameLower.split(/\s+/);
+                            restWords.forEach(word => {
+                                if (word.length > 2 && query.includes(word)) {
+                                    restScore += 30; // e.g. "kolkata" matches "kolkata biryani house"
+                                }
+                            });
+                        }
+                        if (restScore > highestRestScore) {
+                            highestRestScore = restScore;
+                            globalRestaurant = rest;
                         }
                     }
+                    // Bind global restaurant if we have a matched score
+                    if (highestRestScore < 30) {
+                        globalRestaurant = null;
+                    }
 
-                    // Match remaining text to a dish across all restaurants
-                    const candidates = [];
-                    for (const rest of restaurants) {
-                        for (const item of rest.menu) {
-                            const itemNameLower = item.name.toLowerCase();
-                            let score = 0;
+                    // 2. Split query by "and", "plus", or comma
+                    const parts = query.split(/\b(?:and|plus)\b|,/);
+                    const parsedItems = [];
 
-                            if (cleanPart.includes(itemNameLower)) {
-                                score += 150;
-                            } else {
-                                const itemWords = itemNameLower.split(/\s+/);
-                                itemWords.forEach(w => {
-                                    if (w.length > 2 && cleanPart.includes(w)) {
-                                        score += 40;
-                                    }
+                    parts.forEach(part => {
+                        let cleanPart = part.trim();
+                        if (!cleanPart) return;
+
+                        // Extract quantity from the start of the phrase
+                        let quantity = 1;
+                        const words = cleanPart.split(/\s+/);
+                        
+                        for (let idx = 0; idx < Math.min(words.length, 3); idx++) {
+                            const word = words[idx];
+                            if (numberMap[word] !== undefined) {
+                                quantity = numberMap[word];
+                                // Strip out the quantity word so it doesn't affect item matching
+                                cleanPart = cleanPart.replace(new RegExp(`\\b${word}\\b`, 'g'), '').trim();
+                                break;
+                            }
+                        }
+
+                        // Also parse standard numbers like "1", "2"
+                        let matchNum = parseInt(cleanPart);
+                        if (!isNaN(matchNum)) {
+                            quantity = matchNum;
+                            cleanPart = cleanPart.replace(new RegExp(`\\b${matchNum}\\b`, 'g'), '').trim();
+                        }
+
+                        // Match remaining text to a dish across all restaurants
+                        const candidates = [];
+                        for (const rest of restaurants) {
+                            for (const item of rest.menu) {
+                                const itemNameLower = item.name.toLowerCase();
+                                let score = 0;
+
+                                if (cleanPart.includes(itemNameLower)) {
+                                    score += 150;
+                                } else {
+                                    const itemWords = itemNameLower.split(/\s+/);
+                                    itemWords.forEach(w => {
+                                        if (w.length > 2 && cleanPart.includes(w)) {
+                                            score += 40;
+                                        }
+                                    });
+                                }
+
+                                if (score >= 30) {
+                                    candidates.push({ restaurant: rest, item: item, score: score });
+                                }
+                            }
+                        }
+
+                        // Sort candidates by score descending
+                        candidates.sort((a, b) => b.score - a.score);
+
+                        if (candidates.length > 0) {
+                            // Only keep candidates with the maximum matching score for this item
+                            const topScore = candidates[0].score;
+                            const topTierCandidates = candidates.filter(c => c.score === topScore);
+
+                            parsedItems.push({
+                                rawPart: part.trim(),
+                                cleanPart: cleanPart,
+                                quantity: quantity,
+                                candidates: topTierCandidates
+                            });
+                        }
+                    });
+
+                    // 3. Process matched items
+                    if (parsedItems.length === 0) {
+                        updateVoiceStep(4, 'error', 'Local matching intent failed.');
+                        speakText("Sorry, I could not match those dishes. Please say it again clearly.");
+                        document.getElementById('voice-transcript').innerText = "Couldn't match command. Try again.";
+                        return;
+                    }
+
+                    updateVoiceStep(4, 'success', 'Local intent matching completed.');
+                    updateVoiceStep(5, 'active', 'Validating items locally...');
+
+                    setTimeout(() => {
+                        // Analyze candidate lists to resolve store ambiguity
+                        const resolvedOrders = [];
+                        let ambiguityFound = false;
+
+                        parsedItems.forEach(parsed => {
+                            // If a global restaurant context was detected, restrict candidates to it
+                            let itemCandidates = parsed.candidates;
+                            if (globalRestaurant) {
+                                const filtered = itemCandidates.filter(c => c.restaurant.id === globalRestaurant.id);
+                                if (filtered.length > 0) {
+                                    itemCandidates = filtered;
+                                }
+                            }
+
+                            // Check if multiple restaurant sources still exist for this item
+                            if (itemCandidates.length > 1) {
+                                ambiguityFound = true;
+                            } else if (itemCandidates.length === 1) {
+                                resolvedOrders.push({
+                                    item: itemCandidates[0].item,
+                                    restaurant: itemCandidates[0].restaurant,
+                                    quantity: parsed.quantity
                                 });
                             }
+                        });
 
-                            if (score >= 30) {
-                                candidates.push({ restaurant: rest, item: item, score: score });
+                        // Handle Ambiguity: Show option selection if multiple candidates match
+                        if (ambiguityFound) {
+                            updateVoiceStep(5, 'active', 'Awaiting manual selection context...');
+                            
+                            // Find the first item that has ambiguity
+                            const firstAmbiguousItem = parsedItems.find(p => {
+                                let cands = p.candidates;
+                                if (globalRestaurant) {
+                                    const filtered = cands.filter(c => c.restaurant.id === globalRestaurant.id);
+                                    if (filtered.length > 0) cands = filtered;
+                                }
+                                return cands.length > 1;
+                            });
+                            
+                            let filteredCands = firstAmbiguousItem.candidates;
+                            if (globalRestaurant) {
+                                const filtered = filteredCands.filter(c => c.restaurant.id === globalRestaurant.id);
+                                if (filtered.length > 0) filteredCands = filtered;
                             }
+
+                            // Update UI state inside voice overlay modal
+                            document.getElementById('voice-status-title').innerText = "Select Option";
+                            document.getElementById('voice-transcript').innerText = `Which item would you like to choose?`;
+
+                            const container = document.getElementById('voice-candidates-container');
+                            const list = document.getElementById('voice-candidates-list');
+                            list.innerHTML = '';
+                            container.classList.remove('hidden');
+
+                            // Generate choice selection buttons
+                            filteredCands.forEach(cand => {
+                                const btn = document.createElement('button');
+                                btn.className = "w-full bg-slate-50 hover:bg-brand-50 text-slate-800 hover:text-brand-600 font-extrabold py-3 px-4 rounded-xl text-left border border-slate-100 hover:border-brand-200 transition-all duration-300 flex items-center justify-between text-xs sm:text-sm";
+                                btn.innerHTML = `
+                                    <div class="flex flex-col text-left">
+                                        <span class="font-extrabold text-slate-900">${cand.item.name}</span>
+                                        <span class="text-[10px] text-slate-400 font-semibold mt-0.5">${cand.restaurant.name}</span>
+                                    </div>
+                                    <span class="font-black text-brand-500">₹${cand.item.price.toFixed(2)}</span>
+                                `;
+                                btn.onclick = () => {
+                                    updateVoiceStep(5, 'success', 'Manual choice confirmed.');
+                                    confirmRestaurantVoiceSelection(cand.restaurant, parsedItems);
+                                };
+                                list.appendChild(btn);
+                            });
+
+                            // Turn off speech listener since user has choices to select
+                            if (recognition) {
+                                try { recognition.stop(); } catch(e) {}
+                            }
+
+                            // Cache debug info globally
+                            window.lastParsedItems = parsedItems;
+                            window.lastResolvedOrders = resolvedOrders;
+
+                            speakText(`I found multiple options. Please choose one from the screen.`);
+                        } else if (resolvedOrders.length > 0) {
+                            // No ambiguity - direct checkout!
+                            const finalRestaurant = globalRestaurant || (resolvedOrders[0] ? resolvedOrders[0].restaurant : null);
+                            
+                            // Cache debug info globally
+                            window.lastParsedItems = parsedItems;
+                            window.lastResolvedOrders = resolvedOrders;
+
+                            updateVoiceStep(5, 'success', `Synced ${resolvedOrders.length} valid dishes.`);
+                            executeDirectCheckout(finalRestaurant, resolvedOrders);
+                        } else {
+                            updateVoiceStep(5, 'error', 'Local matching validation failed.');
+                            speakText("Sorry, I could not match those dishes. Please say it again clearly.");
+                            document.getElementById('voice-transcript').innerText = "Couldn't match command. Try again.";
                         }
-                    }
-
-                    // Sort candidates by score descending
-                    candidates.sort((a, b) => b.score - a.score);
-
-                    if (candidates.length > 0) {
-                        // Only keep candidates with the maximum matching score for this item
-                        const topScore = candidates[0].score;
-                        const topTierCandidates = candidates.filter(c => c.score === topScore);
-
-                        parsedItems.push({
-                            rawPart: part.trim(),
-                            cleanPart: cleanPart,
-                            quantity: quantity,
-                            candidates: topTierCandidates
-                        });
-                    }
-                });
-
-                // 3. Process matched items
-                if (parsedItems.length === 0) {
-                    speakText("Sorry, I could not match those dishes. Please say it again clearly.");
-                    document.getElementById('voice-transcript').innerText = "Couldn't match command. Try again.";
-                    return;
-                }
-
-                // Analyze candidate lists to resolve store ambiguity
-                const resolvedOrders = [];
-                let ambiguityFound = false;
-
-                parsedItems.forEach(parsed => {
-                    // If a global restaurant context was detected, restrict candidates to it
-                    let itemCandidates = parsed.candidates;
-                    if (globalRestaurant) {
-                        const filtered = itemCandidates.filter(c => c.restaurant.id === globalRestaurant.id);
-                        if (filtered.length > 0) {
-                            itemCandidates = filtered;
-                        }
-                    }
-
-                    // Check if multiple restaurant sources still exist for this item
-                    if (itemCandidates.length > 1) {
-                        ambiguityFound = true;
-                    } else if (itemCandidates.length === 1) {
-                        resolvedOrders.push({
-                            item: itemCandidates[0].item,
-                            restaurant: itemCandidates[0].restaurant,
-                            quantity: parsed.quantity
-                        });
-                    }
-                });
-
-                // Handle Ambiguity: Show option selection if multiple candidates match
-                if (ambiguityFound) {
-                    // Find the first item that has ambiguity (optionally filtered by global restaurant context)
-                    const firstAmbiguousItem = parsedItems.find(p => {
-                        let cands = p.candidates;
-                        if (globalRestaurant) {
-                            const filtered = cands.filter(c => c.restaurant.id === globalRestaurant.id);
-                            if (filtered.length > 0) cands = filtered;
-                        }
-                        return cands.length > 1;
-                    });
-                    
-                    let filteredCands = firstAmbiguousItem.candidates;
-                    if (globalRestaurant) {
-                        const filtered = filteredCands.filter(c => c.restaurant.id === globalRestaurant.id);
-                        if (filtered.length > 0) filteredCands = filtered;
-                    }
-
-                    // Update UI state inside voice overlay modal
-                    document.getElementById('voice-status-title').innerText = "Select Option";
-                    document.getElementById('voice-transcript').innerText = `Which item would you like to choose?`;
-
-                    const container = document.getElementById('voice-candidates-container');
-                    const list = document.getElementById('voice-candidates-list');
-                    list.innerHTML = '';
-                    container.classList.remove('hidden');
-
-                    // Generate choice selection buttons
-                    filteredCands.forEach(cand => {
-                        const btn = document.createElement('button');
-                        btn.className = "w-full bg-slate-50 hover:bg-brand-50 text-slate-800 hover:text-brand-600 font-extrabold py-3 px-4 rounded-xl text-left border border-slate-100 hover:border-brand-200 transition-all duration-300 flex items-center justify-between text-xs sm:text-sm";
-                        btn.innerHTML = `
-                            <div class="flex flex-col text-left">
-                                <span class="font-extrabold text-slate-900">${cand.item.name}</span>
-                                <span class="text-[10px] text-slate-400 font-semibold mt-0.5">${cand.restaurant.name}</span>
-                            </div>
-                            <span class="font-black text-brand-500">₹${cand.item.price.toFixed(2)}</span>
-                        `;
-                        btn.onclick = () => confirmRestaurantVoiceSelection(cand.restaurant, parsedItems);
-                        list.appendChild(btn);
-                    });
-
-                    // Turn off speech listener since user has choices to select
-                    if (recognition) {
-                        try { recognition.stop(); } catch(e) {}
-                    }
-
-                    // Cache debug info globally
-                    window.lastParsedItems = parsedItems;
-                    window.lastResolvedOrders = resolvedOrders;
-
-                    speakText(`I found multiple options. Please choose one from the screen.`);
-                } else if (resolvedOrders.length > 0) {
-                    // No ambiguity - direct checkout!
-                    const finalRestaurant = globalRestaurant || (resolvedOrders[0] ? resolvedOrders[0].restaurant : null);
-                    
-                    // Cache debug info globally
-                    window.lastParsedItems = parsedItems;
-                    window.lastResolvedOrders = resolvedOrders;
-
-                    executeDirectCheckout(finalRestaurant, resolvedOrders);
-                } else {
-                    speakText("Sorry, I could not match those dishes. Please say it again clearly.");
-                    document.getElementById('voice-transcript').innerText = "Couldn't match command. Try again.";
-                }
+                    }, 800);
+                }, 800);
             }
+
+            // Step 4: NLU parsing active
+            updateVoiceStep(4, 'active', 'Sending transcript to Gemini NLU parser...');
 
             // Call backend endpoint for Gemini voice NLU parsing
             fetch('/api/voice-parse', {
@@ -1767,6 +1983,9 @@
             })
             .then(data => {
                 if (data.action === "ADD_TO_CART") {
+                    updateVoiceStep(4, 'success', 'Parsed intent extracted successfully.');
+                    updateVoiceStep(5, 'active', 'Validating parsed dishes against menus...');
+
                     const resolvedOrders = [];
                     let firstRestaurant = null;
                     data.items.forEach(parsed => {
@@ -1784,13 +2003,19 @@
                         }
                     });
 
-                    if (resolvedOrders.length > 0) {
-                        speakText(data.speech_response);
-                        executeDirectCheckout(firstRestaurant, resolvedOrders);
-                    } else {
-                        runLocalFallback();
-                    }
+                    setTimeout(() => {
+                        if (resolvedOrders.length > 0) {
+                            updateVoiceStep(5, 'success', `Synced ${resolvedOrders.length} valid dishes.`);
+                            executeDirectCheckout(firstRestaurant, resolvedOrders, data.speech_response);
+                        } else {
+                            updateVoiceStep(5, 'error', 'Dish names not found in active menu catalog.');
+                            runLocalFallback();
+                        }
+                    }, 800);
                 } else if (data.action === "CLARIFY") {
+                    updateVoiceStep(4, 'success', 'Ambiguity detected in restaurant context.');
+                    updateVoiceStep(5, 'active', 'Awaiting manual selection choice...');
+
                     document.getElementById('voice-status-title').innerText = "Select Option";
                     document.getElementById('voice-transcript').innerText = data.speech_response;
 
@@ -1820,7 +2045,10 @@
                             quantity: 1,
                             candidates: [{ restaurant: rest, item: item }]
                         }];
-                        btn.onclick = () => confirmRestaurantVoiceSelection(rest, parsedItemsForClarification);
+                        btn.onclick = () => {
+                            updateVoiceStep(5, 'success', 'Manual option confirmed.');
+                            confirmRestaurantVoiceSelection(rest, parsedItemsForClarification);
+                        };
                         list.appendChild(btn);
                     });
 
@@ -1829,17 +2057,23 @@
                     }
                     speakText(data.speech_response);
                 } else {
+                    updateVoiceStep(4, 'error', 'Milo NLU could not parse request context.');
                     runLocalFallback();
                 }
             })
             .catch(err => {
                 console.warn("Gemini voice parse failed. Running local fallback NLU parser.", err);
-                runLocalFallback();
+                updateVoiceStep(4, 'error', 'NLU network timeout. Falling back...');
+                setTimeout(() => {
+                    runLocalFallback();
+                }, 800);
             });
         }
 
         // Complete checkout with the user's manual selection
         function confirmRestaurantVoiceSelection(restaurant, parsedItems) {
+            updateVoiceStep(5, 'success', 'Manual restaurant choice confirmed.');
+
             const resolvedOrders = [];
             parsedItems.forEach(parsed => {
                 // Filter matches for this selected restaurant, or default to highest score
@@ -1859,28 +2093,48 @@
         }
 
         // Construct final cart order list and open invoice
-        function executeDirectCheckout(restaurant, resolvedOrders) {
+        function executeDirectCheckout(restaurant, resolvedOrders, customSpeech = "") {
             document.getElementById('voice-candidates-container').classList.add('hidden');
 
-            // Clear previous cart
-            cart = [];
+            // Step 6: Cart Creation active
+            updateVoiceStep(6, 'active', 'Populating cart items...');
             
-            // Add items to cart
-            resolvedOrders.forEach(order => {
-                cart.push({
-                    name: order.item.name,
-                    price: order.item.price,
-                    quantity: order.quantity
+            setTimeout(() => {
+                // Clear previous cart
+                cart = [];
+                
+                // Add items to cart
+                resolvedOrders.forEach(order => {
+                    cart.push({
+                        name: order.item.name,
+                        price: order.item.price,
+                        quantity: order.quantity
+                    });
                 });
-            });
-            updateCartUI();
+                updateCartUI();
 
-            const speakItems = resolvedOrders.map(o => `${o.quantity} ${o.item.name}`).join(' and ');
-            speakText(`Adding ${speakItems} from ${restaurant.name}. Transitioning to checkout.`);
-            stopVoiceListening();
+                const speakItems = resolvedOrders.map(o => `${o.quantity} ${o.item.name}`).join(' and ');
+                updateVoiceStep(6, 'success', `Added ${resolvedOrders.length} item(s) to cart.`);
+                
+                // Step 7: Confirmation active
+                updateVoiceStep(7, 'active', 'Speaking checkout confirmation message...');
+                
+                const finalSpeech = customSpeech || `Adding ${speakItems} from ${restaurant.name}. Transitioning to checkout.`;
+                speakText(finalSpeech);
 
-            // Trigger payment screen
-            showPaymentScreen(restaurant, cart);
+                setTimeout(() => {
+                    updateVoiceStep(7, 'success', 'Confirmed audibly.');
+                    
+                    // Step 8: Checkout active
+                    updateVoiceStep(8, 'active', 'Redirecting to payment review desk...');
+                    
+                    setTimeout(() => {
+                        updateVoiceStep(8, 'success', 'Checkout routing complete.');
+                        stopVoiceListening();
+                        showPaymentScreen(restaurant, cart);
+                    }, 800);
+                }, 2000);
+            }, 800);
         }
 
         // Voice Feedback Text-to-Speech Helper
