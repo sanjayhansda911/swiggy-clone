@@ -1782,7 +1782,8 @@
                         } else {
                             const restWords = restNameLower.split(/\s+/);
                             restWords.forEach(word => {
-                                if (word.length > 2 && query.includes(word)) {
+                                const blacklist = ["restaurant", "hotel", "point", "house", "kitchen", "cafe", "bistro", "dhaba", "grill", "biryani", "biriyani", "pizza", "burger", "dosa", "idli", "chai", "coffee", "shake", "roll", "sweets", "curry", "kebab", "kebabs", "kabab", "kababs", "pulao", "rice", "mutton", "chicken", "veg", "food", "foods", "meals", "special", "classic", "express", "kitchens", "bakes", "bakehouse", "sweet", "mart"];
+                                if (word.length > 2 && !blacklist.includes(word) && query.includes(word)) {
                                     restScore += 30; // e.g. "kolkata" matches "kolkata biryani house"
                                 }
                             });

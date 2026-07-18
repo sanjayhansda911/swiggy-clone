@@ -381,8 +381,9 @@ Respond in JSON format. The response must be a JSON object with:
                     for cand in matching_candidates:
                         cand_name = cand["restaurantName"].lower()
                         # Match if full name or core unique parts of restaurant name are mentioned
-                        # Ignore common keywords like "restaurant", "hotel", "point", "house", "kitchen", "cafe", "bistro", "dhaba", "grill"
-                        keywords = [w for w in re.split(r'\s+', cand_name) if len(w) > 3 and w not in ["restaurant", "hotel", "point", "house", "kitchen", "cafe", "bistro", "dhaba", "grill"]]
+                        # Ignore common keywords and food categories to avoid false positives (e.g. user saying "biryani" matching restaurant "Madhapur Biryani Point")
+                        blacklist = ["restaurant", "hotel", "point", "house", "kitchen", "cafe", "bistro", "dhaba", "grill", "biryani", "biriyani", "pizza", "burger", "dosa", "idli", "chai", "coffee", "shake", "roll", "sweets", "curry", "kebab", "kebabs", "kabab", "kababs", "pulao", "rice", "mutton", "chicken", "veg", "food", "foods", "meals", "special", "classic", "express", "kitchens", "bakes", "bakehouse", "sweet", "mart"]
+                        keywords = [w for w in re.split(r'\s+', cand_name) if len(w) > 3 and w not in blacklist]
                         if any(kw in user_text_lower for kw in keywords) or cand_name in user_text_lower:
                             mentioned_rest = cand
                             break
